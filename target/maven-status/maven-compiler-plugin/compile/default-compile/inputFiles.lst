@@ -1,0 +1,13 @@
+/home/janke/workspace/spittr/src/main/java/com/spittr/user/model/User.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/config/AaopWebAppInitializer.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/exception/TestException.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/config/RootConfig.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/user/model/Passwd.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/config/WebConfig.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/data/SpittleRepository.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/Spittle.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/controller/SpittleController.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/controller/RedirectController.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/authorization/model/Token.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/controller/HomeController.java
+/home/janke/workspace/spittr/src/main/java/com/spittr/controller/ExceptionsHandler.java
