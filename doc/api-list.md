@@ -4,7 +4,7 @@
 -  api示例中url默认忽略应用地址: `http://ip:port/应用名`, 实际使用过程中自行添加
 - 符号说明: 
 
-		url:		请求地址
+		url:			请求地址
 		method:		http请求方式
 		login:		该请求是否需要登录(is required janke-authorization in headers ?)
 		argument:		请求携带参数
