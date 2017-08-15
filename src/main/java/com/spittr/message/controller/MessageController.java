@@ -9,7 +9,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.spittr.authorization.annotation.Authorization;
@@ -82,7 +81,7 @@ public class MessageController {
 	}
 
 	@RequestMapping(value="/get/{id}", method=RequestMethod.GET)
-	public Object get(
+	public ReturnModel get(
 			@PathVariable Long id
 			) throws IOException{
 		Message message = messageService.get(id);
@@ -91,12 +90,12 @@ public class MessageController {
 
 		message = MessageIssues.generateFakeMessage(message);
 
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(message), HttpStatus.OK);
+		return  ReturnModel.SUCCESS(message);
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.DELETE)
 	@Authorization
-	public ResponseEntity<ReturnModel> delete(
+	public ReturnModel delete(
 			@AutoCurrentUser User user,
 			@RequestParam("mid") Long mid
 			){
@@ -107,20 +106,32 @@ public class MessageController {
 		if (MessageIssues.checkAuthority(message, user)){
 			messageService.delete(message);
 			
-			return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+			return ReturnModel.SUCCESS();
 		}
 		else {
-			return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(), HttpStatus.OK);
+			return ReturnModel.ERROR();
 		}
 	}
 	
 	@RequestMapping(value="/page/{pid}", method=RequestMethod.GET)
-	public ResponseEntity<ReturnModel> page(
+	@ResponseStatus(value=HttpStatus.OK)
+	public ReturnModel page(
 			@PathVariable Integer pid
 			){
 		Map<String, Object> result =  messageService.getMessageByPageNumber(pid);
 		
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(result), HttpStatus.OK);
+		return ReturnModel.SUCCESS(result);
+	}
+	
+	@RequestMapping(value="/lid/{lid}/page/{pid}")
+	@ResponseStatus(value=HttpStatus.OK)
+	public ReturnModel pageByLid(
+			@PathVariable Long lid,
+			@PathVariable Integer pid
+			){
+		Map<String, Object> result = messageService.getLocaleMessageByPageNumber(lid, pid);
+		
+		return ReturnModel.SUCCESS(result);
 	}
 	
 }

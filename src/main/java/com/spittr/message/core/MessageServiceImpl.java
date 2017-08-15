@@ -138,4 +138,22 @@ public class MessageServiceImpl implements MessageService{
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> getLocaleMessageByPageNumber(Long lid, Integer pageNumber) {
+		// TODO Auto-generated method stub
+		Long items = messageDao.coutByLid(lid);
+		Page page = Page.newInstance(items);
+		page.setPage(pageNumber);
+		
+		List<Message> messageList = messageDao.getByLid(page, lid);
+		messageList = MessageIssues.generateFakeMessageList(messageList);
+
+		page.setItemInThisPage(messageList.size());
+		
+		Map<String, Object> map = getMap();
+		map.put(PAGE, page);
+		map.put(MESSAGE_LIST, messageList);
+		return map;
+	}
+
 }

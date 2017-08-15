@@ -28,6 +28,8 @@ public class Message implements Serializable{
 	
 	private Long uid;
 	
+	private Long lid;
+	
 	@ManyToOne
 	@JoinColumn(name="user", updatable=false)
 	private User user;
@@ -73,16 +75,17 @@ public class Message implements Serializable{
 	}
 	
 	public Message(String content, User user, Location localtion){
-		this(content, user, user.getUid(), localtion, (long)0, (long)0, (long)1, false, null, new Date(/* now */), false, null);
+		this(content, user, user.getUid(),localtion!=null?localtion.getLid() : null,  localtion, (long)0, (long)0, (long)1, false, null, new Date(/* now */), false, null);
 	}
 	
-	public Message(String content, User user, Long uid, Location location,
+	public Message(String content, User user, Long uid,Long lid, Location location,
 			Long likeCount, Long commentCount, Long commentNextVal,
 			Boolean isFake, String fakeName, 
 			Date tmCreated,Boolean isDelete, Date tmDelete){
 		this.content = content;
 		this.user = user;
 		this.uid = uid;
+		this.lid = lid;
 		this.location = location;
 		this.likeCount = likeCount;
 		this.commentCount = commentCount;
@@ -297,5 +300,13 @@ public class Message implements Serializable{
 		} else if (!user.equals(other.user))
 			return false;
 		return true;
+	}
+
+	public Long getLid() {
+		return lid;
+	}
+
+	public void setLid(Long lid) {
+		this.lid = lid;
 	}
 }

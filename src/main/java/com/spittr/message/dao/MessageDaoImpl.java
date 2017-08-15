@@ -44,6 +44,31 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 		Long count = (Long)criteria.uniqueResult();
 		return count;
 	}
+
+	@Override
+	public List<Message> getByLid(Page page, Long lid) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.eq("lid", lid))
+				.add(Restrictions.eq("isDelete", false))
+				.addOrder(Order.desc("tmCreated"));
+		@SuppressWarnings("unchecked")
+		List<Message> list = criteria.list();
+		return list;
+	}
+
+	@Override
+	public Long coutByLid(Long lid) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.eq("lid", lid))
+				.add(Restrictions.eq("isDelete", false))
+				.setProjection(Projections.rowCount());
+		Long count = (long)criteria.uniqueResult();
+		return count;
+	}
 	
 }
 	

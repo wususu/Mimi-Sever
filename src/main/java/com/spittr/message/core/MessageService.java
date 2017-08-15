@@ -36,4 +36,6 @@ public interface MessageService {
 	
 	Map<String, Object> getMessageByPageNumber(Integer pageNumber);
 	
+	Map<String, Object> getLocaleMessageByPageNumber(Long lid, Integer pageNumber);
+	
 }

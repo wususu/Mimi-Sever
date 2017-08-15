@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,7 +44,7 @@ public class CommentController {
 	
 	@Authorization
 	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public ResponseEntity<ReturnModel> create(
+	public ReturnModel create(
 			@AutoCurrentUser User user,
 			@RequestParam("mid") Long mid,
 			@RequestParam(value="rcid", required=false) Long replayCommentId,
@@ -66,11 +64,11 @@ public class CommentController {
 		
 		commentService.create( underMessage, user, content, replayComment, isFake );
 		
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return ReturnModel.SUCCESS();
 	}
 	
 	@RequestMapping(value="/get/{cid}", method=RequestMethod.GET)
-	public ResponseEntity<ReturnModel> get(
+	public ReturnModel get(
 			@PathVariable("cid") Long cid
 			) throws JsonParseException, JsonMappingException, IOException{
 		
@@ -79,12 +77,12 @@ public class CommentController {
 		CommentIssue.checkIsDelete(comment);
 		comment = CommentIssue.generateFakeComment(comment);		
 		
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(comment), HttpStatus.OK);
+		return ReturnModel.SUCCESS(comment);
 	}
 	
 	@Authorization
 	@RequestMapping(value="/delete", method=RequestMethod.DELETE)
-	public ResponseEntity<ReturnModel> delete(
+	public ReturnModel delete(
 			@AutoCurrentUser User user,
 			@RequestParam("cid") Long cid
 			){
@@ -93,11 +91,11 @@ public class CommentController {
 		if (CommentIssue.checkAuthority(comment, user))
 			commentService.delete(comment);
 		
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return ReturnModel.SUCCESS();
 	}
 	
 	@RequestMapping(value={"/message/{mid}/page/{pid}", "/message/{mid}"}, method=RequestMethod.GET)
-	public ResponseEntity<ReturnModel> page(
+	public ReturnModel page(
 			@PathVariable("mid") Long mid,
 			@PathVariable(value = "pid", required=false) Integer pid
 			){
@@ -106,7 +104,7 @@ public class CommentController {
 		
 		Map<String, Object> result = commentService.getByMidAndPageNumber(mid, pid);
 				
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(result), HttpStatus.OK);
+		return ReturnModel.SUCCESS(result);
 	}
 	
 

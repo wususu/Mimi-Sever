@@ -10,5 +10,9 @@ public interface MessageDao extends BaseDao<Message>{
 
 	List<Message> get(Page page);
 	
+	List<Message> getByLid(Page page, Long lid);
+	
 	Long count();
+	
+	Long coutByLid(Long lid);
 }
