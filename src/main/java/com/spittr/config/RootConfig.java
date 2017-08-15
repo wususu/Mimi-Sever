@@ -5,6 +5,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +43,14 @@ public class RootConfig {
 	public LocalSessionFactoryBean sessionFactory(){
 		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
 		sessionFactoryBean.setDataSource(dataSource());
-		sessionFactoryBean.setPackagesToScan("com.spittr.user.model", "com.spittr.authorization.model");
+		sessionFactoryBean.setPackagesToScan(
+				"com.spittr.model",
+				"com.spittr.user.model", 
+				"com.spittr.authorization.model",
+				"com.spittr.message.model",
+				"com.spittr.image.model",
+				"com.spittr.location.model"
+				);
 
 		Properties hibernateProperties = new Properties();
 		hibernateProperties.put("hibernate.dialect", "com.spittr.config.MySQLDialectUTF8");
@@ -53,9 +62,10 @@ public class RootConfig {
 	}
 	
 	@Bean
-	public HibernateTransactionManager transactionManager(){
+	@Autowired
+	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory(sessionFactory().getObject());
+		transactionManager.setSessionFactory(sessionFactory);
 		return transactionManager;
 	}
 	
