@@ -8,9 +8,9 @@
 		method:		http请求方式
 		login:		该请求是否需要登录(is required janke-authorization in headers ?)
 		argument:		请求携带参数
-		key:		参数名
+		key:			参数名
 		isrequired:		参数是否必须
-		type:		参数类型
+		type:			参数类型
 		response:		请求成功数据返回格式
 		
 - 注意:
@@ -432,6 +432,85 @@
 			    }
 			}
 			
+			
+- 按页获取某一地点的`message`
+
+		- url: /api/message/lid/{lid}/page/{pid}
+		
+		- method: GET
+		
+		- login: false
+		
+		- argument:
+			           |   key       |  isrequired | defaultValue |    type      |
+			-----------+-------------+-------------+--------------+--------------+
+		 	    页码    |   null      |     true    |    null      |   Integer    |
+		 	    地点ID  |   null      |     true    |    null      |   Integer    |
+		
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+		        "messageList": [
+		            {
+		                "mid": 129,
+		                "uid": 1,
+		                "lid": 23,
+		                "user": {
+		                    "uid": 1,
+		                    "uname": "wususu",
+		                    "nname": "wususu",
+		                    "tmCreated": 1501604357000
+		                },
+		                "content": "测试用户的测试message",
+		                "tmCreated": 1502727291000,
+		                "messageImageSet": [],
+		                "isFake": false,
+		                "fakeName": null,
+		                "likeCount": 0,
+		                "commentCount": 0,
+		                "commentNextVal": 1,
+		                "location": {
+		                    "lid": 23,
+		                    "locale": "华山"
+		                }
+		            },
+		            {
+		                "mid": 128,
+		                "uid": 1,
+		                "lid": 23,
+		                "user": {
+		                    "uid": 1,
+		                    "uname": "wususu",
+		                    "nname": "wususu",
+		                    "tmCreated": 1501604357000
+		                },
+		                "content": "测试用户的测试message",
+		                "tmCreated": 1502725914000,
+		                "messageImageSet": [],
+		                "isFake": false,
+		                "fakeName": null,
+		                "likeCount": 0,
+		                "commentCount": 8,
+		                "commentNextVal": 18,
+		                "location": {
+		                    "lid": 23,
+		                    "locale": "华山"
+		                }
+		            }
+		        ],
+		        "page": {
+		            "itemPerPage": 15,
+		            "pageNum": 1,
+		            "item": 2,
+		            "page": 0,
+		            "firstItem": null,
+		            "itemInThisPage": 2,
+		            "first": 0
+		        }
+		    }
+		}
 
 - 发表评论
 
