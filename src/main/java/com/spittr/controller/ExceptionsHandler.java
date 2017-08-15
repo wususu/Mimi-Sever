@@ -15,17 +15,18 @@ public class ExceptionsHandler {
 	
 	@ExceptionHandler(PasswdNotEqualsException.class)
 	public ResponseEntity<ReturnModel> handleTestException(PasswdNotEqualsException e){
-		return new ResponseEntity<>(ReturnModel.ERROR(e), HttpStatus.OK);
+		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(e), HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(TokenErrorException.class)
 	public ResponseEntity<ReturnModel> handleTestException2(TokenErrorException e){
-		return new ResponseEntity<>(ReturnModel.ERROR(e), HttpStatus.OK);
+		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(e), HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<ReturnModel> handleTestException2(RuntimeException e){
-		return new ResponseEntity<>(ReturnModel.ERROR(e), HttpStatus.OK);
+		e.printStackTrace();
+		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(e), HttpStatus.OK);
 	}
 	
 }

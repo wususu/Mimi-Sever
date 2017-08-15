@@ -12,11 +12,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spittr.user.model.User;
 
 
 @Entity
 @Table(name="token")
+@JsonIgnoreProperties({"tid"})
 public class Token {
 
 	@Id
@@ -36,7 +38,7 @@ public class Token {
 	private Long uid;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date tmCreate;
+	private Date tmCreated;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date tmExpire;
@@ -54,14 +56,14 @@ public class Token {
 	}
 	
 	public Token(String secret, User user, Date tmExpire){
-		this(secret, user, new Date(), tmExpire, user.getId());
+		this(secret, user, new Date(), tmExpire, user.getUid());
 	}
 	
-	public Token(String secret, User user, Date tmCreate, Date tmExpire, Long uid){
+	public Token(String secret, User user, Date tmCreated, Date tmExpire, Long uid){
 		this.secret = secret;
 		this.user = user;
 		this.uid = uid;
-		this.tmCreate = tmCreate;
+		this.tmCreated = tmCreated;
 		this.tmExpire = tmExpire;
 	}
 	
@@ -89,12 +91,12 @@ public class Token {
 		this.user = user;
 	}
 
-	public Date getTmCreate() {
-		return tmCreate;
+	public Date getTmCreated() {
+		return tmCreated;
 	}
 
-	public void setTmCreate(Date tmCreate) {
-		this.tmCreate = tmCreate;
+	public void setTmCreated(Date tmCreated) {
+		this.tmCreated = tmCreated;
 	}
 
 	public Date getTmExpire() {
@@ -107,7 +109,7 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return "Token [tid=" + tid + ", secret=" + secret + ", user=" + user + ", tmCreate=" + tmCreate + ", tmExpire="
+		return "Token [tid=" + tid + ", secret=" + secret + ", user=" + user + ", tmCreate=" + tmCreated + ", tmExpire="
 				+ tmExpire + "]";
 	}
 	

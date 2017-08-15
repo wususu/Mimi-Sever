@@ -51,7 +51,7 @@ public class CommentController {
 			@RequestParam("mid") Long mid,
 			@RequestParam(value="rcid", required=false) Long replayCommentId,
 			@RequestParam("content") String content,
-			@RequestParam("isFake") Boolean isFake
+			@RequestParam(value="isFake", defaultValue="false", required=false) Boolean isFake
 			){
 		
 		Comment replayComment = null;
@@ -60,6 +60,7 @@ public class CommentController {
 		MessageIssues.checkIsDelete(underMessage);
 		if (replayCommentId != null) {
 			replayComment = commentService.get(replayCommentId);
+
 			CommentIssue.checkReplayComment(replayComment, underMessage);
 		}
 		
@@ -103,7 +104,7 @@ public class CommentController {
 		Message message = messageService.get(mid);
 		MessageIssues.checkIsDelete(message);
 		
-		Map<String, Object> result = commentService.getByMidAndPageNumber(mid, --pid);
+		Map<String, Object> result = commentService.getByMidAndPageNumber(mid, pid);
 				
 		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(result), HttpStatus.OK);
 	}

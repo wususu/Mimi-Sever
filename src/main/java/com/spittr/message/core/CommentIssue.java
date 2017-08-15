@@ -36,7 +36,6 @@ public class CommentIssue {
 	}
 	
 	public static void checkIsDelete(Comment comment) {
-		System.out.println(comment);
 		if (comment == null || comment.getIsDelete()) 
 			throw new CommentNotFoundException();
 		
@@ -99,7 +98,7 @@ public class CommentIssue {
 		
 		checkIsDelete(replayComment);
 		
-		if(!replayComment.getUnderWhichMessage().equals(underMessage))
+		if( !replayComment.getUnderWhichMessage().equals(underMessage))
 			throw new UnderMessageNotEqualException();
 		
 		return true;

@@ -38,9 +38,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter{
         Method method = handlerMethod.getMethod();
         
 		String authorization = request.getHeader(Constants.AUTHORIZATION);
-		
-		System.out.println("..." + authorization + "...");
-		
+				
 		if (method.getAnnotation(Authorization.class) != null) {
 		
 				if (authorization == null ) 
@@ -51,7 +49,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter{
 				// 验证成功
 				if (TokenIssues.getInstance().checkToken(token) == true) {
 					manager.updateToken(token);
-					request.setAttribute(Constants.CURRENT_USER_ID, token.getUser().getId());
+					request.setAttribute(Constants.CURRENT_USER_ID, token.getUser().getUid());
 					return true;
 				}
 				
@@ -68,7 +66,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter{
 				// 验证成功
 				if (TokenIssues.getInstance().checkToken(token) == true) {
 					manager.updateToken(token);
-					request.setAttribute(Constants.CURRENT_USER_ID, token.getUser().getId());
+					request.setAttribute(Constants.CURRENT_USER_ID, token.getUser().getUid());
 				}
 			}catch (Exception e) {
 				// TODO: handle exception

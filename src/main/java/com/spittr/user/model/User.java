@@ -21,14 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 7302289073823113966L;
-
-	public static User newInstance(String uname){
-		return newInstance(uname, null);
-	}
-	
-	public static User newInstance(String uname, String nname){
-		return  new User(uname, nname);
-	}
 	
 	public User() {
 	}
@@ -52,7 +44,7 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="uid")
-	private Long id;
+	private Long uid;
 	
 	@Column(name="uname", unique=true, nullable=false)
 	private String uname;
@@ -67,12 +59,12 @@ public class User implements Serializable{
 	@Column(name="create_time", nullable=true)
 	private Date tmCreated;
 	
-	public Long getId(){
-		return id;
+	public Long getUid(){
+		return uid;
 	}
 	
-	public void setId(Long id) {
-		this.id = id;
+	public void setUid(Long uid) {
+		this.uid = uid;
 	}
 	
 	public String getUname() {
@@ -109,9 +101,59 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", uname=" + uname + ", nname=" + nname + ", plogin=" + plogin + ", tmCreated="
+		return "User [id=" + uid + ", uname=" + uname + ", nname=" + nname + ", plogin=" + plogin + ", tmCreated="
 				+ tmCreated + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
+		result = prime * result + ((nname == null) ? 0 : nname.hashCode());
+		result = prime * result + ((plogin == null) ? 0 : plogin.hashCode());
+		result = prime * result + ((tmCreated == null) ? 0 : tmCreated.hashCode());
+		result = prime * result + ((uname == null) ? 0 : uname.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (uid == null) {
+			if (other.uid != null)
+				return false;
+		} else if (!uid.equals(other.uid))
+			return false;
+		if (nname == null) {
+			if (other.nname != null)
+				return false;
+		} else if (!nname.equals(other.nname))
+			return false;
+		if (plogin == null) {
+			if (other.plogin != null)
+				return false;
+		} else if (!plogin.equals(other.plogin))
+			return false;
+		if (tmCreated == null) {
+			if (other.tmCreated != null)
+				return false;
+		} else if (!tmCreated.equals(other.tmCreated))
+			return false;
+		if (uname == null) {
+			if (other.uname != null)
+				return false;
+		} else if (!uname.equals(other.uname))
+			return false;
+		return true;
+	}
+	
 	
 	
 }

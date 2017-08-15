@@ -5,6 +5,14 @@ import com.spittr.user.model.User;
 
 public interface UserService {
 	
+	public static User newInstance(String uname){
+		return newInstance(uname, null);
+	}
+	
+	public static User newInstance(String uname, String nname){
+		return  new User(uname, nname);
+	}
+	
 	void create(String uname, String nname, String passwd);
 	
 	Token login(String uname, String passwd);

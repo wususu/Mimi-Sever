@@ -1,7 +1,10 @@
 package com.spittr.location.controller;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import org.hibernate.loader.custom.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -11,12 +14,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.spittr.core.JSONConstants.*;
+import com.spittr.location.core.LocationService;
 import com.spittr.location.dao.LocationDao;
 import com.spittr.location.dao.LocationDaoImpl;
 import com.spittr.location.model.Location;
 import com.spittr.model.ReturnModel;
+
 
 
 @RestController
@@ -24,23 +31,32 @@ import com.spittr.model.ReturnModel;
 public class LocationCRUDCotroller {
 
 	@Autowired
-	@Qualifier("locationDaoImpl")
-	private LocationDao locationDao;
+	@Qualifier("locationServiceImpl")
+	private LocationService locationService;
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public ResponseEntity<ReturnModel> create(
 			@RequestParam("locale") String locale
 			){
-		Location location = LocationDaoImpl.getInstance(locale);
-		locationDao.save(location);
+		Location location = LocationService.getInstance(locale);
+		locationService.save(location);
 		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	@ResponseStatus(value=HttpStatus.OK)
+	public ReturnModel list(){
+		List<Location> locations = locationService.getAll();
+		Map<String, Object> map = getMap();
+		map.put(LOCATION_LIST, locations);
+		return ReturnModel.SUCCESS(map);
 	}
 	
 	@RequestMapping(value="/get/{id}", method=RequestMethod.GET)
 	public ResponseEntity<ReturnModel> get(
 			@PathVariable Long id
 			){
-		Location location = locationDao.get(Location.class, id);
+		Location location = locationService.get(id);
 		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(location), HttpStatus.OK);
 	}
 	
@@ -50,10 +66,10 @@ public class LocationCRUDCotroller {
 			@RequestParam("id") Long lid,
 			@RequestParam("locale") String locale
 			){
-		Location location = locationDao.get(Location.class, lid);
+		Location location = locationService.get(lid);
 		
 		location.setLocale(locale);
-		locationDao.update(location);
+		locationService.update(location);
 		
 		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
 	}
@@ -63,14 +79,12 @@ public class LocationCRUDCotroller {
 	public ResponseEntity<ReturnModel> delete(
 			@RequestParam("id") Long lid
 			){
-		Location location = locationDao.get(Location.class, lid);
-		
-		System.out.println(location);
+		Location location = locationService.get(lid);
 		
 		location.setIsDelete(true);
 		location.setTmDelete(new Date());
 		
-		locationDao.update(location);
+		locationService.update(location);
 		
 		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
 	}

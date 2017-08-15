@@ -9,6 +9,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spittr.image.model.MessageImage;
 import com.spittr.location.model.Location;
+import com.spittr.message.core.MessageService;
 import com.spittr.user.model.User;
 
 @Entity
@@ -217,13 +218,12 @@ public class Message implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((commentCount == null) ? 0 : commentCount.hashCode());
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((fakeName == null) ? 0 : fakeName.hashCode());
 		result = prime * result + ((isDelete == null) ? 0 : isDelete.hashCode());
 		result = prime * result + ((isFake == null) ? 0 : isFake.hashCode());
-		result = prime * result + ((likeCount == null) ? 0 : likeCount.hashCode());
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((messageImageSet == null) ? 0 : messageImageSet.hashCode());
 		result = prime * result + ((mid == null) ? 0 : mid.hashCode());
 		result = prime * result + ((tmCreated == null) ? 0 : tmCreated.hashCode());
 		result = prime * result + ((tmDelete == null) ? 0 : tmDelete.hashCode());
@@ -241,11 +241,6 @@ public class Message implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Message other = (Message) obj;
-		if (commentCount == null) {
-			if (other.commentCount != null)
-				return false;
-		} else if (!commentCount.equals(other.commentCount))
-			return false;
 		if (content == null) {
 			if (other.content != null)
 				return false;
@@ -266,15 +261,15 @@ public class Message implements Serializable{
 				return false;
 		} else if (!isFake.equals(other.isFake))
 			return false;
-		if (likeCount == null) {
-			if (other.likeCount != null)
-				return false;
-		} else if (!likeCount.equals(other.likeCount))
-			return false;
 		if (location == null) {
 			if (other.location != null)
 				return false;
 		} else if (!location.equals(other.location))
+			return false;
+		if (messageImageSet == null) {
+			if (other.messageImageSet != null)
+				return false;
+		} else if (!messageImageSet.equals(other.messageImageSet))
 			return false;
 		if (mid == null) {
 			if (other.mid != null)
@@ -302,5 +297,5 @@ public class Message implements Serializable{
 		} else if (!user.equals(other.user))
 			return false;
 		return true;
-	}	
+	}
 }

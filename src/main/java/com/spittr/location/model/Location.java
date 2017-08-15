@@ -93,10 +93,61 @@ public class Location implements Serializable{
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((isDelete == null) ? 0 : isDelete.hashCode());
+		result = prime * result + ((lid == null) ? 0 : lid.hashCode());
+		result = prime * result + ((locale == null) ? 0 : locale.hashCode());
+		result = prime * result + ((tmCreated == null) ? 0 : tmCreated.hashCode());
+		result = prime * result + ((tmDelete == null) ? 0 : tmDelete.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Location other = (Location) obj;
+		if (isDelete == null) {
+			if (other.isDelete != null)
+				return false;
+		} else if (!isDelete.equals(other.isDelete))
+			return false;
+		if (lid == null) {
+			if (other.lid != null)
+				return false;
+		} else if (!lid.equals(other.lid))
+			return false;
+		if (locale == null) {
+			if (other.locale != null)
+				return false;
+		} else if (!locale.equals(other.locale))
+			return false;
+		if (tmCreated == null) {
+			if (other.tmCreated != null)
+				return false;
+		} else if (!tmCreated.equals(other.tmCreated))
+			return false;
+		if (tmDelete == null) {
+			if (other.tmDelete != null)
+				return false;
+		} else if (!tmDelete.equals(other.tmDelete))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
-		return "Location [lid=" + lid + ", locale=" + locale + ", tmCreated=" + tmCreated+ ", isDelete=" + isDelete
+		return "Location [lid=" + lid + ", locale=" + locale + ", tmCreated=" + tmCreated + ", isDelete=" + isDelete
 				+ ", tmDelete=" + tmDelete + "]";
 	}
+
+
 	
 	
 }

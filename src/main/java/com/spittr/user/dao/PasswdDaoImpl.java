@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.spittr.dao.BaseDaoHibernate5;
@@ -21,6 +22,7 @@ public class PasswdDaoImpl extends BaseDaoHibernate5<Passwd> implements PasswdDa
 	private SessionFactory sessionFactory;
 	
 	@Autowired 
+	@Qualifier("userDaoImpl")
 	private UserDao userDao;
 	
 	@Override

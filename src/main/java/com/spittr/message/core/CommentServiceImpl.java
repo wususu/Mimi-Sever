@@ -35,14 +35,16 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		Comment comment = CommentService.newInstance(content, user, underWhichMessage, replayComment);
 		
-		underWhichMessage.setCommentNextVal(underWhichMessage.getCommentNextVal() + 1 );
+		underWhichMessage.setCommentNextVal(underWhichMessage.getCommentNextVal());
 		
 		comment = CommentIssue.generateIsFake(comment, isFake);
 		
 		messageService.adcCommentCount(comment.getUnderWhichMessage());
-		messageService.adcNextCommentVal(comment.getUnderWhichMessage());
 		
 		save(comment);
+		
+		messageService.adcNextCommentVal(comment.getUnderWhichMessage());
+
 	}
 	
 	@Override

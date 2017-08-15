@@ -1,6 +1,7 @@
 package com.spittr.location.core;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,6 +28,8 @@ public class LocationServiceImpl implements LocationService{
 		}
 		return location;
 	}
+	
+	
 
 	@Override
 	public void save(Location location) {
@@ -47,5 +50,13 @@ public class LocationServiceImpl implements LocationService{
 		location.setIsDelete(true);
 		location.setTmDelete(new Date());
 		locationDao.update(location);
+	}
+
+
+
+	@Override
+	public List<Location> getAll() {
+		// TODO Auto-generated method stub
+		return locationDao.getAll();
 	}
 }

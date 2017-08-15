@@ -9,6 +9,8 @@ public class JSONConstants {
 	
 	public static final String COMMENT_LIST = "commentList";
 	
+	public static final String LOCATION_LIST = "locationList";
+	
 	public static final String MESSAGE = "message";
 	
 	public static final String PAGE = "page";

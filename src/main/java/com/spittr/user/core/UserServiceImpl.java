@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 	public void create(String uname, String nname, String passwd){
-		User user = User.newInstance(uname, nname);
+		User user = UserService.newInstance(uname, nname);
 		
 		this.save(user);
 		
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public void logout(User user){
-		tokenManager.deleteTokens(user.getId());
+		tokenManager.deleteTokens(user.getUid());
 	}
 	
 	@Override
@@ -83,7 +83,4 @@ public class UserServiceImpl implements UserService{
 		user.setPlogin(false);
 		this.update(user);
 	}
-
-	
-	
 }

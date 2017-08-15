@@ -44,7 +44,7 @@ public class UserController {
 			throw new PasswdNotEqualsException();
 		}
 		userService.create(uname, nname, passwd);
-		return new ResponseEntity<>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
@@ -54,7 +54,7 @@ public class UserController {
 			){
 		
 		Token token = userService.login(uname, passwd);
-		return new ResponseEntity<>(ReturnModel.SUCCESS(token), HttpStatus.OK);
+		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(token), HttpStatus.OK);
 	}
 	
 	@Authorization
@@ -63,13 +63,13 @@ public class UserController {
 		
 		userService.logout(user);
 		
-		return new ResponseEntity<>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
 	}
 	
 	@Authorization
 	@RequestMapping(value="/me", method=RequestMethod.GET)
 	public ResponseEntity<ReturnModel> get(@AutoCurrentUser User user){
-		return new ResponseEntity<>(ReturnModel.SUCCESS(user), HttpStatus.OK);
+		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(user), HttpStatus.OK);
 	}
 
 	

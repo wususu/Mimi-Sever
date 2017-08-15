@@ -32,7 +32,7 @@ public class Passwd implements Serializable{
 	@JoinColumn(name="uid", unique=true, nullable=false)
 	private User user;
 	
-	@Column(name="login", nullable=false)
+	@Column(name="login", nullable=false, updatable=false)
 	private String login;
 	
 	@Column(name="upass", nullable=false)
