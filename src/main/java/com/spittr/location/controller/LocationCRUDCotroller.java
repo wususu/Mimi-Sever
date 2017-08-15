@@ -35,12 +35,12 @@ public class LocationCRUDCotroller {
 	private LocationService locationService;
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public ResponseEntity<ReturnModel> create(
+	public ReturnModel create(
 			@RequestParam("locale") String locale
 			){
 		Location location = LocationService.getInstance(locale);
 		locationService.save(location);
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return ReturnModel.SUCCESS();
 	}
 	
 	@RequestMapping(value="/list", method=RequestMethod.GET)
@@ -53,16 +53,16 @@ public class LocationCRUDCotroller {
 	}
 	
 	@RequestMapping(value="/get/{id}", method=RequestMethod.GET)
-	public ResponseEntity<ReturnModel> get(
+	public ReturnModel get(
 			@PathVariable Long id
 			){
 		Location location = locationService.get(id);
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(location), HttpStatus.OK);
+		return ReturnModel.SUCCESS(location);
 	}
 	
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public ResponseEntity<ReturnModel> update(
+	public ReturnModel update(
 			@RequestParam("id") Long lid,
 			@RequestParam("locale") String locale
 			){
@@ -71,12 +71,12 @@ public class LocationCRUDCotroller {
 		location.setLocale(locale);
 		locationService.update(location);
 		
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return ReturnModel.SUCCESS();
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.DELETE)
 	@Transactional
-	public ResponseEntity<ReturnModel> delete(
+	public ReturnModel delete(
 			@RequestParam("id") Long lid
 			){
 		Location location = locationService.get(lid);
@@ -86,7 +86,7 @@ public class LocationCRUDCotroller {
 		
 		locationService.update(location);
 		
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return ReturnModel.SUCCESS();
 	}
 	
 }

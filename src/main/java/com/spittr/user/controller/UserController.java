@@ -33,7 +33,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public ResponseEntity<ReturnModel> create(
+	public ReturnModel create(
 			@RequestParam("uname") String uname, 
 			@RequestParam("passwd") String passwd,
 			@RequestParam("rpasswd") String rpasswd,
@@ -44,32 +44,32 @@ public class UserController {
 			throw new PasswdNotEqualsException();
 		}
 		userService.create(uname, nname, passwd);
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return ReturnModel.SUCCESS();
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public ResponseEntity<ReturnModel> logIn(
+	public ReturnModel logIn(
 			@RequestParam("uname") String uname,
 			@RequestParam("passwd") String passwd
 			){
 		
 		Token token = userService.login(uname, passwd);
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(token), HttpStatus.OK);
+		return ReturnModel.SUCCESS(token);
 	}
 	
 	@Authorization
 	@RequestMapping(value="/logout", method=RequestMethod.POST)
-	public ResponseEntity<ReturnModel> logOut(@AutoCurrentUser User user){
+	public ReturnModel logOut(@AutoCurrentUser User user){
 		
 		userService.logout(user);
 		
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(), HttpStatus.OK);
+		return ReturnModel.SUCCESS();
 	}
 	
 	@Authorization
 	@RequestMapping(value="/me", method=RequestMethod.GET)
-	public ResponseEntity<ReturnModel> get(@AutoCurrentUser User user){
-		return new ResponseEntity<ReturnModel>(ReturnModel.SUCCESS(user), HttpStatus.OK);
+	public ReturnModel get(@AutoCurrentUser User user){
+		return ReturnModel.SUCCESS(user);
 	}
 
 	
