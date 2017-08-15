@@ -13,6 +13,9 @@
 		type:		参数类型
 		response:		请求成功数据返回格式
 		
+- 注意:
+  `GET`url中`{something}`表示将其替换为参数
+  `DELETE`操作参数在url中以`?a=参数&b=参数`的形式发送
 
 ### user api
 
@@ -477,7 +480,7 @@
 			
 - 按页获取某一`message`下的评论, 同样,页码从零开始计数
 
-		- url: /api/comment/delete
+		- url: /api/comment/message/{mid}/page/{pageid}
 		
 		- method: DELETE
 		
