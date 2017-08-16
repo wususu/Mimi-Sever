@@ -97,19 +97,11 @@
 		
 - 用户信息
 
-		- url: /api/user/logout
+		- url: /api/user/me
 		
 		- method: GET
 		
 		- login: true
-		
-		- argument:
-			          |   key     |  isrequired |  type    |
-			----------+---------- +-------------+----------+
-		 	     帐号  |   uname   |     true    |  String  |
-			     昵称  |   nname   |     true    |  String  |
-			     密码  |   passwd  |     true    |  String  |
-			   重复密码 |   rpasswd |     true    |  String  |	
 			     
 		- response(success):
 		{
@@ -254,6 +246,7 @@
 - create message
 
  图片可以设置1~3张,多张照片时,只要加多一个`imageidList`
+ ![请求示例](../pic/示例(create%20message).png)
 
 		- url: /api/message/create
 		
