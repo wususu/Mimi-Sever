@@ -20,6 +20,7 @@ import com.spittr.model.ReturnModel;
 import com.spittr.user.model.User;
 
 
+@CrossOrigin(origins="*", maxAge=3600)
 @RestController
 @RequestMapping(value="/api/image")
 public class ImageController {
