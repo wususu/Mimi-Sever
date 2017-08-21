@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spittr.authorization.manager.TokenManager;
 import com.spittr.authorization.model.Token;
 import com.spittr.user.dao.UserDao;
-import com.spittr.user.exception.UserNotFoundException;
+import com.spittr.user.exception.*;
 import com.spittr.user.model.Passwd;
 import com.spittr.user.model.User;
 
@@ -30,7 +30,16 @@ public class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 	public void create(String uname, String nname, String passwd){
-		User user = UserService.newInstance(uname, nname);
+		User user = null;
+		
+		user = userDao.get(uname);
+		if (user  != null) 
+			throw new UserNameAlreadyExistException(uname);
+		user = userDao.getByNname(nname);
+		if (user != null) 
+			throw new NickNameAlreadyExistException(nname);
+		
+		user = UserService.newInstance(uname, nname);
 		
 		this.save(user);
 		

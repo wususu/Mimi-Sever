@@ -9,4 +9,6 @@ import com.spittr.user.model.User;
 public interface UserDao extends BaseDao<User>{
 
 	User get(String uname);
+	
+	User getByNname(String nname);
 }

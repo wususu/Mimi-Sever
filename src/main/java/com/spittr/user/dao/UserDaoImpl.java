@@ -25,11 +25,17 @@ public class UserDaoImpl extends BaseDaoHibernate5<User> implements UserDao {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("uname", uname));
-		List<?>  list = criteria.list();
-		if (list.size() > 0) {
-			return (User)list.get(0);
-		}
-		return null;
+		Object user = criteria.uniqueResult();
+		return user == null? null : (User)user;
+	}
+
+	@Override
+	public User getByNname(String nname) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("nname", nname));
+		Object user = criteria.uniqueResult();
+		return user == null? null : (User)user;
 	}
 	
 }
