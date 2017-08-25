@@ -8,4 +8,6 @@ public class StaticConfig {
 	public static final String DEFAULT_IMAGE_DIRECTORY = "/images";
 	
 	public static final Long Token_EXPIRED_TIME = 7200000L;
+	
+	public static final String WEBSOCKET_WEB_PARAM = "srect";
 }

@@ -22,7 +22,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableTransactionManagement
 @ComponentScan(
 		basePackages={
-				"com.spittr"
+				"com.spittr",
+				"com.spittr.websocket.core"
 				},
 		excludeFilters={
 				@ComponentScan.Filter(type=FilterType.ANNOTATION, value=EnableWebMvc.class)}
