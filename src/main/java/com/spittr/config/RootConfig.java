@@ -50,7 +50,8 @@ public class RootConfig {
 				"com.spittr.authorization.model",
 				"com.spittr.message.model",
 				"com.spittr.image.model",
-				"com.spittr.location.model"
+				"com.spittr.location.model",
+				"com.spittr.websocket.model"
 				);
 
 		Properties hibernateProperties = new Properties();

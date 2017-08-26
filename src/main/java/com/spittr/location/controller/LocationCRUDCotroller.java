@@ -39,6 +39,7 @@ public class LocationCRUDCotroller {
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public ReturnModel create(
 			@RequestParam("locale") String locale
+
 			){
 		Location location = LocationService.getInstance(locale);
 		locationService.save(location);
