@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.TextMessage;
 
 import com.spittr.websocket.core.SocketHandler;
-import com.spittr.websocket.model.ChattingMsg;
+import com.spittr.websocket.model.SendMsg;
 
 @RestController
 @CrossOrigin(origins="*")
