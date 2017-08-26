@@ -6,6 +6,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spittr.image.model.MessageImage;
 import com.spittr.location.model.Location;
@@ -44,6 +47,7 @@ public class Message implements Serializable{
 	private Date tmDelete;
 	
 	@OneToMany(mappedBy="message", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	private Set<MessageImage> messageImageSet;
 	
 	private Boolean isDelete;
