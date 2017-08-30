@@ -12,11 +12,11 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 @Component
 public class StompHandShakeHandler extends DefaultHandshakeHandler{
 
-	
 	@Override
 	protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) {
 		// TODO Auto-generated method stub
+		System.out.println("222");
 		return super.determineUser(request, wsHandler, attributes);
 	}
 	

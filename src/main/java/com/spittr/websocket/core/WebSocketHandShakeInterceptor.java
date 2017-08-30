@@ -2,14 +2,11 @@ package com.spittr.websocket.core;
 
 import java.util.Map;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletRequest;
-
-import org.apache.jasper.tagplugins.jstl.core.If;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
@@ -20,6 +17,7 @@ import com.spittr.authorization.model.Token;
 import com.spittr.config.StaticConfig;
 import com.spittr.user.exception.UserNameAlreadyExistException;
 import com.spittr.user.model.User;
+import com.spittr.websocket.model.WebSocketConstant;
 
 @Component
 public class WebSocketHandShakeInterceptor extends HttpSessionHandshakeInterceptor{
@@ -46,10 +44,8 @@ public class WebSocketHandShakeInterceptor extends HttpSessionHandshakeIntercept
 			}
 			
 			User user = token.getUser();
-			System.out.println(user);
 			
-			attributes.put("srect", srect);
-			attributes.put("user", user);
+			attributes.put(WebSocketConstant.CURRENT_USER, user);
 		}
 		return super.beforeHandshake(request, response, wsHandler, attributes);
 
