@@ -28,7 +28,10 @@ public class ChatMsg implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long chatId;
+	private Long id;
+	
+	@Column(nullable=false, unique=true)
+	private String chatID;
 	
 	@Column(nullable=false)
 	private String sender;
@@ -59,13 +62,14 @@ public class ChatMsg implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ChatMsg(User sender, User reciver, String content) {
-		this(sender.getUname(), reciver.getUname(), content, new Date(), sender.getUid(), reciver.getUid(), false, null);
+	public ChatMsg(User sender, User reciver, SendMsg sendMsg) {
+		this(sendMsg.getMsgID(), sender.getUname(), reciver.getUname(), sendMsg.getMessage(), new Date(), sender.getUid(), reciver.getUid(), false, null);
 	}
 	
-	public ChatMsg( String sender, String reciver, String content, Date time, Long senderId,
+	public ChatMsg( String chatID, String sender, String reciver, String content, Date time, Long senderId,
 			Long reciverId, Boolean isRecived, Date tmRecived) {
 		super();
+		this.chatID = chatID;
 		this.sender = sender;
 		this.reciver = reciver;
 		this.content = content;
@@ -76,12 +80,22 @@ public class ChatMsg implements Serializable{
 		this.tmRecived = tmRecived;
 	}
 
-	public Long getChatId() {
-		return chatId;
+	
+	
+	public String getChatID() {
+		return chatID;
 	}
 
-	public void setChatId(Long chatId) {
-		this.chatId = chatId;
+	public void setChatID(String chatID) {
+		this.chatID = chatID;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getSender() {
@@ -150,7 +164,7 @@ public class ChatMsg implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ChatMsg [chatId=" + chatId + ", sender=" + sender + ", reciver=" + reciver + ", content=" + content
+		return "ChatMsg [id = "+  id +",  chatID=" + chatID + ", sender=" + sender + ", reciver=" + reciver + ", content=" + content
 				+ ", time=" + time + ", senderId=" + senderId + ", reciverId=" + reciverId + ", isRecived=" + isRecived
 				+ ", tmRecived=" + tmRecived + "]";
 	}

@@ -4,28 +4,29 @@ import java.util.Date;
 
 public class SendMsg {
 	
-	private Long senderId;
-	
+	private String msgID;
+		
 	private Long reciverId;
 	
-	private String content;
+	private String message;
 	
 	public SendMsg() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public SendMsg(Long senderId, Long reciverId, String content, Date time){
-		this.senderId = senderId;
+	public SendMsg(String msgID, Long reciverId, String message, Date time){
+		this.msgID = msgID;
 		this.reciverId = reciverId;
-		this.content = content;
+		this.message = message;
 	}
 
-	public Long getSenderId() {
-		return senderId;
+
+	public String getMsgID() {
+		return msgID;
 	}
 
-	public void setSenderId(Long senderId) {
-		this.senderId = senderId;
+	public void setMsgID(String msgID) {
+		this.msgID = msgID;
 	}
 
 	public Long getReciverId() {
@@ -36,17 +37,17 @@ public class SendMsg {
 		this.reciverId = reciverId;
 	}
 
-	public String getContent() {
-		return content;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@Override
 	public String toString() {
-		return "ChattingMsg [sender=" + senderId + ", reciver=" + reciverId + ", content=" + content + "]";
+		return "ChattingMsg [msgID=" + msgID + ", reciver=" + reciverId + ", message=" + message + "]";
 	}
 	
 }
