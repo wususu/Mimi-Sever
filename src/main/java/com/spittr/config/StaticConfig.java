@@ -10,4 +10,8 @@ public class StaticConfig {
 	public static final Long Token_EXPIRED_TIME = 7200000L;
 	
 	public static final String WEBSOCKET_WEB_PARAM = "srect";
+	
+	public static final String HEAD_AUTHORIZATION = "janke-authorization";
+	
+	public static final String USER_ID = "UID";
 }

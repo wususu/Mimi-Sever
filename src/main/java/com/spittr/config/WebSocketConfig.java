@@ -11,6 +11,7 @@ import org.springframework.web.socket.config.annotation.AbstractWebSocketMessage
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.StompWebSocketEndpointRegistration;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
@@ -45,8 +46,8 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer{
 //	@Override
 //	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 //		// TODO Auto-generated method stub
-//		registry.addHandler(socketHandler, "/socketServer").addInterceptors(webSocketInterceptor);
-		
+//		registry..addHandler(socketHandler, "/socketServer").addInterceptors(webSocketInterceptor);
+//		
 //		registry.addHandler(socketHandler, "/sockjs/socketServer").addInterceptors(webSocketInterceptor).withSockJS();
 //	}
 
@@ -54,9 +55,10 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer{
 	@Override  
     public void configureMessageBroker(MessageBrokerRegistry registry) {  
         // queue、topic、user代理  
-        registry.enableSimpleBroker("/queue", "/topic", "/user");  
+        registry.enableSimpleBroker("/queue", "/topic");  
 	   registry.setApplicationDestinationPrefixes("/socket");  
         registry.setUserDestinationPrefix("/user/");  
+      
     }  
 	
 	@Override
@@ -64,10 +66,19 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer{
 		// TODO Auto-generated method stub
 
 		registry.addEndpoint("/socketServer")
+		.setAllowedOrigins("*")
 		.setHandshakeHandler(stompHandShakeHandler)
-		.withSockJS()
-		.setInterceptors(webSocketHandShakeInterceptor);
+		.addInterceptors(webSocketHandShakeInterceptor)
+		.withSockJS();
+		
+		registry.addEndpoint("/client")
+		.setAllowedOrigins("*")
+		.setHandshakeHandler(stompHandShakeHandler)
+		.addInterceptors(webSocketHandShakeInterceptor);
+	
 		}
+	
+	
 	
 	@Override
 	public void configureClientInboundChannel(ChannelRegistration registration) {
