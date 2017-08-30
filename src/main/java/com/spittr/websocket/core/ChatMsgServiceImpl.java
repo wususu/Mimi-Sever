@@ -46,10 +46,9 @@ public class ChatMsgServiceImpl implements ChatMsgService{
 	}
 
 	@Override
-	public ChatMsg get(Long chatId) {
+	public ChatMsg get(String chatID) {
 		// TODO Auto-generated method stub
-		ChatMsg chatMsg = chatMsgDao.get(ChatMsg.class, chatId);
+		ChatMsg chatMsg = chatMsgDao.getChatMsg(chatID);
 		return chatMsg;
 	}
-
 }

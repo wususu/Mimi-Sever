@@ -4,15 +4,14 @@ import org.springframework.stereotype.Service;
 
 import com.spittr.user.model.User;
 import com.spittr.websocket.model.ChatMsg;
+import com.spittr.websocket.model.SendMsg;
 
 @Service
 public interface ChatMsgService {
 
-	public static ChatMsg newInstance(User sender, User reciver, String content){
-		return new ChatMsg(sender, reciver, content);
+	public static ChatMsg newInstance(User sender, User reciver, SendMsg sendMsg){
+		return new ChatMsg(sender, reciver, sendMsg);
 	}
-	
-	ChatMsg get(Long chatId);
 	
 	void save(ChatMsg chatMsg);
 	
@@ -21,4 +20,6 @@ public interface ChatMsgService {
 	void sended(ChatMsg chatMsg);
 	
 	void recived(ChatMsg chatMsg);
+
+	ChatMsg get(String chatID);
 }

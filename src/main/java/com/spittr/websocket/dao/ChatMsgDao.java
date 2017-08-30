@@ -10,6 +10,7 @@ import com.spittr.websocket.model.ChatMsg;
 @Repository
 public interface ChatMsgDao extends BaseDao<ChatMsg>{
 
-	List<ChatMsg> getNotRecivedChatMsg(Long reciverId);
+	List<ChatMsg> getNotRecivedChatMsgList(Long reciverId);
 	
+	ChatMsg getChatMsg(String chatID);
 }

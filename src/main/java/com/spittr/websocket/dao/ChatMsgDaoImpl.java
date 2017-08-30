@@ -21,7 +21,7 @@ public class ChatMsgDaoImpl extends BaseDaoHibernate5<ChatMsg> implements ChatMs
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public List<ChatMsg> getNotRecivedChatMsg(Long reciverId) {
+	public List<ChatMsg> getNotRecivedChatMsgList(Long reciverId) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(ChatMsg.class)
@@ -32,5 +32,17 @@ public class ChatMsgDaoImpl extends BaseDaoHibernate5<ChatMsg> implements ChatMs
 		@SuppressWarnings("unchecked")
 		List<ChatMsg> chatMsgList = (List<ChatMsg>)criteria.list();
 		return chatMsgList;
+	}
+
+
+
+	@Override
+	public ChatMsg getChatMsg(String chatID) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(ChatMsg.class)
+		.add(Restrictions.eq("chatID", chatID));
+		ChatMsg chatMsg = (ChatMsg)criteria.uniqueResult();
+		return chatMsg;
 	}
 }
