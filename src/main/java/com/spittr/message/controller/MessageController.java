@@ -1,6 +1,7 @@
 package com.spittr.message.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -133,6 +134,26 @@ public class MessageController {
 		Map<String, Object> result = messageService.getLocaleMessageByPageNumber(lid, pid);
 		
 		return ReturnModel.SUCCESS(result);
+	}
+	
+	@RequestMapping(value="/tmbefore/{time}", method=RequestMethod.GET)
+	@ResponseStatus(value=HttpStatus.OK)
+	public ReturnModel getMessageBeforeTime(@PathVariable Long time){
+		if (time != null) {
+			Map<String, Object> data = messageService.getMessageBeforeTime(new Date(time));
+			return ReturnModel.SUCCESS(data);
+		}
+		return ReturnModel.ERROR();
+	}
+	
+	@RequestMapping(value="/tmafter/{time}", method=RequestMethod.GET)
+	@ResponseStatus(value=HttpStatus.OK)
+	public ReturnModel getMessageAfterTime(@PathVariable Long time) {
+		if (time != null) {
+			Map<String, Object> data = messageService.getMessageBeforeTime(new Date(time));
+			return ReturnModel.SUCCESS(data);
+		}
+		return ReturnModel.ERROR();
 	}
 	
 }

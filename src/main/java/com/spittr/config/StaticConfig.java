@@ -14,4 +14,5 @@ public class StaticConfig {
 	public static final String HEAD_AUTHORIZATION = "janke-authorization";
 	
 	public static final String USER_ID = "UID";
+
 }

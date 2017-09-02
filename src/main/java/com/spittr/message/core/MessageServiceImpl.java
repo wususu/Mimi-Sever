@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spittr.config.StaticConfig;
 import com.spittr.image.dao.MessageImageDao;
 import com.spittr.image.model.MessageImage;
 import com.spittr.message.dao.MessageDao;
@@ -152,6 +153,36 @@ public class MessageServiceImpl implements MessageService{
 		
 		Map<String, Object> map = getMap();
 		map.put(PAGE, page);
+		map.put(MESSAGE_LIST, messageList);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getMessageBeforeTime(Date time) {
+		// TODO Auto-generated method stub
+		Integer num = StaticConfig.ITEM_PER_PAGE;
+		List< Message> messageList = messageDao.getBeforeTime(time, num);
+		System.out.println(messageList);
+
+		messageList = MessageIssues.generateFakeMessageList(messageList);
+		
+		
+		Map<String, Object> map = getMap();
+		
+		map.put(MESSAGE_LIST, messageList);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getMessageAfterTime(Date time) {
+		// TODO Auto-generated method stub
+		Integer num = StaticConfig.ITEM_PER_PAGE;
+		List< Message> messageList = messageDao.getAfterTime(time, num);
+		System.out.println(messageList);
+		messageList = MessageIssues.generateFakeMessageList(messageList);
+		
+		Map<String, Object> map = getMap();
+		
 		map.put(MESSAGE_LIST, messageList);
 		return map;
 	}

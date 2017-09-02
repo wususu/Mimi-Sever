@@ -1,5 +1,6 @@
 package com.spittr.message.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -11,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spittr.config.StaticConfig;
 import com.spittr.dao.BaseDaoHibernate5;
 import com.spittr.message.model.Message;
 import com.spittr.tools.page.Page;
@@ -68,6 +70,36 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 				.setProjection(Projections.rowCount());
 		Long count = (long)criteria.uniqueResult();
 		return count;
+	}
+
+	@Override
+	public List<Message> getBeforeTime(Date time, Integer num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.le("tmCreated", time))
+				.addOrder(Order.desc("tmCreated"))
+				.setMaxResults(num);
+		
+		@SuppressWarnings("unchecked")
+		List<Message> messageList = (List<Message>)criteria.list();
+		
+		return messageList;
+	}
+
+	@Override
+	public List<Message> getAfterTime(Date time, Integer num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.ge("tmCteated", time))
+				.addOrder(Order.asc("tmCreated"))
+				.setMaxResults(num);
+		
+		@SuppressWarnings("unchecked")
+		List<Message> messageList = (List<Message>)criteria.list();
+		
+		return messageList;
 	}
 	
 }

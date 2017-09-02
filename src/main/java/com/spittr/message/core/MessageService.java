@@ -1,5 +1,6 @@
 package com.spittr.message.core;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,5 +38,10 @@ public interface MessageService {
 	Map<String, Object> getMessageByPageNumber(Integer pageNumber);
 	
 	Map<String, Object> getLocaleMessageByPageNumber(Long lid, Integer pageNumber);
+	
+	Map<String, Object> getMessageBeforeTime(Date time);
+	
+	Map<String, Object> getMessageAfterTime(Date time);
+
 	
 }
