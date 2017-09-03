@@ -92,7 +92,7 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Message.class)
-				.add(Restrictions.ge("tmCteated", time))
+				.add(Restrictions.ge("tmCreated", time))
 				.addOrder(Order.asc("tmCreated"))
 				.setMaxResults(num);
 		

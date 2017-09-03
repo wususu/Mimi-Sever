@@ -150,7 +150,7 @@ public class MessageController {
 	@ResponseStatus(value=HttpStatus.OK)
 	public ReturnModel getMessageAfterTime(@PathVariable Long time) {
 		if (time != null) {
-			Map<String, Object> data = messageService.getMessageBeforeTime(new Date(time));
+			Map<String, Object> data = messageService.getMessageAfterTime(new Date(time));
 			return ReturnModel.SUCCESS(data);
 		}
 		return ReturnModel.ERROR();
