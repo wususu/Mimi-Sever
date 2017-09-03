@@ -1,5 +1,6 @@
 package com.spittr.message.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -35,7 +36,7 @@ public class CommentDaoImpl extends BaseDaoHibernate5<Comment> implements Commen
 	}
 	
 	@Override
-	public List<Comment> get(Long mid, Page page){
+	public List<Comment> getByPage(Long mid, Page page){
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Comment.class)
 				.add(Restrictions.eq("mid", mid))
@@ -59,6 +60,38 @@ public class CommentDaoImpl extends BaseDaoHibernate5<Comment> implements Commen
 		
 		Long count = (Long)criteria.uniqueResult();
 		return count;
+	}
+
+	@Override
+	public List<Comment> getBeforeTime(Long mid, Date time, Integer num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Comment.class)
+				.add(Restrictions.eq("isDelete", false))
+				.add(Restrictions.eq("mid", mid))
+				.addOrder(Order.desc("tmCreated"))
+				.add(Restrictions.lt("tmCreated", time))
+				.setMaxResults(num);
+		
+		@SuppressWarnings("unchecked")
+		List<Comment> comments = (List<Comment>)criteria.list();
+		return comments;
+	}
+
+	@Override
+	public List<Comment> getAfterTime(Long mid, Date time, Integer num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Comment.class)
+				.add(Restrictions.eq("isDelete", false))
+				.add(Restrictions.eq("mid", mid))
+				.addOrder(Order.asc("tmCreated"))
+				.add(Restrictions.gt("tmCreated", time))
+				.setMaxResults(num);
+		
+		@SuppressWarnings("unchecked")
+		List<Comment> comments = (List<Comment>)criteria.list();
+		return comments;
 	}
 
 }

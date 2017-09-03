@@ -1,5 +1,6 @@
 package com.spittr.message.core;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,10 @@ public interface CommentService {
 	Comment get(Long cid);
 	
 	Map<String, Object> getByMidAndPageNumber(Long mid, Integer pageNumber);
+	
+	Map<String, Object> getCommentBeforeTime(Long mid, Date time);
+	
+	Map<String, Object> getCommentAfterTime(Long mid, Date time);
 	
 	List<Comment> getByMid(Long mid);
 	

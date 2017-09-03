@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spittr.config.StaticConfig;
 import com.spittr.message.dao.CommentDao;
 import com.spittr.message.exception.CommentNotFoundException;
 import com.spittr.message.model.Comment;
@@ -94,13 +95,14 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		Message message = messageService.get(mid);
 		MessageIssues.checkIsDelete(message);
+		message = MessageIssues.generateFakeMessage(message);
 		
 		Long items = commentDao.count(mid);
 		
 		Page page = Page.newInstance(items);
 		page.setPage(pageNumber == null ? 0: pageNumber);
 		
-		List<Comment> commentList = commentDao.get(mid, page);
+		List<Comment> commentList = commentDao.getByPage(mid, page);
 		DynamicFilter fakeFilter = DynamicFilter.getInstance()
 				.addFilteFields("user")
 				.addFilteFields("uid");
@@ -121,5 +123,49 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		List<Comment> commentList = commentDao.get(mid);
 		return commentList;
+	}
+
+	@Override
+	public Map<String, Object> getCommentBeforeTime(Long mid, Date time) {
+		// TODO Auto-generated method stub
+		Message message = messageService.get(mid);
+		MessageIssues.checkIsDelete(message);
+		message = MessageIssues.generateFakeMessage(message);
+		
+		Integer num = StaticConfig.ITEM_PER_PAGE;
+		List<Comment> comments = commentDao.getBeforeTime(mid, time, num);
+		
+		DynamicFilter fakeFilter = DynamicFilter.getInstance()
+				.addFilteFields("user")
+				.addFilteFields("uid");
+		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
+		
+		Map<String, Object> map = getMap();
+		map.put(MESSAGE, message);
+		map.put(COMMENT_LIST, comments);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getCommentAfterTime(Long mid, Date time) {
+		// TODO Auto-generated method stub
+		Message message = messageService.get(mid);
+		MessageIssues.checkIsDelete(message);
+		message = MessageIssues.generateFakeMessage(message);
+		
+		Integer num = StaticConfig.ITEM_PER_PAGE;
+		List<Comment> comments = commentDao.getAfterTime(mid, time, num);
+		
+		DynamicFilter fakeFilter = DynamicFilter.getInstance()
+				.addFilteFields("user")
+				.addFilteFields("uid");
+		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
+		
+		Map<String, Object> map = getMap();
+		map.put(MESSAGE, message);
+		map.put(COMMENT_LIST, comments);
+		
+		return map;
 	}
 }

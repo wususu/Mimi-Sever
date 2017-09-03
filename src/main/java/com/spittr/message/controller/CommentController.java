@@ -1,6 +1,7 @@
 package com.spittr.message.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ import com.spittr.user.model.User;
 @RequestMapping(value="/api/comment")
 @CrossOrigin(origins="*", maxAge=3600)
 public class CommentController {
-	
+
 	@Autowired
 	@Qualifier("messageServiceImpl")
 	private MessageService messageService;
-	
+
 	@Autowired
 	@Qualifier("commentServiceImpl")
 	private CommentService commentService;
@@ -43,7 +44,7 @@ public class CommentController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
-	
+
 	@Authorization
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public ReturnModel create(
@@ -60,7 +61,6 @@ public class CommentController {
 		MessageIssues.checkIsDelete(underMessage);
 		if (replayCommentId != null) {
 			replayComment = commentService.get(replayCommentId);
-
 			CommentIssue.checkReplayComment(replayComment, underMessage);
 		}
 		
@@ -68,20 +68,20 @@ public class CommentController {
 		
 		return ReturnModel.SUCCESS();
 	}
-	
+
 	@RequestMapping(value="/get/{cid}", method=RequestMethod.GET)
 	public ReturnModel get(
 			@PathVariable("cid") Long cid
 			) throws JsonParseException, JsonMappingException, IOException{
 		
 		Comment comment = commentService.get(cid);
-
+		
 		CommentIssue.checkIsDelete(comment);
 		comment = CommentIssue.generateFakeComment(comment);		
 		
 		return ReturnModel.SUCCESS(comment);
 	}
-	
+
 	@Authorization
 	@RequestMapping(value="/delete", method=RequestMethod.DELETE)
 	public ReturnModel delete(
@@ -95,8 +95,8 @@ public class CommentController {
 		
 		return ReturnModel.SUCCESS();
 	}
-	
-	@RequestMapping(value={"/message/{mid}/page/{pid}", "/message/{mid}"}, method=RequestMethod.GET)
+
+	@RequestMapping(value={"/message/{mid}/page/{pid}"}, method=RequestMethod.GET)
 	public ReturnModel page(
 			@PathVariable("mid") Long mid,
 			@PathVariable(value = "pid", required=false) Integer pid
@@ -105,9 +105,30 @@ public class CommentController {
 		MessageIssues.checkIsDelete(message);
 		
 		Map<String, Object> result = commentService.getByMidAndPageNumber(mid, pid);
-				
+		
 		return ReturnModel.SUCCESS(result);
 	}
 	
+	@RequestMapping(value={"/message/{mid}/tmbefore/{time}", "/message/{mid}/tmbefore", "message/{mid}"}, method=RequestMethod.GET)
+	public ReturnModel beforeTime(
+			@PathVariable("mid") Long mid,
+			@PathVariable(value="time", required=false) Long time
+			){
+		if (time == null) 
+			time = (new Date()).getTime();
+		
+		Map< String, Object> result = commentService.getCommentBeforeTime(mid, new Date(time));
+		return ReturnModel.SUCCESS(result);
+	}
+	
+	@RequestMapping(value={"/message/{mid}/tmafter/{time}"}, method=RequestMethod.GET)
+	public ReturnModel afterTime(
+			@PathVariable("mid") Long mid,
+			@PathVariable(value="time", required=false) Long time
+			){
 
+		Map<String, Object> result = commentService.getCommentAfterTime(mid, new Date(time));
+		return ReturnModel.SUCCESS(result);
+	}
+	
 }
