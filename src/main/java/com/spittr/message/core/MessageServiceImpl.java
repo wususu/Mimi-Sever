@@ -168,7 +168,9 @@ public class MessageServiceImpl implements MessageService{
 		
 		
 		Map<String, Object> map = getMap();
-		
+		map.put(BEFORE_TIME, time);
+		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
+		map.put(NUM_THIS_PAGE, messageList.size());
 		map.put(MESSAGE_LIST, messageList);
 		return map;
 	}
@@ -182,7 +184,9 @@ public class MessageServiceImpl implements MessageService{
 		messageList = MessageIssues.generateFakeMessageList(messageList);
 		
 		Map<String, Object> map = getMap();
-		
+		map.put(AFTER_TIME, time);
+		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
+		map.put(NUM_THIS_PAGE, messageList.size());
 		map.put(MESSAGE_LIST, messageList);
 		return map;
 	}

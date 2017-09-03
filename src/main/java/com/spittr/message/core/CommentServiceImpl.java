@@ -141,6 +141,9 @@ public class CommentServiceImpl implements CommentService{
 		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
 		
 		Map<String, Object> map = getMap();
+		map.put(BEFORE_TIME, time);
+		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
+		map.put(NUM_THIS_PAGE, comments.size());
 		map.put(MESSAGE, message);
 		map.put(COMMENT_LIST, comments);
 		
@@ -163,6 +166,9 @@ public class CommentServiceImpl implements CommentService{
 		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
 		
 		Map<String, Object> map = getMap();
+		map.put(AFTER_TIME, time);
+		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
+		map.put(NUM_THIS_PAGE, comments.size());
 		map.put(MESSAGE, message);
 		map.put(COMMENT_LIST, comments);
 		

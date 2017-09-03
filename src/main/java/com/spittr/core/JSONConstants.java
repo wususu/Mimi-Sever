@@ -15,6 +15,14 @@ public class JSONConstants {
 	
 	public static final String PAGE = "page";
 	
+	public static final String NUM_PER_PAGE = "numPerPage";
+	
+	public static final String NUM_THIS_PAGE = "numThisPage";
+	
+	public static final String BEFORE_TIME = "tmBefore";
+	
+	public static final String AFTER_TIME = "tmAfter";
+	
 	public static Map<String, Object> getMap(){
 		return new HashMap<String, Object>();
 	}
