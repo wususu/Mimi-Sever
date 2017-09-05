@@ -180,7 +180,7 @@
  
 		- url: /api/locale/create
 		
-		- method: POST
+		- method: GET
 		
 		- login: TRUE
 			     
@@ -554,14 +554,9 @@
 
 		- url: /api/comment/message/{mid}/page/{pageid}
 		
-		- method: DELETE
+		- method: GET
 		
-		- login: true
-		
-		- argument:
-			              |   key       |  isrequired | defaultValue |    type         |
-			--------------+-------------+-------------+--------------+-----------------+
-			  commentID   |    cid      |     true    |              |   Integer       |	
+		- login: false
 			     
 		- response(success):
 		{
@@ -739,4 +734,306 @@
 		        }
 		    }
 		}
+
+### Update (2017.9.5):  get message/comment by times 
+
+ 根据时间戳获取message/comment, {time}为Unix timestamp, 按日期从大到小排序
+
+- 获取指定时间之前的10条message
+ 
+	- url: /api/comment/message/tmbefore/{time}
+		
+	- method: GET
+		
+	- login: false
+				     
+	- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+		        "tmAfter": 1502856242000,
+		        "messageList": [
+		            {
+		                "mid": 150,
+		                "uid": 4,
+		                "lid": 24,
+		                "user": {
+		                    "uid": 4,
+		                    "uname": "testuser1",
+		                    "nname": "测试用户1",
+		                    "tmCreated": 1502693156000
+		                },
+		                "content": "吴叔叔的心情",
+		                "tmCreated": 1502856242000,
+		                "messageImageSet": [
+		                    {
+		                        "imageid": 148,
+		                        "webPath": "/images/2017-08-16/12:03:01_1502856181514.png",
+		                        "mid": 150
+		                    },
+		                    {
+		                        "imageid": 149,
+		                        "webPath": "/images/2017-08-16/12:03:06_1502856186349.png",
+		                        "mid": 150
+		                    }
+		                ],
+		                "isFake": false,
+		                "fakeName": null,
+		                "likeCount": 0,
+		                "commentCount": 0,
+		                "commentNextVal": 1,
+		                "location": {
+		                    "lid": 24,
+		                    "locale": "图书馆"
+		                }
+		            },
+		            {
+		                "mid": 168,
+		                "uid": 1,
+		                "lid": 25,
+		                "user": {
+		                    "uid": 1,
+		                    "uname": "wususu",
+		                    "nname": "wususu",
+		                    "tmCreated": 1501604357000
+		                },
+		                "content": "测试用户的测试message",
+		                "tmCreated": 1503737006000,
+		                "messageImageSet": [
+		                    {
+		                        "imageid": 166,
+		                        "webPath": "/images/2017-08-26/04:41:00_1503736860047.png",
+		                        "mid": 168
+		                    },
+		                    {
+		                        "imageid": 165,
+		                        "webPath": "/images/2017-08-26/04:40:56_1503736856930.png",
+		                        "mid": 168
+		                    }
+		                ],
+		                "isFake": false,
+		                "fakeName": null,
+		                "likeCount": 0,
+		                "commentCount": 0,
+		                "commentNextVal": 1,
+		                "location": {
+		                    "lid": 25,
+		                    "locale": "教四"
+		                }
+		            },
+		            {
+		                "mid": 222,
+		                "uid": 2,
+		                "lid": 26,
+		                "user": {
+		                    "uid": 2,
+		                    "uname": "liaojiekx",
+		                    "nname": "liaojie",
+		                    "tmCreated": 1501605274000
+		                },
+		                "content": "廖狗的测试message1",
+		                "tmCreated": 1504453626000,
+		                "messageImageSet": [],
+		                "isFake": false,
+		                "fakeName": null,
+		                "likeCount": 0,
+		                "commentCount": 22,
+		                "commentNextVal": 23,
+		                "location": {
+		                    "lid": 26,
+		                    "locale": "教三"
+		                }
+		            }
+		        ],
+		        "numThisPage": 3,
+		        "numPerPage": 15
+		    }
+		}
+
+- 获取指定日期之后的10条message
+	
+		- url: /api/message/tmafter/{time}
+		
+		- method: GET
+		
+		- login: false
+			     
+		- response(success):
+			略
+
+- 获取指定某一message下指定日期前的10条comment
+
+		- url: /api/comment/message/{mid}/tmbefore/{time}
+		
+		- method: GET
+		
+		- login: false
+			     
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+		        "commentList": [
+		            {
+		                "cid": 229,
+		                "mid": 222,
+		                "rcid": null,
+		                "commentVal": 7,
+		                "user": {
+		                    "uid": 2,
+		                    "uname": "liaojiekx",
+		                    "nname": "liaojie",
+		                    "tmCreated": 1501605274000
+		                },
+		                "content": "廖狗的评论7",
+		                "tmCreated": 1504454285000,
+		                "likeCount": 0,
+		                "isFake": false,
+		                "fakeName": null
+		            },
+		            {
+		                "cid": 228,
+		                "mid": 222,
+		                "rcid": null,
+		                "commentVal": 6,
+		                "user": {
+		                    "uid": 2,
+		                    "uname": "liaojiekx",
+		                    "nname": "liaojie",
+		                    "tmCreated": 1501605274000
+		                },
+		                "content": "廖狗的评论6",
+		                "tmCreated": 1504454282000,
+		                "likeCount": 0,
+		                "isFake": false,
+		                "fakeName": null
+		            },
+		            {
+		                "cid": 227,
+		                "mid": 222,
+		                "rcid": null,
+		                "commentVal": 5,
+		                "user": {
+		                    "uid": 2,
+		                    "uname": "liaojiekx",
+		                    "nname": "liaojie",
+		                    "tmCreated": 1501605274000
+		                },
+		                "content": "廖狗的评论5",
+		                "tmCreated": 1504454278000,
+		                "likeCount": 0,
+		                "isFake": false,
+		                "fakeName": null
+		            },
+		            {
+		                "cid": 226,
+		                "mid": 222,
+		                "rcid": null,
+		                "commentVal": 4,
+		                "user": {
+		                    "uid": 2,
+		                    "uname": "liaojiekx",
+		                    "nname": "liaojie",
+		                    "tmCreated": 1501605274000
+		                },
+		                "content": "廖狗的评论4",
+		                "tmCreated": 1504454275000,
+		                "likeCount": 0,
+		                "isFake": false,
+		                "fakeName": null
+		            },
+		            {
+		                "cid": 225,
+		                "mid": 222,
+		                "rcid": null,
+		                "commentVal": 3,
+		                "user": {
+		                    "uid": 2,
+		                    "uname": "liaojiekx",
+		                    "nname": "liaojie",
+		                    "tmCreated": 1501605274000
+		                },
+		                "content": "廖狗的评论3",
+		                "tmCreated": 1504454272000,
+		                "likeCount": 0,
+		                "isFake": false,
+		                "fakeName": null
+		            },
+		            {
+		                "cid": 224,
+		                "mid": 222,
+		                "rcid": null,
+		                "commentVal": 2,
+		                "user": {
+		                    "uid": 2,
+		                    "uname": "liaojiekx",
+		                    "nname": "liaojie",
+		                    "tmCreated": 1501605274000
+		                },
+		                "content": "廖狗的评论",
+		                "tmCreated": 1504454268000,
+		                "likeCount": 0,
+		                "isFake": false,
+		                "fakeName": null
+		            },
+		            {
+		                "cid": 223,
+		                "mid": 222,
+		                "rcid": null,
+		                "commentVal": 1,
+		                "user": {
+		                    "uid": 2,
+		                    "uname": "liaojiekx",
+		                    "nname": "liaojie",
+		                    "tmCreated": 1501605274000
+		                },
+		                "content": "廖狗的评论",
+		                "tmCreated": 1504454263000,
+		                "likeCount": 0,
+		                "isFake": false,
+		                "fakeName": null
+		            }
+		        ],
+		        "tmBefore": 1504454288000,
+		        "numThisPage": 7,
+		        "numPerPage": 15,
+		        "message": {
+		            "mid": 222,
+		            "uid": 2,
+		            "lid": 26,
+		            "user": {
+		                "uid": 2,
+		                "uname": "liaojiekx",
+		                "nname": "liaojie",
+		                "tmCreated": 1501605274000
+		            },
+		            "content": "廖狗的测试message1",
+		            "tmCreated": 1504453626000,
+		            "messageImageSet": [],
+		            "isFake": false,
+		            "fakeName": null,
+		            "likeCount": 0,
+		            "commentCount": 22,
+		            "commentNextVal": 23,
+		            "location": {
+		                "lid": 26,
+		                "locale": "教三"
+		            }
+		        }
+		    }
+		}
+
+- 获取指定某一message下指定日期后的10条comment
+
+		- url: /api/comment/message/{mid}/tmafter/{time}
+		
+		- method: GET
+		
+		- login: false
+			     
+		- response(success):
+			略
+
 
