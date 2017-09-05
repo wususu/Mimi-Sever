@@ -1,6 +1,7 @@
 package com.spittr.websocket.core;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,5 +51,12 @@ public class ChatMsgServiceImpl implements ChatMsgService{
 		// TODO Auto-generated method stub
 		ChatMsg chatMsg = chatMsgDao.getChatMsg(chatID);
 		return chatMsg;
+	}
+
+	@Override
+	public List<ChatMsg> getNotRecivedChatMsg(Long userId) {
+		// TODO Auto-generated method stub
+		List<ChatMsg> chatMsgList = chatMsgDao.getNotRecivedChatMsgList(userId);
+		return chatMsgList;
 	}
 }

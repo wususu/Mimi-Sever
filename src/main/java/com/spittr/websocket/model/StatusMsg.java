@@ -2,6 +2,11 @@ package com.spittr.websocket.model;
 
 import com.spittr.tools.ExceptionStatus;
 
+/**
+ * 状态消息包装类
+ * @author janke
+ *
+ */
 public class StatusMsg {
 
 	private String msgID;
@@ -12,6 +17,10 @@ public class StatusMsg {
 	
 	private Object content;
 	
+	public static StatusMsg OK(String msgID, Object content){
+		return new StatusMsg(msgID, ExceptionStatus.SUCCESS.getCode(), ExceptionStatus.SUCCESS.getMessage(), content);
+	}
+
 	public static StatusMsg OK(String msgID){
 		return new StatusMsg(msgID, ExceptionStatus.SUCCESS.getCode(), ExceptionStatus.SUCCESS.getMessage(), ExceptionStatus.DiY_OK_MESSAGE);
 	}

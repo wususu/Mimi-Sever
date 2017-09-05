@@ -1,5 +1,7 @@
 package com.spittr.websocket.core;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.spittr.user.model.User;
@@ -22,4 +24,6 @@ public interface ChatMsgService {
 	void recived(ChatMsg chatMsg);
 
 	ChatMsg get(String chatID);
+	
+	List<ChatMsg> getNotRecivedChatMsg(Long userId);
 }

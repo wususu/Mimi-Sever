@@ -2,6 +2,11 @@ package com.spittr.websocket.model;
 
 import java.util.Date;
 
+/**
+ * 聊天消息发送实体
+ * @author janke
+ *
+ */
 public class SendMsg {
 	
 	private String msgID;

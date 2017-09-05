@@ -16,7 +16,6 @@ public class StompHandShakeHandler extends DefaultHandshakeHandler{
 	protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) {
 		// TODO Auto-generated method stub
-		System.out.println("222");
 		return super.determineUser(request, wsHandler, attributes);
 	}
 	
