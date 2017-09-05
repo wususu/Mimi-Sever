@@ -1,5 +1,6 @@
 package com.spittr.websocket.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,6 +47,20 @@ public class UserChatController {
 	@Autowired
 	@Qualifier("chatMsgServiceImpl")
 	private ChatMsgService chatMsgService;
+	
+	@MessageMapping("/chat/init")
+	public void connectionInit(Message<Object>message){
+		User user = SocketAuthorization.getUser(message);
+		if (user != null) {
+			List<ChatMsg> chatMsgsNotRecived = chatMsgService.getNotRecivedChatMsg(user.getUid());
+			for (ChatMsg chatMsg : chatMsgsNotRecived) {
+				messageingTemplate.convertAndSendToUser(user.getUname(), "/recive", chatMsg);
+				messageingTemplate.convertAndSendToUser(String.valueOf(user.getUid()), "/recive", chatMsg);
+
+			}
+		}
+		
+	}
 	
 	/**
 	 * 聊天信息发送接口
