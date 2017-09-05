@@ -1,5 +1,7 @@
 package com.spittr.message.dao;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +93,7 @@ public class CommentDaoImpl extends BaseDaoHibernate5<Comment> implements Commen
 		
 		@SuppressWarnings("unchecked")
 		List<Comment> comments = (List<Comment>)criteria.list();
+		Collections.reverse(comments);
 		return comments;
 	}
 

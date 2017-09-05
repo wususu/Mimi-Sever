@@ -1,5 +1,7 @@
 package com.spittr.message.dao;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -97,9 +99,10 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 				.setMaxResults(num);
 		
 		@SuppressWarnings("unchecked")
-		List<Message> messageList = (List<Message>)criteria.list();
-		
-		return messageList;
+		List<Message> messages= (List<Message>)criteria.list();
+		Collections.reverse(messages);
+
+		return messages;
 	}
 	
 }
