@@ -15,7 +15,11 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spittr.user.model.User;
 
-
+/**
+ * 聊天消息存储实体
+ * @author janke
+ *
+ */
 @Entity
 @Table(name="chatMsg")
 @JsonIgnoreProperties({"isRecived", "tmRecived"})

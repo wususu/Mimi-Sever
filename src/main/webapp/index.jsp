@@ -8,6 +8,8 @@
 <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script  src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+ <script src="http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js"></script>
+
 </head>
 <body>
 <h1>Wellcome to Mimi.</h1>
@@ -21,6 +23,17 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
+
+		var SHA1 = new Hashes.SHA1;
+		var  data = {
+			  'senderId': 1,
+			  'reciverId':2,
+			  'content':'聊天内容'
+		  }
+		var srect  = SHA1.hex(data+ (new Date()).getTime());
+		data.chatId = srect;		
+		
+		console.info(data);
 		var sock;
 		var stomp;
 		$("#send").click(function () {
@@ -36,7 +49,7 @@
 				socketHandler();
 				stomp = Stomp.over(sock);
 				stomp.connect(
-						{},
+						{"src":"iamaheader"},
 						function (frame) {
 							console.info("Connected: " + frame);
 							stomp.subscribe("/topic/message", function (message) {
@@ -49,6 +62,12 @@
 								console.info("message body: "+message.body);
 								var chatMsg = JSON.parse(message.body);
 								reciveMsg(chatMsg.chatId, chatMsg.reciverId);
+							});
+							
+							stomp.subscribe("/user/queue/status", function (message) {
+								console.info("message: "+ message);
+								console.info("message body: "+message.body);
+
 							});
 						}
 				);
@@ -96,12 +115,11 @@
 		}
 		
 		function sendMsg() {
-			 stomp.send("/socket/socketServer/chatSender", {}, 
+			 stomp.send("/socket/test", {"janke-authorization":"iamaheader"}, 
 	                  JSON.stringify(
 	                		  {
-	                			  'senderId': 1,
 	                			  'reciverId':2,
-	                			  'content':'聊天啦啦啦啦啦啦啦啦啦类'
+	                			  'message':'聊天啦啦啦啦啦啦啦啦啦类'
 	                		  }
 	                		  ));
 	                		  

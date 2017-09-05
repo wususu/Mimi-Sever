@@ -1,6 +1,10 @@
 package com.spittr.websocket.model;
 
-
+/**
+ * 聊天消息确认接收发送实体
+ * @author janke
+ *
+ */
 public class ReciveMsg {
 	
 	private String msgID;

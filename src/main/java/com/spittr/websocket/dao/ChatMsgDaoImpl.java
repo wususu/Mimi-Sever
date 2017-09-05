@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.spittr.dao.BaseDaoHibernate5;
@@ -26,7 +25,7 @@ public class ChatMsgDaoImpl extends BaseDaoHibernate5<ChatMsg> implements ChatMs
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(ChatMsg.class)
 				.add(Restrictions.eq("reciverId", reciverId))
-				.add(Restrictions.eq("isRecivered", false))
+				.add(Restrictions.eq("isRecived", false))
 				.addOrder(Order.asc("time"));
 		
 		@SuppressWarnings("unchecked")

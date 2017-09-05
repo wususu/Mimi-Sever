@@ -4,7 +4,11 @@ import org.springframework.messaging.Message;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+/**
+ * 错误消息实体
+ * @author janke
+ *
+ */
 @JsonIgnoreProperties({"msg"})
 public class ErrorMsg {
 	
