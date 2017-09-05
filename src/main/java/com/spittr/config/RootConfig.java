@@ -34,7 +34,7 @@ public class RootConfig {
 	public DataSource dataSource(){
 		DriverManagerDataSource dSource = new DriverManagerDataSource();
 		dSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dSource.setUrl("jdbc:mysql://localhost:3306/srect?useUnicode=true&characterEncoding=UTF-8");
+		dSource.setUrl("jdbc:mysql://127.0.0.1:3306/srect?useUnicode=true&characterEncoding=UTF-8");
 		dSource.setUsername("root");
 		dSource.setPassword("root");
 		return dSource;
