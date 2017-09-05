@@ -27,16 +27,14 @@ import com.spittr.websocket.core.SocketAuthorization;
 import com.spittr.websocket.exception.ChatMsgReciverErrorException;
 import com.spittr.websocket.exception.ParamersErrorException;
 import com.spittr.websocket.exception.ParamersRequiredException;
-import com.spittr.websocket.exception.StompHeaderRequiredException;
 import com.spittr.websocket.model.ChatMsg;
 import com.spittr.websocket.model.ErrorMsg;
 import com.spittr.websocket.model.StatusMsg;
 import com.spittr.websocket.model.ReciveMsg;
 
-import static com.spittr.websocket.model.WebSocketConstant.*;
-
+import static com.spittr.websocket.config.WebSocketConstant.*;
 @Controller
-public class MessageHandleController {
+public class UserChatController {
 	
 	@Autowired
 	private SimpMessagingTemplate messageingTemplate;
