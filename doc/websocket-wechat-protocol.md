@@ -9,7 +9,7 @@ websocket 不同于http, 前者更为底层,即使使用子协议stomp,还是不
 
 ### 点对点聊天流程:
 唔...差不多如图
-![用户A向用户B发送消息,B成功接收的整个流程](../pic/socket_chatting_process .png)
+![用户A向用户B发送消息,B成功接收的整个流程](../pic/socket_chatting_process.png)
 
 ### 建立websocket通讯通道:
 
