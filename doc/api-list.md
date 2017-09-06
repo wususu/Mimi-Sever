@@ -741,7 +741,7 @@
 
 - 获取指定时间之前的10条message
  
-		- url: /api/comment/message/tmbefore/{time}
+		- url: /api/message/tmbefore/{time}
 
 		- method: GET
 
