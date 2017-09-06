@@ -741,115 +741,115 @@
 
 - 获取指定时间之前的10条message
  
-	- url: /api/comment/message/tmbefore/{time}
-		
-	- method: GET
-		
-	- login: false
-				     
-	- response(success):
-		{
-		    "code": 200,
-		    "message": "成功",
-		    "content": {
-		        "tmAfter": 1502856242000,
-		        "messageList": [
-		            {
-		                "mid": 150,
-		                "uid": 4,
-		                "lid": 24,
-		                "user": {
-		                    "uid": 4,
-		                    "uname": "testuser1",
-		                    "nname": "测试用户1",
-		                    "tmCreated": 1502693156000
-		                },
-		                "content": "吴叔叔的心情",
-		                "tmCreated": 1502856242000,
-		                "messageImageSet": [
-		                    {
-		                        "imageid": 148,
-		                        "webPath": "/images/2017-08-16/12:03:01_1502856181514.png",
-		                        "mid": 150
-		                    },
-		                    {
-		                        "imageid": 149,
-		                        "webPath": "/images/2017-08-16/12:03:06_1502856186349.png",
-		                        "mid": 150
-		                    }
-		                ],
-		                "isFake": false,
-		                "fakeName": null,
-		                "likeCount": 0,
-		                "commentCount": 0,
-		                "commentNextVal": 1,
-		                "location": {
-		                    "lid": 24,
-		                    "locale": "图书馆"
-		                }
-		            },
-		            {
-		                "mid": 168,
-		                "uid": 1,
-		                "lid": 25,
-		                "user": {
-		                    "uid": 1,
-		                    "uname": "wususu",
-		                    "nname": "wususu",
-		                    "tmCreated": 1501604357000
-		                },
-		                "content": "测试用户的测试message",
-		                "tmCreated": 1503737006000,
-		                "messageImageSet": [
-		                    {
-		                        "imageid": 166,
-		                        "webPath": "/images/2017-08-26/04:41:00_1503736860047.png",
-		                        "mid": 168
-		                    },
-		                    {
-		                        "imageid": 165,
-		                        "webPath": "/images/2017-08-26/04:40:56_1503736856930.png",
-		                        "mid": 168
-		                    }
-		                ],
-		                "isFake": false,
-		                "fakeName": null,
-		                "likeCount": 0,
-		                "commentCount": 0,
-		                "commentNextVal": 1,
-		                "location": {
-		                    "lid": 25,
-		                    "locale": "教四"
-		                }
-		            },
-		            {
-		                "mid": 222,
-		                "uid": 2,
-		                "lid": 26,
-		                "user": {
-		                    "uid": 2,
-		                    "uname": "liaojiekx",
-		                    "nname": "liaojie",
-		                    "tmCreated": 1501605274000
-		                },
-		                "content": "廖狗的测试message1",
-		                "tmCreated": 1504453626000,
-		                "messageImageSet": [],
-		                "isFake": false,
-		                "fakeName": null,
-		                "likeCount": 0,
-		                "commentCount": 22,
-		                "commentNextVal": 23,
-		                "location": {
-		                    "lid": 26,
-		                    "locale": "教三"
-		                }
-		            }
-		        ],
-		        "numThisPage": 3,
-		        "numPerPage": 15
-		    }
-		}
+		- url: /api/message/tmbefore/{time}
+
+		- method: GET
+
+		- login: false
+
+		- response(success):
+			{
+			    "code": 200,
+			    "message": "成功",
+			    "content": {
+				"tmAfter": 1502856242000,
+				"messageList": [
+				    {
+					"mid": 150,
+					"uid": 4,
+					"lid": 24,
+					"user": {
+					    "uid": 4,
+					    "uname": "testuser1",
+					    "nname": "测试用户1",
+					    "tmCreated": 1502693156000
+					},
+					"content": "吴叔叔的心情",
+					"tmCreated": 1502856242000,
+					"messageImageSet": [
+					    {
+						"imageid": 148,
+						"webPath": "/images/2017-08-16/12:03:01_1502856181514.png",
+						"mid": 150
+					    },
+					    {
+						"imageid": 149,
+						"webPath": "/images/2017-08-16/12:03:06_1502856186349.png",
+						"mid": 150
+					    }
+					],
+					"isFake": false,
+					"fakeName": null,
+					"likeCount": 0,
+					"commentCount": 0,
+					"commentNextVal": 1,
+					"location": {
+					    "lid": 24,
+					    "locale": "图书馆"
+					}
+				    },
+				    {
+					"mid": 168,
+					"uid": 1,
+					"lid": 25,
+					"user": {
+					    "uid": 1,
+					    "uname": "wususu",
+					    "nname": "wususu",
+					    "tmCreated": 1501604357000
+					},
+					"content": "测试用户的测试message",
+					"tmCreated": 1503737006000,
+					"messageImageSet": [
+					    {
+						"imageid": 166,
+						"webPath": "/images/2017-08-26/04:41:00_1503736860047.png",
+						"mid": 168
+					    },
+					    {
+						"imageid": 165,
+						"webPath": "/images/2017-08-26/04:40:56_1503736856930.png",
+						"mid": 168
+					    }
+					],
+					"isFake": false,
+					"fakeName": null,
+					"likeCount": 0,
+					"commentCount": 0,
+					"commentNextVal": 1,
+					"location": {
+					    "lid": 25,
+					    "locale": "教四"
+					}
+				    },
+				    {
+					"mid": 222,
+					"uid": 2,
+					"lid": 26,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000
+					},
+					"content": "廖狗的测试message1",
+					"tmCreated": 1504453626000,
+					"messageImageSet": [],
+					"isFake": false,
+					"fakeName": null,
+					"likeCount": 0,
+					"commentCount": 22,
+					"commentNextVal": 23,
+					"location": {
+					    "lid": 26,
+					    "locale": "教三"
+					}
+				    }
+				],
+				"numThisPage": 3,
+				"numPerPage": 15
+			    }
+			}
 
 - 获取指定日期之后的10条message
 	

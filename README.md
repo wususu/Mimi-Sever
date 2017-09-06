@@ -17,8 +17,10 @@
 ##### 2017.9.5 Mimi-2.0 
  - 增加用户websocket通讯功能
  - 修复了可获端获取message重复出现的bug
- - 新增了根据Unix timestamp 获取message/comment的接口
-
+ - 新增了根据Unix timestamp 获取message/comment的接口, api文档已更新
+ - 应用测试地址: http://104.224.174.146:8080/Mimi-2.0/
+ - [websocket客户端连接协议](./doc/websocket-wechat-protocol.md) (明天写,逃
+ 
 ## TODO:
 - [ ] `message` `comment`点赞
 - [ ] 用户详细资料,头像
