@@ -29,20 +29,20 @@ public class CommentIssue {
 	
 	public static Comment generateIsFake(Comment comment, Boolean isFake){
 		if (isFake != null && isFake.equals(true)) {
-			comment.setIsFake(true);
+			comment.setFake(true);
 			comment.setFakeName("匿名");
 		}
 		return comment;
 	}
 	
 	public static void checkIsDelete(Comment comment) {
-		if (comment == null || comment.getIsDelete()) 
+		if (comment == null || comment.isDelete()) 
 			throw new CommentNotFoundException();
 		
 	}
 	
 	public static  Comment generateFakeComment(Comment comment){
-		if (comment.getIsFake()) {}
+		if (comment.isFake()) {}
 			try {
 				comment = (Comment)DynamicFilter.getInstance().addFilteFields("user").filter(comment);
 			} catch (JsonParseException e) {
@@ -60,7 +60,7 @@ public class CommentIssue {
 	}
 	
 	public static  Comment generateFakeComment(Comment comment, DynamicFilter jsonObjFilter){
-		if (comment.getIsFake()) {
+		if (comment.isFake()) {
 			try {
 				comment = (Comment)jsonObjFilter.filter(comment);
 			} catch (JsonParseException e) {

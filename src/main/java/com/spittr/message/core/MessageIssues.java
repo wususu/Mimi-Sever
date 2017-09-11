@@ -27,20 +27,20 @@ public class MessageIssues {
 	
 	public static Message generateFakeName(Boolean isFake, Message message){
 		if (isFake != null && isFake.equals(true)){
-			message.setIsFake(true);
+			message.setFake(true);
 			message.setFakeName("匿名");
 		}
 		return message;
 	}
 	
 	public static Boolean checkIsDelete(Message message) throws MessageNotFoundException{
-		if ( message.getIsDelete()) 
+		if ( message.isDelete()) 
 			throw new MessageNotFoundException();
 		return true;
 	}
 	
 	public static Message generateFakeMessage(Message message){
-		if (!message.getIsFake()) {
+		if (!message.isFake()) {
 			return message;
 		}
 		try {

@@ -5,6 +5,10 @@ import java.util.Map;
 
 public class JSONConstants {
 
+	private JSONConstants(){
+		throw new AssertionError();
+	}
+	
 	public static final String MESSAGE_LIST = "messageList";
 	
 	public static final String COMMENT_LIST = "commentList";
@@ -22,6 +26,11 @@ public class JSONConstants {
 	public static final String BEFORE_TIME = "tmBefore";
 	
 	public static final String AFTER_TIME = "tmAfter";
+	
+	public static final String ISLIKE = "isLike";
+	
+	public static final String LIKE_COUNT = "likeCount";
+
 	
 	public static Map<String, Object> getMap(){
 		return new HashMap<String, Object>();

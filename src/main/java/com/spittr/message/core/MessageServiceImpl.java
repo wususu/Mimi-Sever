@@ -81,10 +81,10 @@ public class MessageServiceImpl implements MessageService{
 		if (message == null) 
 			throw new NullPointerException();
 		
-		if (message.getIsDelete()) 
+		if (message.isDelete()) 
 			throw new MessageNotFoundException();
 		
-		message.setIsDelete(true);
+		message.setDelete(true);
 		message.setTmDelete(new Date());
 		
 		messageDao.update(message);

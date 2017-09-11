@@ -12,7 +12,6 @@ import org.hibernate.annotations.FetchMode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spittr.image.model.MessageImage;
 import com.spittr.location.model.Location;
-import com.spittr.message.core.MessageService;
 import com.spittr.user.model.User;
 
 @Entity
@@ -27,11 +26,11 @@ public class Message implements Serializable{
 
 	@Id
 	@GeneratedValue
-	private Long mid;
+	private long mid;
 	
-	private Long uid;
+	private long uid;
 	
-	private Long lid;
+	private long lid;
 	
 	@ManyToOne
 	@JoinColumn(name="user", updatable=false)
@@ -50,17 +49,20 @@ public class Message implements Serializable{
 	@Fetch(FetchMode.SELECT)
 	private Set<MessageImage> messageImageSet;
 	
-	private Boolean isDelete;
+	private boolean isDelete;
 	
-	private Boolean isFake;
+	private boolean isFake;
 	
 	private String fakeName;
 	
-	private Long likeCount;
+	private long likeCount;
 	
-	private Long commentCount;
+	@Transient
+	private Like like;
 	
-	private Long commentNextVal;
+	private long commentCount;
+	
+	private long commentNextVal;
 	
 	@ManyToOne
 	@JoinColumn(name="location")
@@ -82,10 +84,10 @@ public class Message implements Serializable{
 		this(content, user, user.getUid(),localtion!=null?localtion.getLid() : null,  localtion, (long)0, (long)0, (long)1, false, null, new Date(/* now */), false, null);
 	}
 	
-	public Message(String content, User user, Long uid,Long lid, Location location,
-			Long likeCount, Long commentCount, Long commentNextVal,
-			Boolean isFake, String fakeName, 
-			Date tmCreated,Boolean isDelete, Date tmDelete){
+	public Message(String content, User user, long uid,long lid, Location location,
+			long likeCount, long commentCount, long commentNextVal,
+			boolean isFake, String fakeName, 
+			Date tmCreated,boolean isDelete, Date tmDelete){
 		this.content = content;
 		this.user = user;
 		this.uid = uid;
@@ -101,12 +103,36 @@ public class Message implements Serializable{
 		this.tmDelete = tmDelete;
 	}
 
-	public Long getMid() {
+	public long getMid() {
 		return mid;
 	}
 
-	public void setMid(Long mid) {
+	public void setMid(long mid) {
 		this.mid = mid;
+	}
+
+	public long getUid() {
+		return uid;
+	}
+
+	public void setUid(long uid) {
+		this.uid = uid;
+	}
+
+	public long getLid() {
+		return lid;
+	}
+
+	public void setLid(long lid) {
+		this.lid = lid;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getContent() {
@@ -133,44 +159,28 @@ public class Message implements Serializable{
 		this.tmDelete = tmDelete;
 	}
 
-	public Boolean getIsDelete() {
+	public Set<MessageImage> getMessageImageSet() {
+		return messageImageSet;
+	}
+
+	public void setMessageImageSet(Set<MessageImage> messageImageSet) {
+		this.messageImageSet = messageImageSet;
+	}
+
+	public boolean isDelete() {
 		return isDelete;
 	}
 
-	public void setIsDelete(Boolean isDelete) {
+	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
 
-	public Long getUid() {
-		return uid;
-	}
-
-	public void setUid(Long uid) {
-		this.uid = uid;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Boolean getIsFake() {
+	public boolean isFake() {
 		return isFake;
 	}
 
-	public void setIsFake(Boolean isFake) {
+	public void setFake(boolean isFake) {
 		this.isFake = isFake;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
 	}
 
 	public String getFakeName() {
@@ -181,60 +191,63 @@ public class Message implements Serializable{
 		this.fakeName = fakeName;
 	}
 
-	public Long getLikeCount() {
+	public long getLikeCount() {
 		return likeCount;
 	}
 
-	public void setLikeCount(Long likeCount) {
+	public void setLikeCount(long likeCount) {
 		this.likeCount = likeCount;
 	}
 
-	public Long getCommentCount() {
+	public Like getLike() {
+		return like;
+	}
+
+	public void setLike(Like like) {
+		this.like = like;
+	}
+
+	public long getCommentCount() {
 		return commentCount;
 	}
 
-	public void setCommentCount(Long commentCount) {
+	public void setCommentCount(long commentCount) {
 		this.commentCount = commentCount;
 	}
-	
-	public Set<MessageImage> getMessageImageSet() {
-		return messageImageSet;
-	}
 
-	public void setMessageImageSet(Set<MessageImage> messageImageSet) {
-		this.messageImageSet = messageImageSet;
-	}
-
-	public Long getCommentNextVal() {
+	public long getCommentNextVal() {
 		return commentNextVal;
 	}
 
-	public void setCommentNextVal(Long commentNextVal) {
+	public void setCommentNextVal(long commentNextVal) {
 		this.commentNextVal = commentNextVal;
 	}
 
-	@Override
-	public String toString() {
-		return "Message [mid=" + mid + ", uid=" + uid + ", user=" + user + ", content=" + content + ", tmCreated="
-				+ tmCreated + ", tmDelete=" + tmDelete + ", isDelete=" + isDelete + ", isFake=" + isFake + ", fakeName="
-				+ fakeName + ", likeCount=" + likeCount + ", commentCount=" + commentCount + ", location=" + location
-				+ "]";
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (int) (commentCount ^ (commentCount >>> 32));
+		result = prime * result + (int) (commentNextVal ^ (commentNextVal >>> 32));
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((fakeName == null) ? 0 : fakeName.hashCode());
-		result = prime * result + ((isDelete == null) ? 0 : isDelete.hashCode());
-		result = prime * result + ((isFake == null) ? 0 : isFake.hashCode());
+		result = prime * result + (isDelete ? 1231 : 1237);
+		result = prime * result + (isFake ? 1231 : 1237);
+		result = prime * result + (int) (lid ^ (lid >>> 32));
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((messageImageSet == null) ? 0 : messageImageSet.hashCode());
-		result = prime * result + ((mid == null) ? 0 : mid.hashCode());
+		result = prime * result + (int) (mid ^ (mid >>> 32));
 		result = prime * result + ((tmCreated == null) ? 0 : tmCreated.hashCode());
 		result = prime * result + ((tmDelete == null) ? 0 : tmDelete.hashCode());
-		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
+		result = prime * result + (int) (uid ^ (uid >>> 32));
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -248,6 +261,10 @@ public class Message implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Message other = (Message) obj;
+		if (commentCount != other.commentCount)
+			return false;
+		if (commentNextVal != other.commentNextVal)
+			return false;
 		if (content == null) {
 			if (other.content != null)
 				return false;
@@ -258,15 +275,11 @@ public class Message implements Serializable{
 				return false;
 		} else if (!fakeName.equals(other.fakeName))
 			return false;
-		if (isDelete == null) {
-			if (other.isDelete != null)
-				return false;
-		} else if (!isDelete.equals(other.isDelete))
+		if (isDelete != other.isDelete)
 			return false;
-		if (isFake == null) {
-			if (other.isFake != null)
-				return false;
-		} else if (!isFake.equals(other.isFake))
+		if (isFake != other.isFake)
+			return false;
+		if (lid != other.lid)
 			return false;
 		if (location == null) {
 			if (other.location != null)
@@ -278,10 +291,7 @@ public class Message implements Serializable{
 				return false;
 		} else if (!messageImageSet.equals(other.messageImageSet))
 			return false;
-		if (mid == null) {
-			if (other.mid != null)
-				return false;
-		} else if (!mid.equals(other.mid))
+		if (mid != other.mid)
 			return false;
 		if (tmCreated == null) {
 			if (other.tmCreated != null)
@@ -293,10 +303,7 @@ public class Message implements Serializable{
 				return false;
 		} else if (!tmDelete.equals(other.tmDelete))
 			return false;
-		if (uid == null) {
-			if (other.uid != null)
-				return false;
-		} else if (!uid.equals(other.uid))
+		if (uid != other.uid)
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -306,11 +313,12 @@ public class Message implements Serializable{
 		return true;
 	}
 
-	public Long getLid() {
-		return lid;
-	}
-
-	public void setLid(Long lid) {
-		this.lid = lid;
+	@Override
+	public String toString() {
+		return "Message [mid=" + mid + ", uid=" + uid + ", lid=" + lid + ", user=" + user + ", content=" + content
+				+ ", tmCreated=" + tmCreated + ", tmDelete=" + tmDelete + ", messageImageSet=" + messageImageSet
+				+ ", isDelete=" + isDelete + ", isFake=" + isFake + ", fakeName=" + fakeName + ", likeCount="
+				+ likeCount +  ", commentCount=" + commentCount + ", commentNextVal=" + commentNextVal
+				+ ", location=" + location + "]";
 	}
 }

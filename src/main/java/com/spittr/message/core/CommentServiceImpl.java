@@ -69,10 +69,10 @@ public class CommentServiceImpl implements CommentService{
 	@Transactional
 	public void delete(Comment comment) {
 		// TODO Auto-generated method stub
-		if (comment.getIsDelete()) 
+		if (comment.isDelete()) 
 			throw new CommentNotFoundException();
 	
-		comment.setIsDelete(true);
+		comment.setDelete(true);
 		comment.setTmDelete(new Date());
 		
 		commentDao.update(comment);
@@ -85,7 +85,7 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		List<Comment> commentList = getByMid(message.getMid());
 		for (Comment comment : commentList) {
-			if (!comment.getIsDelete()) 
+			if (!comment.isDelete()) 
 				delete(comment);
 		}
 	}
