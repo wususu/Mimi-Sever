@@ -46,59 +46,46 @@ public class LikeServiceImpl implements LikeService{
 	}
 
 	@Override
+	public Map<String, Object> likee(Like like){
+		
+		if (like == null) 
+			throw new NullPointerException("like");
+		
+		return like.isLike() == true ? dislike(like) : like(like);
+	}
+	
 	@Transactional
-	public Map<String, Object> like(Like like) {
-		// TODO Auto-generated method stub
+	private Map<String, Object> like(Like like) {
 
 		Map<String, Object> result = getMap();
+		Message message = like.getMessage();
 		
-		if (like == null) {
-			throw new NullPointerException();
-		}
+		message.setLikeCount(message.getLikeCount() + 1);
+		messageDao.update(message);
+		like.setLike(true);
+		likeDao.update(like);
 		
-		if (like.isLike() == true) 
-			result.put(LIKE_COUNT,like.getMessage().getLikeCount());
-		
-		
-		if (like.isLike() == false){
-			Message message = like.getMessage();
-			message.setLikeCount(message.getLikeCount() + 1);
-			messageDao.update(message);
-			like.setLike(true);
-			likeDao.update(like);
-			result.put(LIKE_COUNT, message.getLikeCount());
-		}
+		result.put(LIKE_COUNT, message.getLikeCount());
 		result.put(ISLIKE, like.isLike());
 
 		return result;
 	}
 
-	@Override
 	@Transactional
-	public Map<String, Object> dislike(Like like) {
-		// TODO Auto-generated method stub
-		Map<String, Object> result = getMap();
-		
-		if (like == null) {
-			throw new NullPointerException();
-		}
-		
-		if (like.isLike() == false) 
-			result.put(LIKE_COUNT,like.getMessage().getLikeCount());
+	private Map<String, Object> dislike(Like like) {
 
+		Map<String, Object> result = getMap();
+		Message message = like.getMessage();
 		
-		if (like.isLike() == true) {
-			Message message = like.getMessage();
-			if (message.getLikeCount() < 1) {
-				throw new LikeCountErrorException();
-			}
-			message.setLikeCount( message.getLikeCount() - 1);
-			messageDao.update(message);
-			like.setLike(false);
-			likeDao.update(like);
-			result.put(LIKE_COUNT, message.getLikeCount());
-		}
+		if (message.getLikeCount() < 1) 
+			throw new LikeCountErrorException();
 		
+		message.setLikeCount( message.getLikeCount() - 1);
+		messageDao.update(message);
+		like.setLike(false);
+		likeDao.update(like);
+		
+		result.put(LIKE_COUNT, message.getLikeCount());
 		result.put(ISLIKE, like.isLike());
 		
 		return result;

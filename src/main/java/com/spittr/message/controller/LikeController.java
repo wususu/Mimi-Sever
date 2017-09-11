@@ -22,7 +22,7 @@ public class LikeController {
 	private MessageService messageService;
 	
 	@Authorization
-	@RequestMapping(value="/like/{mid}", method=RequestMethod.POST)
+	@RequestMapping(value="/likee/{mid}", method=RequestMethod.POST)
 	public ReturnModel like(
 			@PathVariable Long mid,
 			@AutoCurrentUser User user
@@ -34,27 +34,8 @@ public class LikeController {
 		if (like == null) {
 			like = LikeService.newInstance(message, user);
 			likeService.create(like);
-			System.out.println("after create: " + like);
 		}
 		
-		return ReturnModel.SUCCESS(likeService.like(like));
+		return ReturnModel.SUCCESS(likeService.likee(like));
 	}
-	
-	@Authorization
-	@RequestMapping(value="/dislike/{mid}", method=RequestMethod.POST)
-	public ReturnModel disLike(
-			@AutoCurrentUser User user,
-			@PathVariable Long mid
-			){
-		
-		Message message = messageService.get(mid);
-		Like like = likeService.get(message, user);
-		if (like == null) {
-			like = LikeService.newInstance(message, user);
-			likeService.create(like);
-		}
-
-		return ReturnModel.SUCCESS(likeService.dislike(like));
-	}
-	
 }

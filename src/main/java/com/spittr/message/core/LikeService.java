@@ -18,7 +18,5 @@ public interface LikeService {
 	
 	Like get(Message message, User user);
 	
-	Map<String, Object>  like(Like like);
-	
-	Map<String, Object>  dislike(Like like);
+	Map<String, Object>  likee(Like like);
 }
