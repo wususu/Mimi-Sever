@@ -11,11 +11,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spittr.user.model.User;
 
 @Entity(name="likees")
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"message", "user"}))
-public class Like implements Serializable{
+@JsonIgnoreProperties({"message", "user"})
+public class Likee implements Serializable{
 
 	/**
 	 * 
@@ -43,15 +45,15 @@ public class Like implements Serializable{
 	@JoinColumn(name="user", nullable=false, updatable=false)
 	private User user;
 
-	public Like() {
+	public Likee() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Like(Message message, User user){
+	public Likee(Message message, User user){
 		this(message.getMid(), user.getUid(), false, message, user);
 	}
 	
-	public Like(long mid, long uid, boolean isLike, Message message, User user) {
+	public Likee(long mid, long uid, boolean isLike, Message message, User user) {
 		super();
 		this.mid = mid;
 		this.uid = uid;
@@ -101,8 +103,39 @@ public class Like implements Serializable{
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (isLike ? 1231 : 1237);
+		result = prime * result + (int) (mid ^ (mid >>> 32));
+		result = prime * result + (int) (uid ^ (uid >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Likee other = (Likee) obj;
+		if (id != other.id)
+			return false;
+		if (isLike != other.isLike)
+			return false;
+		if (mid != other.mid)
+			return false;
+		if (uid != other.uid)
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
-		return "Like [id=" + id + ", mid=" + mid + ", uid=" + uid + ", isLike=" + isLike + ", user=" + user + "]";
+		return "Likee [id=" + id + ", isLike=" + isLike + "]";
 	}
 	
 }

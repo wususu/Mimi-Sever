@@ -14,8 +14,10 @@ import com.spittr.image.dao.MessageImageDao;
 import com.spittr.image.model.MessageImage;
 import com.spittr.message.dao.MessageDao;
 import com.spittr.message.exception.MessageNotFoundException;
+import com.spittr.message.model.Likee;
 import com.spittr.message.model.Message;
 import com.spittr.tools.page.Page;
+import com.spittr.user.model.User;
 
 import java.util.List;
 
@@ -32,6 +34,10 @@ public class MessageServiceImpl implements MessageService{
 	@Autowired
 	@Qualifier("commentServiceImpl")
 	private CommentService commentService;
+	
+	@Autowired
+	@Qualifier("likeeServiceImpl")
+	private LikeeService likeeService;
 	
 	@Autowired
 	@Qualifier("messageImageDaoImpl")
@@ -158,14 +164,16 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public Map<String, Object> getMessageBeforeTime(Date time) {
+	public Map<String, Object> getMessageBeforeTime(Date time, User user) {
 		// TODO Auto-generated method stub
 		Integer num = StaticConfig.ITEM_PER_PAGE;
 		List< Message> messageList = messageDao.getBeforeTime(time, num);
-		System.out.println(messageList);
 
 		messageList = MessageIssues.generateFakeMessageList(messageList);
 		
+		if (user != null) 
+			for (int i=0; i<messageList.size(); i++) 
+				generateLikee(messageList.get(i), user);
 		
 		Map<String, Object> map = getMap();
 		map.put(BEFORE_TIME, time);
@@ -176,12 +184,15 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public Map<String, Object> getMessageAfterTime(Date time) {
+	public Map<String, Object> getMessageAfterTime(Date time, User user) {
 		// TODO Auto-generated method stub
 		Integer num = StaticConfig.ITEM_PER_PAGE;
 		List< Message> messageList = messageDao.getAfterTime(time, num);
-		System.out.println(messageList);
 		messageList = MessageIssues.generateFakeMessageList(messageList);
+		
+		if (user != null) 
+			for (int i=0; i<messageList.size(); i++) 
+				generateLikee(messageList.get(i), user);
 		
 		Map<String, Object> map = getMap();
 		map.put(AFTER_TIME, time);
@@ -190,5 +201,18 @@ public class MessageServiceImpl implements MessageService{
 		map.put(MESSAGE_LIST, messageList);
 		return map;
 	}
+	
+	private void generateLikee(Message message, User user){
+		if (message == null )
+			return ;
+		if (message.getLikeCount() == 0) 
+			return ;
+		
+		Likee likee = likeeService.get(message, user);
+		
+		if (likee == null) 
+			return ;
 
+		message.setLikee(likee);
+	}
 }

@@ -39,9 +39,9 @@ public interface MessageService {
 	
 	Map<String, Object> getLocaleMessageByPageNumber(Long lid, Integer pageNumber);
 	
-	Map<String, Object> getMessageBeforeTime(Date time);
+	Map<String, Object> getMessageBeforeTime(Date time, User user);
 	
-	Map<String, Object> getMessageAfterTime(Date time);
+	Map<String, Object> getMessageAfterTime(Date time, User user);
 
 	
 }

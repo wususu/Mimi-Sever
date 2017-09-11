@@ -11,11 +11,11 @@ import com.spittr.user.model.User;
 
 @RestController
 @RequestMapping(value="/api/message")
-public class LikeController {
+public class LikeeController {
 
 	@Autowired
-	@Qualifier("likeServiceImpl")
-	private LikeService likeService;
+	@Qualifier("likeeServiceImpl")
+	private LikeeService likeService;
 	
 	@Autowired
 	@Qualifier("messageServiceImpl")
@@ -30,9 +30,9 @@ public class LikeController {
 		
 		Message message = messageService.get(mid);
 		
-		Like like = likeService.get(message, user);
+		Likee like = likeService.get(message, user);
 		if (like == null) {
-			like = LikeService.newInstance(message, user);
+			like = LikeeService.newInstance(message, user);
 			likeService.create(like);
 		}
 		

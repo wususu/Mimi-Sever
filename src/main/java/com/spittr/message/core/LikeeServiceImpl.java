@@ -8,19 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.spittr.core.JSONConstants.*;
-import com.spittr.message.dao.LikeDao;
+import com.spittr.message.dao.LikeeDao;
 import com.spittr.message.dao.MessageDao;
 import com.spittr.message.exception.LikeCountErrorException;
-import com.spittr.message.model.Like;
+import com.spittr.message.model.Likee;
 import com.spittr.message.model.Message;
 import com.spittr.user.model.User;
 
 @Service
-public class LikeServiceImpl implements LikeService{
+public class LikeeServiceImpl implements LikeeService{
 
 	@Autowired
-	@Qualifier("likeDaoImpl")
-	private LikeDao likeDao;
+	@Qualifier("likeeDaoImpl")
+	private LikeeDao likeeDao;
 	
 	@Autowired
 	@Qualifier("messageDaoImpl")
@@ -28,25 +28,25 @@ public class LikeServiceImpl implements LikeService{
 	
 
 	@Override
-	public void create(Like entity) {
+	public void create(Likee entity) {
 		// TODO Auto-generated method stub
-		likeDao.create(entity);
+		likeeDao.create(entity);
 	}
 	
 	@Override
-	public Like get(long mid, long uid) {
+	public Likee get(long mid, long uid) {
 		// TODO Auto-generated method stub
-		return likeDao.get(mid, uid);
+		return likeeDao.get(mid, uid);
 	}
 
 	@Override
-	public Like get(Message message, User user) {
+	public Likee get(Message message, User user) {
 		// TODO Auto-generated method stub
-		return likeDao.get(message, user);
+		return likeeDao.get(message, user);
 	}
 
 	@Override
-	public Map<String, Object> likee(Like like){
+	public Map<String, Object> likee(Likee like){
 		
 		if (like == null) 
 			throw new NullPointerException("like");
@@ -55,7 +55,7 @@ public class LikeServiceImpl implements LikeService{
 	}
 	
 	@Transactional
-	private Map<String, Object> like(Like like) {
+	private Map<String, Object> like(Likee like) {
 
 		Map<String, Object> result = getMap();
 		Message message = like.getMessage();
@@ -63,7 +63,7 @@ public class LikeServiceImpl implements LikeService{
 		message.setLikeCount(message.getLikeCount() + 1);
 		messageDao.update(message);
 		like.setLike(true);
-		likeDao.update(like);
+		likeeDao.update(like);
 		
 		result.put(LIKE_COUNT, message.getLikeCount());
 		result.put(ISLIKE, like.isLike());
@@ -72,7 +72,7 @@ public class LikeServiceImpl implements LikeService{
 	}
 
 	@Transactional
-	private Map<String, Object> dislike(Like like) {
+	private Map<String, Object> dislike(Likee like) {
 
 		Map<String, Object> result = getMap();
 		Message message = like.getMessage();
@@ -83,7 +83,7 @@ public class LikeServiceImpl implements LikeService{
 		message.setLikeCount( message.getLikeCount() - 1);
 		messageDao.update(message);
 		like.setLike(false);
-		likeDao.update(like);
+		likeeDao.update(like);
 		
 		result.put(LIKE_COUNT, message.getLikeCount());
 		result.put(ISLIKE, like.isLike());

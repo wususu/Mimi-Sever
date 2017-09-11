@@ -58,7 +58,7 @@ public class Message implements Serializable{
 	private long likeCount;
 	
 	@Transient
-	private Like like;
+	private Likee likee;
 	
 	private long commentCount;
 	
@@ -199,12 +199,12 @@ public class Message implements Serializable{
 		this.likeCount = likeCount;
 	}
 
-	public Like getLike() {
-		return like;
+	public Likee getLikee() {
+		return likee;
 	}
 
-	public void setLike(Like like) {
-		this.like = like;
+	public void setLikee(Likee likee) {
+		this.likee = likee;
 	}
 
 	public long getCommentCount() {
@@ -318,7 +318,9 @@ public class Message implements Serializable{
 		return "Message [mid=" + mid + ", uid=" + uid + ", lid=" + lid + ", user=" + user + ", content=" + content
 				+ ", tmCreated=" + tmCreated + ", tmDelete=" + tmDelete + ", messageImageSet=" + messageImageSet
 				+ ", isDelete=" + isDelete + ", isFake=" + isFake + ", fakeName=" + fakeName + ", likeCount="
-				+ likeCount +  ", commentCount=" + commentCount + ", commentNextVal=" + commentNextVal
-				+ ", location=" + location + "]";
+				+ likeCount + ", likee=" + likee + ", commentCount=" + commentCount + ", commentNextVal="
+				+ commentNextVal + ", location=" + location + "]";
 	}
+
+
 }

@@ -138,9 +138,12 @@ public class MessageController {
 	
 	@RequestMapping(value="/tmbefore/{time}", method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
-	public ReturnModel getMessageBeforeTime(@PathVariable Long time){
+	public ReturnModel getMessageBeforeTime(
+			@PathVariable Long time,
+			@AutoCurrentUser User user
+			){
 		if (time != null) {
-			Map<String, Object> data = messageService.getMessageBeforeTime(new Date(time));
+			Map<String, Object> data = messageService.getMessageBeforeTime(new Date(time), user);
 			return ReturnModel.SUCCESS(data);
 		}
 		return ReturnModel.ERROR();
@@ -148,9 +151,12 @@ public class MessageController {
 	
 	@RequestMapping(value="/tmafter/{time}", method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
-	public ReturnModel getMessageAfterTime(@PathVariable Long time) {
+	public ReturnModel getMessageAfterTime(
+			@PathVariable Long time,
+			@AutoCurrentUser User user
+			) {
 		if (time != null) {
-			Map<String, Object> data = messageService.getMessageAfterTime(new Date(time));
+			Map<String, Object> data = messageService.getMessageAfterTime(new Date(time), user);
 			return ReturnModel.SUCCESS(data);
 		}
 		return ReturnModel.ERROR();

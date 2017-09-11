@@ -146,8 +146,7 @@ public class MessageImage implements Serializable{
 	@Override
 	public String toString() {
 		return "MessageImage [imageid=" + imageid + ", realPath=" + realPath + ", webPath=" + webPath + ", tmCreated="
-				+ tmCreated + ", isDelete=" + isDelete + ", tmDelete=" + tmDelete + ", mid=" + mid + ", message="
-				+ message + "]";
+				+ tmCreated + ", isDelete=" + isDelete + ", tmDelete=" + tmDelete + ", mid=" + mid + "]";
 	}
 	
 }
