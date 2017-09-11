@@ -1,6 +1,10 @@
 package com.spittr.websocket.config;
 
 public class WebSocketConstant {
+	
+	private WebSocketConstant() {
+		throw new AssertionError();
+	}
 
 	public static final String CHATID = "msgID";
 	

@@ -8,6 +8,10 @@ import com.spittr.user.model.User;
 
 public class WSSession {
 	
+	private WSSession(){
+		throw new AssertionError();
+	}
+	
 	private static final Set<User> USER_SESSION;
 	
 	static{

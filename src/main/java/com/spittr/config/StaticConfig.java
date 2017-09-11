@@ -2,6 +2,10 @@ package com.spittr.config;
 
 
 public class StaticConfig {
+	
+	private StaticConfig(){
+		throw new AssertionError();
+	}
 
 	public static final Integer ITEM_PER_PAGE = 15;
 	

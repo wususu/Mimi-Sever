@@ -57,7 +57,7 @@ public class ChatMsg implements Serializable{
 	private Long reciverId;
 	
 	@Column(nullable=false)
-	private Boolean isRecived;
+	private boolean isRecived;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date tmRecived;
