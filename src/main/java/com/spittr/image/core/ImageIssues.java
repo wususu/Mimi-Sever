@@ -50,7 +50,7 @@ public class ImageIssues {
 			throw new ImageNotFoundException();
 		
 		if (messageImage.getMessage() != null || messageImage.getMid() != null) {
-			if (messageImage.getMessage().getIsDelete()) {
+			if (messageImage.getMessage().isDelete()) {
 				messageImage.setIsDelete(true);
 				messageImage.setTmDelete(new Date());
 				throw new ImageNotFoundException(); 

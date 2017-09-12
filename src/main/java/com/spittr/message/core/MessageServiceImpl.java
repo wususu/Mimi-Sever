@@ -162,18 +162,10 @@ public class MessageServiceImpl implements MessageService{
 		map.put(MESSAGE_LIST, messageList);
 		return map;
 	}
-
+	
 	@Override
-	public Map<String, Object> getMessageBeforeTime(Date time, User user) {
-		// TODO Auto-generated method stub
-		Integer num = StaticConfig.ITEM_PER_PAGE;
-		List< Message> messageList = messageDao.getBeforeTime(time, num);
-
-		messageList = MessageIssues.generateFakeMessageList(messageList);
-		
-		if (user != null) 
-			for (int i=0; i<messageList.size(); i++) 
-				generateLikee(messageList.get(i), user);
+	public Map<String, Object> beforeTimeMessage(Date time, User user){
+		List<Message> messageList =  user == null? getMessageBeforeTime(time) : getMessageBeforeTime(time, user);
 		
 		Map<String, Object> map = getMap();
 		map.put(BEFORE_TIME, time);
@@ -183,16 +175,29 @@ public class MessageServiceImpl implements MessageService{
 		return map;
 	}
 
-	@Override
-	public Map<String, Object> getMessageAfterTime(Date time, User user) {
+	public List<Message> getMessageBeforeTime(Date time, User user) {
 		// TODO Auto-generated method stub
-		Integer num = StaticConfig.ITEM_PER_PAGE;
-		List< Message> messageList = messageDao.getAfterTime(time, num);
-		messageList = MessageIssues.generateFakeMessageList(messageList);
+		List<Message> messageList = getMessageBeforeTime(time);
 		
 		if (user != null) 
 			for (int i=0; i<messageList.size(); i++) 
 				generateLikee(messageList.get(i), user);
+				
+		return messageList;
+	}
+	
+	public List<Message> getMessageBeforeTime(Date time){
+		Integer num = StaticConfig.ITEM_PER_PAGE;
+		List< Message> messageList = messageDao.getBeforeTime(time, num);
+
+		messageList = MessageIssues.generateFakeMessageList(messageList);
+		
+		return messageList;
+	}
+
+	@Override
+	public Map<String, Object> afterTimeMessage(Date time, User user){
+		List<Message> messageList = user == null? getMessageAfterTime(time) : getMessageAfterTime(time, user);
 		
 		Map<String, Object> map = getMap();
 		map.put(AFTER_TIME, time);
@@ -200,6 +205,25 @@ public class MessageServiceImpl implements MessageService{
 		map.put(NUM_THIS_PAGE, messageList.size());
 		map.put(MESSAGE_LIST, messageList);
 		return map;
+	}
+	
+	public List<Message> getMessageAfterTime(Date time, User user) {
+		// TODO Auto-generated method stub
+		List<Message> messageList = getMessageAfterTime(time);
+		
+		if (user != null) 
+			for (int i=0; i<messageList.size(); i++) 
+				generateLikee(messageList.get(i), user);
+
+		return messageList;
+	}
+	
+	public List<Message> getMessageAfterTime(Date time){
+		Integer num = StaticConfig.ITEM_PER_PAGE;
+		List< Message> messageList = messageDao.getAfterTime(time, num);
+		
+		messageList = MessageIssues.generateFakeMessageList(messageList);
+		return messageList;
 	}
 	
 	private void generateLikee(Message message, User user){

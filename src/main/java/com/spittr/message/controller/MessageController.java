@@ -142,24 +142,20 @@ public class MessageController {
 			@PathVariable Long time,
 			@AutoCurrentUser User user
 			){
-		if (time != null) {
-			Map<String, Object> data = messageService.getMessageBeforeTime(new Date(time), user);
-			return ReturnModel.SUCCESS(data);
-		}
-		return ReturnModel.ERROR();
+		Map<String, Object> data = messageService.beforeTimeMessage(new Date(time), user);
+		return ReturnModel.SUCCESS(data);
 	}
 	
 	@RequestMapping(value="/tmafter/{time}", method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
 	public ReturnModel getMessageAfterTime(
-			@PathVariable Long time,
+			@PathVariable(required=false) Long time,
 			@AutoCurrentUser User user
 			) {
-		if (time != null) {
-			Map<String, Object> data = messageService.getMessageAfterTime(new Date(time), user);
-			return ReturnModel.SUCCESS(data);
-		}
-		return ReturnModel.ERROR();
+		time = time == null? (new Date()).getTime() : time;
+		Map<String, Object> data = messageService.afterTimeMessage(new Date(time), user);
+		return ReturnModel.SUCCESS(data);
+
 	}
 	
 }
