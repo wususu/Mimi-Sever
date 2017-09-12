@@ -1,1 +1,21 @@
-/target/
+#javaÎÄ¼þ
+*.class
+*.classpath
+
+
+#Package Files
+*.jar
+*.war
+*.ear
+
+
+#maven
+**/target/
+
+# Eclipse
+**/RemoteSystemsTempFiles/
+**/.metadata/
+**/target/
+**/.settings/
+*.project
+**/.recommenders/
