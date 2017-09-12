@@ -75,11 +75,12 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 	}
 
 	@Override
-	public List<Message> getBeforeTime(Date time, Integer num) {
+	public List<Message> getBeforeTime(Date time, int num) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Message.class)
 				.add(Restrictions.le("tmCreated", time))
+				.add(Restrictions.eq("isDelete", false))
 				.addOrder(Order.desc("tmCreated"))
 				.setMaxResults(num);
 		
@@ -90,11 +91,12 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 	}
 
 	@Override
-	public List<Message> getAfterTime(Date time, Integer num) {
+	public List<Message> getAfterTime(Date time, int num) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Message.class)
 				.add(Restrictions.ge("tmCreated", time))
+				.add(Restrictions.eq("isDelete", false))
 				.addOrder(Order.asc("tmCreated"))
 				.setMaxResults(num);
 		
@@ -102,6 +104,23 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 		List<Message> messages= (List<Message>)criteria.list();
 		Collections.reverse(messages);
 
+		return messages;
+	}
+
+	@Override
+	public List<Message> getByUid(long uid, Date time, int num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.eq("uid", uid))
+				.add(Restrictions.eq("isDelete", false))
+				.add(Restrictions.le("tmCreated", time))
+				.addOrder(Order.desc("tmCreated"))
+				.setMaxResults(num);
+		
+		@SuppressWarnings("unchecked")
+		List<Message> messages = (List<Message>)criteria.list();
+		
 		return messages;
 	}
 	

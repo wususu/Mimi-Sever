@@ -43,5 +43,5 @@ public interface MessageService {
 	
 	Map<String, Object> afterTimeMessage(Date time, User user);
 
-	
+	Map<String, Object> userMessage(Date time, User user);
 }

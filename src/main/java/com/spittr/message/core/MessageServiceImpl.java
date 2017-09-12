@@ -239,4 +239,21 @@ public class MessageServiceImpl implements MessageService{
 
 		message.setLikee(likee);
 	}
+
+	@Override
+	public Map<String, Object> userMessage(Date time, User user) {
+		// TODO Auto-generated method stub
+		int num = StaticConfig.ITEM_PER_PAGE;
+		List<Message> messages = messageDao.getByUid(user.getUid(), time, num);
+		
+		messages = MessageIssues.generateFakeMessageList(messages);
+		
+		Map<String, Object> map = getMap();
+		map.put(BEFORE_TIME, time);
+		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
+		map.put(NUM_THIS_PAGE, messages.size());
+		map.put(MESSAGE_LIST, messages);
+		
+		return map;
+	}
 }

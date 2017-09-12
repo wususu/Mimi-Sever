@@ -155,7 +155,17 @@ public class MessageController {
 		time = time == null? (new Date()).getTime() : time;
 		Map<String, Object> data = messageService.afterTimeMessage(new Date(time), user);
 		return ReturnModel.SUCCESS(data);
-
+	}
+	
+	@Authorization
+	@RequestMapping(value="/me/{time}")
+	public ReturnModel getSelfMessage(
+			@AutoCurrentUser User user,
+			@PathVariable Long time
+			){
+		time = time == null? (new Date()).getTime() : time;
+		Map<String, Object> data = messageService.userMessage(new Date(time), user);
+		return ReturnModel.SUCCESS(data);
 	}
 	
 }

@@ -16,14 +16,14 @@ import com.spittr.user.model.User;
 
 public class CommentIssue {
 
-	private static CommentIssue instance;
-	
-	static{
-		instance = new CommentIssue();
-	}
+	private static CommentIssue instance = new CommentIssue();;
 	
 	public static CommentIssue getInstance(){
 		return instance;
+	}
+	
+	private CommentIssue() {
+		// TODO Auto-generated constructor stub
 	}
 
 	
