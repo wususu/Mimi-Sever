@@ -9,7 +9,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import com.spittr.authorization.annotation.AutoCurrentUser;
 import com.spittr.authorization.core.Constants;
@@ -33,10 +32,11 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
 			) throws Exception {
 		// TODO Auto-generated method stub
 		Long currentUserId = (Long)webRequest.getAttribute(Constants.CURRENT_USER_ID, RequestAttributes.SCOPE_REQUEST);
-		if (currentUserId != null) {
+		
+		if (currentUserId != null) 
 			return userService.get(currentUserId);
-		}
-		throw new MissingServletRequestPartException(Constants.CURRENT_USER_ID);
+		
+		return null;
 	}
 
 	@Override
