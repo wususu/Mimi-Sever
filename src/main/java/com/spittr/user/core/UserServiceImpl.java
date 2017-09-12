@@ -92,4 +92,13 @@ public class UserServiceImpl implements UserService{
 		user.setPlogin(false);
 		this.update(user);
 	}
+
+	@Override
+	public User get(String uname) throws UserNotFoundException{
+		// TODO Auto-generated method stub
+		User user = userDao.get(uname);
+		if (user == null) 
+			throw new UserNotFoundException(uname);
+		return user;
+	}
 }

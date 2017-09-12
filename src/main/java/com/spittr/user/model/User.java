@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.type.TrueFalseType;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -35,12 +37,20 @@ public class User implements Serializable{
 	
 	public User(String uname, String nname, Date tmCreated, Boolean plogin) {
 		// TODO Auto-generated constructor stub
-		this.uname = uname;
-		this.nname = nname;
-		this.tmCreated = tmCreated;
-		this.plogin = plogin;
+		this(uname, nname, plogin, tmCreated, null, null, null);
 	}
 	
+	public User(String uname, String nname, Boolean plogin, Date tmCreated, String site, String signature,
+			Boolean gender) {
+		this.uname = uname;
+		this.nname = nname;
+		this.plogin = plogin;
+		this.tmCreated = tmCreated;
+		this.site = site;
+		this.signature = signature;
+		this.gender = gender;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="uid")
@@ -58,6 +68,18 @@ public class User implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time", nullable=true)
 	private Date tmCreated;
+	
+	// 宿舍区
+	@Column(nullable=true)
+	private String site;
+	
+	// 个性签名
+	@Column(nullable=true, length=50)
+	private String signature;
+	
+	// 性别
+	@Column(nullable=true)
+	private Boolean gender;
 	
 	public Long getUid(){
 		return uid;
@@ -97,6 +119,30 @@ public class User implements Serializable{
 
 	public void setPlogin(Boolean plogin) {
 		this.plogin = plogin;
+	}
+	
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public Boolean getGender() {
+		return gender;
+	}
+
+	public void setGender(Boolean gender) {
+		this.gender = gender;
 	}
 
 	@Override

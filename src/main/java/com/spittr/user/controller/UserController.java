@@ -1,10 +1,12 @@
 package com.spittr.user.controller;
 
+import org.hibernate.loader.custom.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,7 @@ import com.spittr.user.core.UserService;
 import com.spittr.user.dao.UserDao;
 import com.spittr.user.exception.PasswdNotEqualsException;
 import com.spittr.user.model.User;
+import com.sun.org.apache.bcel.internal.generic.I2F;
 
 
 @RestController
@@ -74,6 +77,34 @@ public class UserController {
 		return ReturnModel.SUCCESS(user);
 	}
 
+	@Authorization
+	@RequestMapping(value="/profile/{uname}", method=RequestMethod.GET)
+	public ReturnModel get(@PathVariable String uname){
+		// 头像
+		
+		User user = userService.get(uname);
+		return ReturnModel.SUCCESS(user);
+	}
+	
+	@Authorization
+	@RequestMapping(value="/profile/edit", method=RequestMethod.POST)
+	public ReturnModel editProfile(
+			@AutoCurrentUser User user,
+			@RequestParam(name="gender", required=false) Boolean gender,
+			@RequestParam(name="site", required=false) String site,
+			@RequestParam(name="signature", required=false) String signature
+			){
+		if ( (user.getGender() == null? user.getGender() == gender: user.getGender().equals(gender)) &&
+			 (user.getSite() == null? user.getSite() == site: user.getSite().equals(site)) && 
+			 (user.getSignature() == null? user.getSignature() == signature: user.getSignature().equals(signature)) )
+			return ReturnModel.SUCCESS(user);
+		
+		user.setGender(gender);
+		user.setSignature(signature);
+		user.setSite(site);
+		userService.update(user);
+		return ReturnModel.SUCCESS(user);
+	}
 	
 //	@RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
 //	public ResponseEntity<ReturnModel> delete(
