@@ -87,8 +87,8 @@ public class CommentDaoImpl extends BaseDaoHibernate5<Comment> implements Commen
 		Criteria criteria = session.createCriteria(Comment.class)
 				.add(Restrictions.eq("isDelete", false))
 				.add(Restrictions.eq("mid", mid))
-				.addOrder(Order.asc("tmCreated"))
 				.add(Restrictions.gt("tmCreated", time))
+				.addOrder(Order.asc("tmCreated"))
 				.setMaxResults(num);
 		
 		@SuppressWarnings("unchecked")

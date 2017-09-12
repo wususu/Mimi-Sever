@@ -11,7 +11,7 @@ import com.spittr.user.model.User;
 
 @Entity
 @Table(name="comment")
-@JsonIgnoreProperties({"replayWhichComment", "underWhichMessage", "uid", "rcuid", "muid", "isDelete", "tmDelete"})
+@JsonIgnoreProperties({"replayWhichComment", "underWhichMessage", "uid", "muid", "isDelete", "tmDelete"})
 public class Comment implements Serializable{
 
 	/**
@@ -25,13 +25,18 @@ public class Comment implements Serializable{
 	
 	private long uid;
 	
-	private long rcuid;
+	@Column(nullable=true)
+	private Long rcuid;
 	
 	private long muid;
 	
 	private long mid;
 	
-	private long rcid;
+	@Column(nullable=true)
+	private Long rcid;
+	
+	@Column(nullable=true)
+	private String rcUname;
 	
 	@Column(updatable=false, nullable=false)
 	private long commentVal;
@@ -65,6 +70,7 @@ public class Comment implements Serializable{
 	@Column(nullable=false)
 	private boolean isFake;
 	
+	@Column(nullable=true)
 	private String fakeName;
 	
 	public Comment() {
@@ -81,13 +87,13 @@ public class Comment implements Serializable{
 		
 		this(user.getUid(), replayComment == null ?null:replayComment.getUid(), underMessage.getUid(), underMessage.getMid(),
 				replayComment == null ? null:replayComment.getCid(), underMessage.getCommentNextVal(), user, underMessage, replayComment, content,
-				new Date(), null, false, false, null, (long)0);
+				new Date(), null, false, false, null, (long)0, replayComment == null?null:replayComment.getUser().getUname());
 
 	}
 	
-	public Comment(long uid, long rcuid, long muid, long mid, long rcid, long commentVal, User user, Message underWhichMessage,
+	public Comment(long uid, Long rcuid, long muid, long mid, Long rcid, long commentVal, User user, Message underWhichMessage,
 			Comment replayWhichComment, String content, Date tmCreated, Date tmDelete, boolean isDelete, boolean isFake,
-			String fakeName, Long likeCount) {
+			String fakeName, Long likeCount, String rcUname) {
 		this.uid = uid;
 		this.rcuid = rcuid;
 		this.muid = muid;
@@ -104,6 +110,7 @@ public class Comment implements Serializable{
 		this.isFake = isFake;
 		this.fakeName = fakeName;
 		this.likeCount = likeCount;
+		this.rcUname =rcUname;
 	}
 
 	public long getCid() {
@@ -122,11 +129,11 @@ public class Comment implements Serializable{
 		this.uid = uid;
 	}
 
-	public long getRcuid() {
+	public Long getRcuid() {
 		return rcuid;
 	}
 
-	public void setRcuid(long rcuid) {
+	public void setRcuid(Long rcuid) {
 		this.rcuid = rcuid;
 	}
 
@@ -146,12 +153,20 @@ public class Comment implements Serializable{
 		this.mid = mid;
 	}
 
-	public long getRcid() {
+	public Long getRcid() {
 		return rcid;
 	}
 
-	public void setRcid(long rcid) {
+	public void setRcid(Long rcid) {
 		this.rcid = rcid;
+	}
+
+	public String getRcUname() {
+		return rcUname;
+	}
+
+	public void setRcUname(String rcUname) {
+		this.rcUname = rcUname;
 	}
 
 	public long getCommentVal() {

@@ -16,7 +16,7 @@ import com.spittr.user.model.User;
 
 public class CommentIssue {
 
-	public static CommentIssue instance;
+	private static CommentIssue instance;
 	
 	static{
 		instance = new CommentIssue();
@@ -97,8 +97,8 @@ public class CommentIssue {
 	public static Boolean checkReplayComment(Comment replayComment, Message underMessage){
 		
 		checkIsDelete(replayComment);
-		
-		if( !replayComment.getUnderWhichMessage().equals(underMessage))
+
+		if( replayComment.getUnderWhichMessage().getMid() != underMessage.getMid())
 			throw new UnderMessageNotEqualException();
 		
 		return true;

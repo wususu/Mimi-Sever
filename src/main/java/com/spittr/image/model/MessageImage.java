@@ -148,5 +148,41 @@ public class MessageImage implements Serializable{
 		return "MessageImage [imageid=" + imageid + ", realPath=" + realPath + ", webPath=" + webPath + ", tmCreated="
 				+ tmCreated + ", isDelete=" + isDelete + ", tmDelete=" + tmDelete + ", mid=" + mid + "]";
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((imageid == null) ? 0 : imageid.hashCode());
+		result = prime * result + ((mid == null) ? 0 : mid.hashCode());
+		result = prime * result + ((realPath == null) ? 0 : realPath.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MessageImage other = (MessageImage) obj;
+		if (imageid == null) {
+			if (other.imageid != null)
+				return false;
+		} else if (!imageid.equals(other.imageid))
+			return false;
+		if (mid == null) {
+			if (other.mid != null)
+				return false;
+		} else if (!mid.equals(other.mid))
+			return false;
+		if (realPath == null) {
+			if (other.realPath != null)
+				return false;
+		} else if (!realPath.equals(other.realPath))
+			return false;
+		return true;
+	}
 }

@@ -30,7 +30,7 @@ public class Message implements Serializable{
 	
 	private long uid;
 	
-	private long lid;
+	private Long lid;
 	
 	@ManyToOne
 	@JoinColumn(name="user", updatable=false)
@@ -84,7 +84,7 @@ public class Message implements Serializable{
 		this(content, user, user.getUid(),localtion!=null?localtion.getLid() : null,  localtion, (long)0, (long)0, (long)1, false, null, new Date(/* now */), false, null);
 	}
 	
-	public Message(String content, User user, long uid,long lid, Location location,
+	public Message(String content, User user, long uid,Long lid, Location location,
 			long likeCount, long commentCount, long commentNextVal,
 			boolean isFake, String fakeName, 
 			Date tmCreated,boolean isDelete, Date tmDelete){
@@ -119,11 +119,11 @@ public class Message implements Serializable{
 		this.uid = uid;
 	}
 
-	public long getLid() {
+	public Long getLid() {
 		return lid;
 	}
 
-	public void setLid(long lid) {
+	public void setLid(Long lid) {
 		this.lid = lid;
 	}
 
