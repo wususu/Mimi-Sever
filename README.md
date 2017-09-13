@@ -1,8 +1,9 @@
-# Mimi 
-### 华南农业大学匿名朋友圈
+ 
+# Mimi 华南农业大学匿名朋友圈  
 
-  <img src="./pic/logo.png" style="text-align:center;" width="40%" height="60%">
-  
+ <img src="./pic/logo.png" style="text-align:center;" width="40%" height="60%">
+
+
 ## 当前功能:
 - 用户登录
 - 发送可匿名可附图片可定位的`message`

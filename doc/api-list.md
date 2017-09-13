@@ -871,159 +871,392 @@
 		- login: false
 			     
 		- response(success):
-		{
-		    "code": 200,
-		    "message": "成功",
-		    "content": {
-		        "commentList": [
-		            {
-		                "cid": 229,
-		                "mid": 222,
-		                "rcid": null,
-		                "commentVal": 7,
-		                "user": {
-		                    "uid": 2,
-		                    "uname": "liaojiekx",
-		                    "nname": "liaojie",
-		                    "tmCreated": 1501605274000
-		                },
-		                "content": "廖狗的评论7",
-		                "tmCreated": 1504454285000,
-		                "likeCount": 0,
-		                "isFake": false,
-		                "fakeName": null
-		            },
-		            {
-		                "cid": 228,
-		                "mid": 222,
-		                "rcid": null,
-		                "commentVal": 6,
-		                "user": {
-		                    "uid": 2,
-		                    "uname": "liaojiekx",
-		                    "nname": "liaojie",
-		                    "tmCreated": 1501605274000
-		                },
-		                "content": "廖狗的评论6",
-		                "tmCreated": 1504454282000,
-		                "likeCount": 0,
-		                "isFake": false,
-		                "fakeName": null
-		            },
-		            {
-		                "cid": 227,
-		                "mid": 222,
-		                "rcid": null,
-		                "commentVal": 5,
-		                "user": {
-		                    "uid": 2,
-		                    "uname": "liaojiekx",
-		                    "nname": "liaojie",
-		                    "tmCreated": 1501605274000
-		                },
-		                "content": "廖狗的评论5",
-		                "tmCreated": 1504454278000,
-		                "likeCount": 0,
-		                "isFake": false,
-		                "fakeName": null
-		            },
-		            {
-		                "cid": 226,
-		                "mid": 222,
-		                "rcid": null,
-		                "commentVal": 4,
-		                "user": {
-		                    "uid": 2,
-		                    "uname": "liaojiekx",
-		                    "nname": "liaojie",
-		                    "tmCreated": 1501605274000
-		                },
-		                "content": "廖狗的评论4",
-		                "tmCreated": 1504454275000,
-		                "likeCount": 0,
-		                "isFake": false,
-		                "fakeName": null
-		            },
-		            {
-		                "cid": 225,
-		                "mid": 222,
-		                "rcid": null,
-		                "commentVal": 3,
-		                "user": {
-		                    "uid": 2,
-		                    "uname": "liaojiekx",
-		                    "nname": "liaojie",
-		                    "tmCreated": 1501605274000
-		                },
-		                "content": "廖狗的评论3",
-		                "tmCreated": 1504454272000,
-		                "likeCount": 0,
-		                "isFake": false,
-		                "fakeName": null
-		            },
-		            {
-		                "cid": 224,
-		                "mid": 222,
-		                "rcid": null,
-		                "commentVal": 2,
-		                "user": {
-		                    "uid": 2,
-		                    "uname": "liaojiekx",
-		                    "nname": "liaojie",
-		                    "tmCreated": 1501605274000
-		                },
-		                "content": "廖狗的评论",
-		                "tmCreated": 1504454268000,
-		                "likeCount": 0,
-		                "isFake": false,
-		                "fakeName": null
-		            },
-		            {
-		                "cid": 223,
-		                "mid": 222,
-		                "rcid": null,
-		                "commentVal": 1,
-		                "user": {
-		                    "uid": 2,
-		                    "uname": "liaojiekx",
-		                    "nname": "liaojie",
-		                    "tmCreated": 1501605274000
-		                },
-		                "content": "廖狗的评论",
-		                "tmCreated": 1504454263000,
-		                "likeCount": 0,
-		                "isFake": false,
-		                "fakeName": null
-		            }
-		        ],
-		        "tmBefore": 1504454288000,
-		        "numThisPage": 7,
-		        "numPerPage": 15,
-		        "message": {
-		            "mid": 222,
-		            "uid": 2,
-		            "lid": 26,
-		            "user": {
-		                "uid": 2,
-		                "uname": "liaojiekx",
-		                "nname": "liaojie",
-		                "tmCreated": 1501605274000
-		            },
-		            "content": "廖狗的测试message1",
-		            "tmCreated": 1504453626000,
-		            "messageImageSet": [],
-		            "isFake": false,
-		            "fakeName": null,
-		            "likeCount": 0,
-		            "commentCount": 22,
-		            "commentNextVal": 23,
-		            "location": {
-		                "lid": 26,
-		                "locale": "教三"
-		            }
-		        }
-		    }
-		}
+
+			  {
+			    "code": 200,
+			    "message": "成功",
+			    "content": {
+				"commentList": [
+				    {
+					"cid": 277,
+					"rcuid": 2,
+					"mid": 222,
+					"rcid": 237,
+					"rcUname": "liaojiekx",
+					"commentVal": 25,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的测试replay comment",
+					"tmCreated": 1505228123000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 276,
+					"rcuid": 2,
+					"mid": 222,
+					"rcid": 237,
+					"rcUname": "liaojiekx",
+					"commentVal": 24,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的测试replay comment",
+					"tmCreated": 1505228032000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 275,
+					"rcuid": 2,
+					"mid": 222,
+					"rcid": 237,
+					"rcUname": "liaojiekx",
+					"commentVal": 23,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的测试replay comment",
+					"tmCreated": 1505226328000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 244,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 22,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论22",
+					"tmCreated": 1504454340000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 243,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 21,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论21",
+					"tmCreated": 1504454336000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 242,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 20,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论20",
+					"tmCreated": 1504454332000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 241,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 19,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论19",
+					"tmCreated": 1504454327000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 240,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 18,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论18",
+					"tmCreated": 1504454323000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 239,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 17,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论17",
+					"tmCreated": 1504454320000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 238,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 16,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论16",
+					"tmCreated": 1504454316000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 237,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 15,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论15",
+					"tmCreated": 1504454313000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 236,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 14,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论14",
+					"tmCreated": 1504454309000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 235,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 13,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论13",
+					"tmCreated": 1504454306000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 234,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 12,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论12",
+					"tmCreated": 1504454303000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    },
+				    {
+					"cid": 233,
+					"rcuid": null,
+					"mid": 222,
+					"rcid": null,
+					"rcUname": null,
+					"commentVal": 11,
+					"user": {
+					    "uid": 2,
+					    "uname": "liaojiekx",
+					    "nname": "liaojie",
+					    "tmCreated": 1501605274000,
+					    "site": "华山",
+					    "signature": "个性签名",
+					    "gender": true
+					},
+					"content": "廖狗的评论11",
+					"tmCreated": 1504454299000,
+					"likeCount": 0,
+					"fakeName": null,
+					"delete": false,
+					"fake": false
+				    }
+				],
+				"tmBefore": 1505233506778,
+				"numThisPage": 15,
+				"numPerPage": 15,
+				"message": {
+				    "mid": 222,
+				    "uid": 2,
+				    "lid": 26,
+				    "user": {
+					"uid": 2,
+					"uname": "liaojiekx",
+					"nname": "liaojie",
+					"tmCreated": 1501605274000,
+					"site": "华山",
+					"signature": "个性签名",
+					"gender": true
+				    },
+				    "content": "廖狗的测试message1",
+				    "tmCreated": 1504453626000,
+				    "messageImageSet": [],
+				    "fakeName": null,
+				    "likeCount": 1,
+				    "likee": null,
+				    "commentCount": 25,
+				    "commentNextVal": 26,
+				    "location": {
+					"lid": 26,
+					"locale": "教三"
+				    },
+				    "delete": false,
+				    "fake": false
+				}
+			    }
+			  }
+	
 
 - 获取指定某一message下指定日期后的10条comment
 
@@ -1037,3 +1270,351 @@
 			略
 
 
+### Update(2017.9.13):
+> `/api/comment/message/{mid}/tmbefore/{time}`内容更新在上面(已经改了response)
+
+#### 1.用户信息模块更新
+
+- 查看个人信息: 
+
+		- url: /api/user/me
+		
+		- method: GET
+		
+		- login: true
+		
+		- response:
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"uid": 2,
+			"uname": "liaojiekx",
+			"nname": "liaojie",
+			"tmCreated": 1501605274000,
+			"faculty": "faculty111",
+			"grade": 2015,
+			"site": "五山",
+			"signature": "帅气的人",
+			"gender": true
+		    }
+		}
+
+
+- 修改个人信息:
+
+		- url: /api/user/profile/edit
+		
+		- method: POST
+		
+		- login: true
+		
+		-argument: 
+			           |   key       |  isrequired | defaultValue |    type                      |
+			-----------+-------------+-------------+--------------+------------------------------+
+		 	    性别    |   gender    |     false    |    null      |   Boolean(true:男/false:女) |
+		 	    宿舍区  |   site      |     false    |    null      |   String                    |
+			    心情    |   signature |     false    |    null      |   String                    |
+			    入学年份 |   grade     |     false    |    null      |   Integer                  |
+			    学院    |   faculty   |     false    |    null      |   String                    |
+
+
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"uid": 2,
+			"uname": "liaojiekx",
+			"nname": "liaojie",
+			"tmCreated": 1501605274000,
+			"faculty": "faculty111",
+			"grade": 2015,
+			"site": "五山",
+			"signature": "帅气的人",
+			"gender": true
+		    }
+		}
+
+- 查看其他用户个人信息:
+
+		- url: /api/user/profile/{uname}
+		
+		- method: GET
+		
+		- login: true
+		
+		- response:
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"uid": 2,
+			"uname": "liaojiekx",
+			"nname": "liaojie",
+			"tmCreated": 1501605274000,
+			"faculty": "faculty111",
+			"grade": 2015,
+			"site": "五山",
+			"signature": "帅气的人",
+			"gender": true
+		    }
+		}
+
+#### 2.新增点赞接口
+ 注意: 点赞和取消点赞都是同一个接口
+
+		- url: /api/message/likee/{mid}
+		
+		- method: POST
+		
+		- login: true
+		
+		- response(点赞):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"isLike": true,
+			"likeCount": 2
+		    }
+		}
+		
+		-response(取消点赞):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"isLike": false,
+			"likeCount": 1
+		    }
+		}		
+		
+#### 3.新增关注用户功能:
+`mainUser`为关注操作的发起者, `objectUser`为操作接受者
+
+- 关注用户:
+
+		- url: /api/user/relationship/add
+		
+		- method: POST
+		
+		- login: true
+		
+		- argument:
+			           |   key       |  isrequired | defaultValue |    type   |
+			-----------+-------------+-------------+--------------+-----------+
+		 	  接受用户  | objectUname |     true    |    null      |  String   |
+
+		
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"id": 283,
+			"mainUser": {
+			    "uid": 2,
+			    "uname": "liaojiekx",
+			    "nname": "liaojie",
+			    "tmCreated": 1501605274000,
+			    "faculty": "faculty111",
+			    "grade": 2015,
+			    "site": "五山",
+			    "signature": "帅气的人",
+			    "gender": true
+			},
+			"objectUser": {
+			    "uid": 3,
+			    "uname": "201527010324",
+			    "nname": "吴培坚",
+			    "tmCreated": 1501833774000,
+			    "faculty": null,
+			    "grade": null,
+			    "site": null,
+			    "signature": null,
+			    "gender": null
+			},
+			"tmCreated": 1505306762679,
+			"delete": false
+		    }
+		}
+		
+- 取关用户:
+
+		- url: /api/user/relationship/cancel
+		
+		- method: POST
+		
+		- login: true
+		
+		- argument:
+			           |   key       |  isrequired | defaultValue |    type   |
+			-----------+-------------+-------------+--------------+-----------+
+		 	  接受用户  | objectUname |     true    |    null      |  String   |
+
+		
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": "(=ↀωↀ=)"
+		}
+		
+- 查看当前用户所关注的用户:
+参数为时间,显示某时间之前关注的15个用户
+
+		- url: /api/user/relationship/asmain/{time}
+		
+		- method: GET
+		
+		- login: true
+		
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"mainUserList": [
+			    {
+				"uid": 3,
+				"uname": "201527010324",
+				"nname": "吴培坚",
+				"tmCreated": 1501833774000,
+				"faculty": null,
+				"grade": null,
+				"site": null,
+				"signature": null,
+				"gender": null
+			    },
+			    {
+				"uid": 1,
+				"uname": "wususu",
+				"nname": "wususu",
+				"tmCreated": 1501604357000,
+				"faculty": null,
+				"grade": null,
+				"site": null,
+				"signature": null,
+				"gender": null
+			    }
+			],
+			"tmBefore": 1505307265295,
+			"numThisPage": 2,
+			"numPerPage": 15
+		    }
+		}
+		
+- 查看所有关注当前用户的用户:
+ (同上)
+ 
+		- url: /api/user/relationship/asobject/{time}
+		
+		- method: GET
+		
+		- login: true
+		
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"mainUserList": [
+			    {
+				"uid": 1,
+				"uname": "wususu",
+				"nname": "wususu",
+				"tmCreated": 1501604357000,
+				"faculty": null,
+				"grade": null,
+				"site": null,
+				"signature": null,
+				"gender": null
+			    }
+			],
+			"tmBefore": 1505307493230,
+			"numThisPage": 1,
+			"numPerPage": 15
+		    }
+		}
+
+#### 4.查看当前用户所发过的message:
+
+		- url: /api/user/message/me/{time}
+		
+		- method: GET
+		
+		- login: true
+		
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"messageList": [
+			    {
+				"mid": 129,
+				"uid": 1,
+				"lid": 23,
+				"user": {
+				    "uid": 1,
+				    "uname": "wususu",
+				    "nname": "wususu",
+				    "tmCreated": 1501604357000,
+				    "faculty": null,
+				    "grade": null,
+				    "site": null,
+				    "signature": null,
+				    "gender": null
+				},
+				"content": "测试用户的测试message",
+				"tmCreated": 1502727291000,
+				"messageImageSet": [],
+				"fakeName": null,
+				"likeCount": 0,
+				"likee": null,
+				"commentCount": 0,
+				"commentNextVal": 1,
+				"location": {
+				    "lid": 23,
+				    "locale": "华山"
+				},
+				"delete": false,
+				"fake": false
+			    },
+			    {
+				"mid": 128,
+				"uid": 1,
+				"lid": 23,
+				"user": {
+				    "uid": 1,
+				    "uname": "wususu",
+				    "nname": "wususu",
+				    "tmCreated": 1501604357000,
+				    "faculty": null,
+				    "grade": null,
+				    "site": null,
+				    "signature": null,
+				    "gender": null
+				},
+				"content": "测试用户的测试message",
+				"tmCreated": 1502725914000,
+				"messageImageSet": [],
+				"fakeName": null,
+				"likeCount": 0,
+				"likee": null,
+				"commentCount": 8,
+				"commentNextVal": 18,
+				"location": {
+				    "lid": 23,
+				    "locale": "华山"
+				},
+				"delete": false,
+				"fake": false
+			    }
+			],
+			"tmBefore": 1502727291000,
+			"numThisPage": 2,
+			"numPerPage": 15
+		    }
+		}
