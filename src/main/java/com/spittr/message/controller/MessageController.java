@@ -136,12 +136,13 @@ public class MessageController {
 		return ReturnModel.SUCCESS(result);
 	}
 	
-	@RequestMapping(value="/tmbefore/{time}", method=RequestMethod.GET)
+	@RequestMapping(value={"/tmbefore/{time}", "/tmbefore"}, method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
 	public ReturnModel getMessageBeforeTime(
-			@PathVariable Long time,
+			@PathVariable(name="time",required=false) Long time,
 			@AutoCurrentUser User user
 			){
+		time = time == null? (new Date()).getTime() : time;
 		Map<String, Object> data = messageService.beforeTimeMessage(new Date(time), user);
 		return ReturnModel.SUCCESS(data);
 	}
@@ -149,19 +150,18 @@ public class MessageController {
 	@RequestMapping(value="/tmafter/{time}", method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
 	public ReturnModel getMessageAfterTime(
-			@PathVariable(required=false) Long time,
+			@PathVariable Long time,
 			@AutoCurrentUser User user
 			) {
-		time = time == null? (new Date()).getTime() : time;
 		Map<String, Object> data = messageService.afterTimeMessage(new Date(time), user);
 		return ReturnModel.SUCCESS(data);
 	}
 	
 	@Authorization
-	@RequestMapping(value="/me/{time}")
+	@RequestMapping(value={"/me/{time}", "/me"})
 	public ReturnModel getSelfMessage(
 			@AutoCurrentUser User user,
-			@PathVariable Long time
+			@PathVariable(name="time", required=false) Long time
 			){
 		time = time == null? (new Date()).getTime() : time;
 		Map<String, Object> data = messageService.userMessage(new Date(time), user);

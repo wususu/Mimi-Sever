@@ -14,6 +14,7 @@ import com.spittr.user.model.*;
 
 @RestController
 @RequestMapping(value="/api/user/relationship")
+@CrossOrigin(origins="*", maxAge=3600)
 public class UserRelationshipController {
 
 	@Autowired
@@ -42,7 +43,7 @@ public class UserRelationshipController {
 	@RequestMapping(value="/cancel", method=RequestMethod.POST)
 	public ReturnModel cancelAttention(
 			@AutoCurrentUser User mainUser,
-			@RequestParam("objectUser") String objectUname
+			@RequestParam("objectUname") String objectUname
 			){
 		User objectUser = userService.get(objectUname);
 		

@@ -3,14 +3,7 @@ package com.spittr.user.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -66,6 +59,14 @@ public class User implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time", nullable=true)
 	private Date tmCreated;
+	
+	//所属学院
+	@Column(nullable=true)
+	private String faculty;
+	
+	// 入学年份: 2015/2016/2017
+	@Column(nullable=true, length=4)
+	private Integer grade;
 	
 	// 宿舍区
 	@Column(nullable=true)
@@ -141,6 +142,22 @@ public class User implements Serializable{
 
 	public void setGender(Boolean gender) {
 		this.gender = gender;
+	}
+	
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
+	}
+
+	public Integer getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Integer grade) {
+		this.grade = grade;
 	}
 
 	@Override

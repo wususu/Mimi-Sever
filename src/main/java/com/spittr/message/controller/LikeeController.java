@@ -11,6 +11,7 @@ import com.spittr.user.model.User;
 
 @RestController
 @RequestMapping(value="/api/message/likee")
+@CrossOrigin(origins="*", maxAge=3600)
 public class LikeeController {
 
 	@Autowired
