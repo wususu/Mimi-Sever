@@ -10,7 +10,7 @@ import com.spittr.model.ReturnModel;
 import com.spittr.user.model.User;
 
 @RestController
-@RequestMapping(value="/api/message")
+@RequestMapping(value="/api/message/likee")
 public class LikeeController {
 
 	@Autowired
@@ -22,7 +22,7 @@ public class LikeeController {
 	private MessageService messageService;
 	
 	@Authorization
-	@RequestMapping(value="/likee/{mid}", method=RequestMethod.POST)
+	@RequestMapping(value="/{mid}", method=RequestMethod.POST)
 	public ReturnModel like(
 			@PathVariable Long mid,
 			@AutoCurrentUser User user

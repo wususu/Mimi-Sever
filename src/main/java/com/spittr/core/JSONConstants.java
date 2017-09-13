@@ -1,7 +1,6 @@
 package com.spittr.core;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class JSONConstants {
 
@@ -14,6 +13,10 @@ public class JSONConstants {
 	public static final String COMMENT_LIST = "commentList";
 	
 	public static final String LOCATION_LIST = "locationList";
+	
+	public static final String OBJECT_USER_LIST = "objectUserList";
+	
+	public static final String MAIN_USER_LIST = "mainUserList";
 	
 	public static final String MESSAGE = "message";
 	

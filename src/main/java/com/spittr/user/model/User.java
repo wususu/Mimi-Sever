@@ -12,8 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.type.TrueFalseType;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -199,7 +197,5 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
 	
 }
