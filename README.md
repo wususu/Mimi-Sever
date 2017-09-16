@@ -9,6 +9,11 @@
 - 发送可匿名可附图片可定位的`message`
 - 发表评论
 
+## 相关文档
+- [api 文档](./doc/api-list.md)
+- [status code 返回码状态表](./doc/api-list.md)
+
+
 ## 更新日志:
 ##### 2017.8.15  Mimi-1.0 <br/>
  - [api文档](./doc/api-list.md)
