@@ -11,7 +11,7 @@
 
 ## 相关文档
 - [api 文档](./doc/api-list.md)
-- [status code 返回码状态表](./doc/api-list.md)
+- [status code 返回码状态表](./doc/code-status-doc.md)
 
 
 ## 更新日志:
