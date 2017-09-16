@@ -1,12 +1,16 @@
 package com.spittr.authorization.exception;
 
+import com.spittr.exception.BaseException;
 
-public class AuthorizationNotFoundException extends TokenErrorException{
+import static com.spittr.config.StatusCodeConf.*;
+
+public class AuthorizationNotFoundException extends BaseException{
 
 	private String authName;
 	
 	public AuthorizationNotFoundException(String authName) {
 		// TODO Auto-generated constructor stub
+		super(AuthorizationNotFoundCode);
 		this.authName = authName;
 	}
 	

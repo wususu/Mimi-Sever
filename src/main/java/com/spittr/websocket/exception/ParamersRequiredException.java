@@ -1,16 +1,20 @@
 package com.spittr.websocket.exception;
 
-import com.spittr.websocket.model.SendMsg;
+import com.spittr.exception.BaseException;
 
-public class ParamersRequiredException extends RuntimeException{
+import static com.spittr.config.StatusCodeConf.*;
+
+public class ParamersRequiredException extends BaseException{
 
 	private String paramer;
 	
 	public ParamersRequiredException() {
 		// TODO Auto-generated constructor stub
+		super(DataErrorCode);
 	}
 	
 	public ParamersRequiredException(String paramer){
+		super(DataErrorCode);
 		this.paramer = paramer;
 	}
 	

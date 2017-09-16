@@ -1,7 +1,16 @@
 package com.spittr.websocket.exception;
 
-public class RequiredAuthorizationException extends RuntimeException{
+import com.spittr.exception.BaseException;
 
+import static com.spittr.config.StatusCodeConf.*;
+
+public class RequiredAuthorizationException extends BaseException{
+
+	public RequiredAuthorizationException() {
+		// TODO Auto-generated constructor stub
+		super(AuthorityErrorCode);
+	}
+	
 	@Override
 	public String getMessage() {
 		// TODO Auto-generated method stub

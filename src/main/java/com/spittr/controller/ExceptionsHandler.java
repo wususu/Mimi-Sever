@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.spittr.authorization.exception.TokenErrorException;
+import com.spittr.authorization.exception.TokenExpiredException;
+import com.spittr.exception.BaseException;
 import com.spittr.model.ReturnModel;
 import com.spittr.user.exception.PasswdNotEqualsException;
 
@@ -15,19 +17,8 @@ import com.spittr.user.exception.PasswdNotEqualsException;
 @CrossOrigin(origins="*", maxAge=3600)
 public class ExceptionsHandler {
 	
-	@ExceptionHandler(PasswdNotEqualsException.class)
-	public ResponseEntity<ReturnModel> handleTestException(PasswdNotEqualsException e){
-		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(e), HttpStatus.OK);
-	}
-	
-	@ExceptionHandler(TokenErrorException.class)
-	public ResponseEntity<ReturnModel> handleTestException2(TokenErrorException e){
-		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(e), HttpStatus.OK);
-	}
-	
-	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<ReturnModel> handleTestException2(RuntimeException e){
-		e.printStackTrace();
+	@ExceptionHandler(BaseException.class)
+	public ResponseEntity<ReturnModel> handleException(BaseException e){
 		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(e), HttpStatus.OK);
 	}
 	

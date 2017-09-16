@@ -1,12 +1,21 @@
 package com.spittr.authorization.exception;
 
+import com.spittr.exception.BaseException;
 
-public class TokenExpiredException extends TokenErrorException{
+import static com.spittr.config.StatusCodeConf.*;
+
+public class TokenExpiredException extends BaseException{
 
 	private String uname;
 	
+	public TokenExpiredException() {
+		// TODO Auto-generated constructor stub
+		super(TokenExpiredCode);
+	}
+	
 	public TokenExpiredException(String uname) {
 		// TODO Auto-generated constructor stub
+		super(TokenExpiredCode);
 		this.uname = uname;
 	}
 	

@@ -1,9 +1,10 @@
 package com.spittr.tools;
 
+import com.spittr.config.StatusCodeConf;
+
 public enum ExceptionStatus {
-	 SUCCESS(200, "成功"),
-     ERROR(-1001, "失败"),
-     USER_NOT_FOUND(-1002, "用户不存在");
+	 SUCCESS(StatusCodeConf.SUCCESS, "成功"),
+     ERROR(StatusCodeConf.ErrorCode, "失败");
 	
 	public static String DiY_OK_MESSAGE = "(=ↀωↀ=)";
 	public static String DiY_ERROR_MESSAGE = "(゜Д゜;)";

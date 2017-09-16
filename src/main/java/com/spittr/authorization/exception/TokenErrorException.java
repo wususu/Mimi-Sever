@@ -1,7 +1,15 @@
 package com.spittr.authorization.exception;
 
+import com.spittr.exception.BaseException;
 
-public class TokenErrorException extends RuntimeException{
+import static com.spittr.config.StatusCodeConf.*;
+
+public class TokenErrorException extends BaseException{
+	
+	public TokenErrorException() {
+		// TODO Auto-generated constructor stub
+		super(TokenErrorCode);
+	}
 	
 	@Override
 	public String getMessage() {

@@ -1,15 +1,21 @@
 package com.spittr.image.exception;
 
-public class ImageNotFoundException extends RuntimeException{
+import com.spittr.exception.BaseException;
+
+import static com.spittr.config.StatusCodeConf.*;
+
+public class ImageNotFoundException extends BaseException{
 
 	private String path;
 	
 	public ImageNotFoundException() {
 		// TODO Auto-generated constructor stub
+		super(ResourceNotFoundCode);
 	}
 	
 	public ImageNotFoundException(String path) {
 		// TODO Auto-generated constructor stub
+		super(ResourceNotFoundCode);
 		this.path = path;
 	}
 	

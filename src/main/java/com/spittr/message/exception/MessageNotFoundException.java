@@ -1,14 +1,20 @@
 package com.spittr.message.exception;
 
-public class MessageNotFoundException extends RuntimeException{
+import static com.spittr.config.StatusCodeConf.*;
+
+import com.spittr.exception.BaseException;
+
+public class MessageNotFoundException extends BaseException{
 
 	private Long mid;
 	
 	public MessageNotFoundException() {
 		// TODO Auto-generated constructor stub
+		super(ResourceNotFoundCode);
 	}
 	
 	public MessageNotFoundException(Long mid){
+		super(ResourceNotFoundCode);
 		this.mid = mid;
 	}
 	

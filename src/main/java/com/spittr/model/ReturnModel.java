@@ -1,20 +1,21 @@
 package com.spittr.model;
 
+import com.spittr.exception.BaseException;
 import com.spittr.tools.ExceptionStatus;
 
 public class ReturnModel {
 
-	private int code;
+	private Integer code;
 	
 	private String message;
-	
+		
 	private Object content;
 	
 	public ReturnModel() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ReturnModel(int code, String message, Object content){
+	public ReturnModel(Integer code, String message, Object content){
 		this.code = code;
 		this.message = message;
 		this.content = content;
@@ -34,8 +35,8 @@ public class ReturnModel {
 		return new ReturnModel(ExceptionStatus.SUCCESS, ExceptionStatus.DiY_OK_MESSAGE);
 	}
 
-	public static ReturnModel ERROR(Exception e){
-		return new ReturnModel(-500, e.getMessage(), ExceptionStatus.DiY_ERROR_MESSAGE); 
+	public static ReturnModel ERROR(BaseException e){
+		return new ReturnModel(e.getCode(), e.getMessage(), e.getClass().getSimpleName()); 
 	}
 	
 	public static ReturnModel ERROR(ExceptionStatus exceptionStatus){
@@ -45,8 +46,20 @@ public class ReturnModel {
 	public static ReturnModel ERROR(){
 		return new ReturnModel(ExceptionStatus.ERROR, ExceptionStatus.DiY_ERROR_MESSAGE); 
 	}
-	
-	public int getCode() {
+
+	public void setCode(Integer code) {
+		this.code = code;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setContent(Object content) {
+		this.content = content;
+	}
+
+	public Integer getCode() {
 		return code;
 	}
 

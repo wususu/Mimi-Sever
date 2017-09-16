@@ -1,11 +1,16 @@
 package com.spittr.user.exception;
 
-public class UserNotFoundException extends RuntimeException{
+import com.spittr.exception.BaseException;
+
+import static com.spittr.config.StatusCodeConf.*;
+
+public class UserNotFoundException extends BaseException{
 
 	private String uname;
 	
 	public UserNotFoundException(String uname) {
 		// TODO Auto-generated constructor stub
+		super(ResourceNotFoundCode);
 		this.uname = uname;
 	}
 	

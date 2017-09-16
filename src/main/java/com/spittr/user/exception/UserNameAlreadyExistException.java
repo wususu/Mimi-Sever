@@ -1,14 +1,20 @@
 package com.spittr.user.exception;
 
-public class UserNameAlreadyExistException extends RuntimeException{
+import com.spittr.exception.BaseException;
+
+import static com.spittr.config.StatusCodeConf.*;
+
+public class UserNameAlreadyExistException extends BaseException{
 
 	private String uname;
 	
 	public UserNameAlreadyExistException() {
 		// TODO Auto-generated constructor stub
+		super(ForbiddenCode);
 	}
 	
 	public UserNameAlreadyExistException(String uname){
+		super(ForbiddenCode);
 		this.uname = uname;
 	}
 	
