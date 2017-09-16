@@ -1540,7 +1540,7 @@
 
 #### 4.查看当前用户所发过的message:
 
-		- url: /api/user/message/me/{time}
+		- url: /api/message/me/{time}
 		
 		- method: GET
 		
