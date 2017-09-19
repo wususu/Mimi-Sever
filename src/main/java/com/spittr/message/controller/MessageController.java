@@ -24,6 +24,8 @@ import com.spittr.message.core.MessageIssues;
 import com.spittr.message.core.MessageService;
 import com.spittr.message.model.Message;
 import com.spittr.model.ReturnModel;
+import com.spittr.user.core.UserService;
+import com.spittr.user.exception.UserNotFoundException;
 import com.spittr.user.model.User;
 
 
@@ -35,7 +37,11 @@ public class MessageController {
 	@Autowired
 	@Qualifier("locationServiceImpl")
 	private LocationService locationService;
-
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
 	@Autowired
 	@Qualifier("messageServiceImpl")
 	private MessageService messageService;
@@ -164,7 +170,21 @@ public class MessageController {
 			@PathVariable(name="time", required=false) Long time
 			){
 		time = time == null? (new Date()).getTime() : time;
-		Map<String, Object> data = messageService.userMessage(new Date(time), user);
+		Map<String, Object> data = messageService.userMessage(new Date(time), user, true);
+		return ReturnModel.SUCCESS(data);
+	}
+	
+	@RequestMapping(value={"/user/{uname}/{time}", "/user/{uname}"})
+	public ReturnModel getSelfMessage(
+			@PathVariable(name="uname") String uName,
+			@PathVariable(name="time", required=false) Long time
+			){
+		time = time == null? (new Date()).getTime() : time;
+		User user = userService.get(uName);
+		if (user == null) 
+			throw new UserNotFoundException(uName);		
+		
+		Map<String, Object> data = messageService.userMessage(new Date(time), user, false);
 		return ReturnModel.SUCCESS(data);
 	}
 	

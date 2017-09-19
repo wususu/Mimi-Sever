@@ -8,11 +8,16 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spittr.message.exception.AuthorityNotAllowException;
 import com.spittr.message.exception.MessageNotFoundException;
+import com.spittr.message.model.Comment;
 import com.spittr.message.model.Message;
 import com.spittr.user.model.User;
 
 
 public class MessageIssues {
+	
+	private MessageIssues(){
+		throw new AssertionError();
+	}
 	
 	public static Boolean checkAuthority(Message message, User login){
 		if (message.getUser() == null || login == null){
@@ -65,4 +70,15 @@ public class MessageIssues {
 		}
 		return fakeMessageList;
 	}
+	
+	public  static List<Message>  removeFakeMessage(List<Message> messages){
+		List<Message> result = new ArrayList<>();
+		
+		for (Message message : messages) {
+			if (!message.isFake()) 
+				result.add(message);
+			}
+		return result;
+		}
+	
 }

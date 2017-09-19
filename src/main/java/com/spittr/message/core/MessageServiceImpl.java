@@ -241,12 +241,15 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public Map<String, Object> userMessage(Date time, User user) {
+	public Map<String, Object> userMessage(Date time, User user, boolean isCurrentUser) {
 		// TODO Auto-generated method stub
 		int num = StaticConfig.ITEM_PER_PAGE;
 		List<Message> messages = messageDao.getByUid(user.getUid(), time, num);
 		
-		messages = MessageIssues.generateFakeMessageList(messages);
+		if (isCurrentUser) 
+			messages = MessageIssues.generateFakeMessageList(messages);
+		else 
+			messages = MessageIssues.removeFakeMessage(messages);
 		
 		Map<String, Object> map = getMap();
 		map.put(BEFORE_TIME, time);

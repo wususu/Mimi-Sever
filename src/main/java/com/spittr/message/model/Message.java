@@ -261,10 +261,6 @@ public class Message implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Message other = (Message) obj;
-		if (commentCount != other.commentCount)
-			return false;
-		if (commentNextVal != other.commentNextVal)
-			return false;
 		if (content == null) {
 			if (other.content != null)
 				return false;
