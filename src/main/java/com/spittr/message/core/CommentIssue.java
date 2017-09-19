@@ -8,10 +8,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spittr.message.exception.AuthorityNotAllowException;
 import com.spittr.message.exception.CommentNotFoundException;
+import com.spittr.message.exception.SourceDataErrorException;
 import com.spittr.message.exception.UnderMessageNotEqualException;
 import com.spittr.message.model.Comment;
 import com.spittr.message.model.Message;
 import com.spittr.user.model.User;
+import com.sun.org.apache.bcel.internal.generic.I2F;
 
 
 public class CommentIssue {
@@ -26,6 +28,27 @@ public class CommentIssue {
 		// TODO Auto-generated constructor stub
 	}
 
+	public static void generateDetailComment(Comment comment){
+		if (comment == null) 
+			throw new SourceDataErrorException();
+		
+		if (comment.getReplayWhichComment() == null) 
+			return ;
+		
+		Comment rComment = null;
+		User rUser = null;
+
+		if (comment.getRcid() == null || comment.getRcuid() == null || comment.getRcUname() == null || comment.getRcNname() == null) {
+			rComment = comment.getReplayWhichComment();
+			rUser = rComment.getUser();
+			
+			comment.setRcid(rComment.getCid());
+			comment.setRcuid(rUser.getUid());
+			comment.setRcUname(rUser.getUname());
+			comment.setRcNname(rUser.getNname());
+		}
+			
+	}
 	
 	public static Comment generateIsFake(Comment comment, Boolean isFake){
 		if (isFake != null && isFake.equals(true)) {

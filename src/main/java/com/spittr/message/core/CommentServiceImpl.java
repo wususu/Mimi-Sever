@@ -135,6 +135,10 @@ public class CommentServiceImpl implements CommentService{
 		Integer num = StaticConfig.ITEM_PER_PAGE;
 		List<Comment> comments = commentDao.getBeforeTime(mid, time, num);
 		
+		// comment添加详细信息
+		for (int i=0; i<comments.size(); i++)
+			CommentIssue.generateDetailComment(comments.get(i));
+		
 		DynamicFilter fakeFilter = DynamicFilter.getInstance()
 				.addFilteFields("user")
 				.addFilteFields("uid");
@@ -160,6 +164,11 @@ public class CommentServiceImpl implements CommentService{
 		Integer num = StaticConfig.ITEM_PER_PAGE;
 		List<Comment> comments = commentDao.getAfterTime(mid, time, num);
 		
+		// comment添加详细信息
+		for (int i=0; i<comments.size(); i++)
+			CommentIssue.generateDetailComment(comments.get(i));
+		
+		// 选择屏蔽发送人信息
 		DynamicFilter fakeFilter = DynamicFilter.getInstance()
 				.addFilteFields("user")
 				.addFilteFields("uid");
