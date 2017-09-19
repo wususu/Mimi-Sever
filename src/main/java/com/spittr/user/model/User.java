@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.spittr.image.model.UserImage;
 
 
 @Entity
@@ -59,6 +60,10 @@ public class User implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time", nullable=true)
 	private Date tmCreated;
+	
+	@OneToOne
+	@JoinColumn(name="userPic", nullable=true)
+	private UserImage userPic;
 	
 	//所属学院
 	@Column(nullable=true)
@@ -120,6 +125,14 @@ public class User implements Serializable{
 		this.plogin = plogin;
 	}
 	
+	public UserImage getUserPic() {
+		return userPic;
+	}
+
+	public void setUserPic(UserImage userPic) {
+		this.userPic = userPic;
+	}
+
 	public String getSite() {
 		return site;
 	}

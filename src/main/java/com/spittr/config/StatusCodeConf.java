@@ -20,6 +20,6 @@ public class StatusCodeConf {
 	
 	public static final int ForbiddenCode = -400;		//操作不允许
 	public static final int DataErrorCode = -401;		// 数据错误
-	public static final int ResourceNotFoundCode = -404;		//资源不存在
+ 	public static final int ResourceNotFoundCode = -404;		//资源不存在
 	
 }

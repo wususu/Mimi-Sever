@@ -9,13 +9,12 @@ import com.spittr.config.StaticConfig;
 import com.spittr.image.exception.ImageAlreadyBeUsedException;
 import com.spittr.image.exception.ImageNotFoundException;
 import com.spittr.image.model.MessageImage;
+import com.spittr.image.model.UserImage;
 
 public class ImageIssues {
-
-	private static ImageIssues instance = new ImageIssues();
 	
-	public static ImageIssues getInstance(){
-		return instance;
+	private ImageIssues(){
+		throw new AssertionError();
 	}
 	
 	public static String generateImagePath(String fatherDir, String childDir){
@@ -40,8 +39,13 @@ public class ImageIssues {
 		return true;
 	}
 	
-	public static void formatImagePath(MessageImage messageImage, String appRootDir){
+	public static void formatMessageImagePath(MessageImage messageImage, String appRootDir){
 		messageImage.setWebPath(appRootDir + messageImage.getWebPath());
+		return ;
+	}
+	
+	public static void formatUserImagePath(UserImage userImage, String appRootDir){
+		userImage.setWebPath(appRootDir + userImage.getWebPath());
 		return ;
 	}
 	

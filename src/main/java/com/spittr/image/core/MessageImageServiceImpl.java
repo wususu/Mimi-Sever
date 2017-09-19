@@ -22,6 +22,10 @@ public class MessageImageServiceImpl implements MessageImageService{
 	@Qualifier("messageImageDaoImpl")
 	private MessageImageDao messageImageDao;
 	
+	/**
+	 * fatherPath: 存放根目录
+	 * base64String: 图片的base64编码
+	 */
 	@Override
 	public String saveImageFromBase64(String fatherPath, String base64String){
 		Date date = newDate();

@@ -14,9 +14,12 @@ import com.spittr.authorization.annotation.AutoCurrentUser;
 import com.spittr.config.StaticConfig;
 import com.spittr.image.core.ImageIssues;
 import com.spittr.image.core.MessageImageService;
+import com.spittr.image.core.UserImageService;
 import com.spittr.image.model.MessageImage;
+import com.spittr.image.model.UserImage;
 import com.spittr.message.core.MessageService;
 import com.spittr.model.ReturnModel;
+import com.spittr.user.core.UserService;
 import com.spittr.user.model.User;
 
 
@@ -30,13 +33,17 @@ public class ImageController {
 	private MessageImageService messageImageService;
 	
 	@Autowired
+	@Qualifier("userImageServiceImpl")
+	private UserImageService userImageService;
+	
+	@Autowired
 	@Qualifier("messageServiceImpl")
 	private MessageService messageService;
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	@ResponseStatus(value=HttpStatus.OK)
 	@Authorization
-	public ReturnModel base64Image(
+	public ReturnModel createMessageImage(
 			@AutoCurrentUser User user,
 			@RequestParam("image") String image,
 			HttpServletRequest request
@@ -48,8 +55,25 @@ public class ImageController {
 		String webPath = messageImageService.saveImageFromBase64(imageDirPath, image);
 		MessageImage messageImage = messageImageService.get(webPath);
 
-		ImageIssues.formatImagePath(messageImage, appRootDir);
+		ImageIssues.formatMessageImagePath(messageImage, appRootDir);
 		return ReturnModel.SUCCESS(messageImage);
+	}
+	
+	@RequestMapping(value="/user/create", method=RequestMethod.POST)
+	@Authorization
+	public ReturnModel createUserImage(
+			@AutoCurrentUser User user,
+			@RequestParam("image") String image,
+			HttpServletRequest request
+			){
+		
+		String imageDirPath = request.getSession().getServletContext().getRealPath(StaticConfig.DEFAULT_IMAGE_DIRECTORY);
+		String appRootDir = request.getServletContext().getContextPath();
+		
+		UserImage userImage = userImageService.saveImageFromBase64(imageDirPath, image, user);
+
+		ImageIssues.formatUserImagePath(userImage, appRootDir);
+		return ReturnModel.SUCCESS(userImage);
 	}
 	
 }
