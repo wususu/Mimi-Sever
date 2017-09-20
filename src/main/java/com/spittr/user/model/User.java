@@ -132,6 +132,7 @@ public class User implements Serializable{
 	public void setUserPic(UserImage userPic) {
 		this.userPic = userPic;
 	}
+	
 
 	public String getSite() {
 		return site;

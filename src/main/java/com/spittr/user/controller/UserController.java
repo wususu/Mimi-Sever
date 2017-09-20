@@ -9,11 +9,16 @@ import com.spittr.authorization.annotation.Authorization;
 import com.spittr.authorization.annotation.AutoCurrentUser;
 import com.spittr.authorization.model.Token;
 import com.spittr.model.ReturnModel;
+import com.spittr.user.core.UserRelationshipService;
 import com.spittr.user.core.UserService;
 import com.spittr.user.dao.UserDao;
 import com.spittr.user.exception.PasswdNotEqualsException;
 import com.spittr.user.model.User;
+import com.spittr.user.model.UserRelationship;
 
+import static com.spittr.core.JSONConstants.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping(value="/api/user")
@@ -27,6 +32,10 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("userRelationshipServiceImpl")
+	private UserRelationshipService userRelationshipService;
 	
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
@@ -71,11 +80,19 @@ public class UserController {
 
 	@Authorization
 	@RequestMapping(value="/profile/{uname}", method=RequestMethod.GET)
-	public ReturnModel get(@PathVariable String uname){
-		// 头像
+	public ReturnModel get(
+			@PathVariable String uname,
+			@AutoCurrentUser User currentUser
+			){
 		
 		User user = userService.get(uname);
-		return ReturnModel.SUCCESS(user);
+		UserRelationship userRelationship = userRelationshipService.get(currentUser, user);
+		boolean isAttention = (userRelationship == null || userRelationship.isDelete())? false : true;
+		Map<String, Object> map = getMap();
+		map.put(USER, user);
+		map.put(IS_ATTENTION, isAttention);
+		
+		return ReturnModel.SUCCESS(map);
 	}
 	
 	@Authorization

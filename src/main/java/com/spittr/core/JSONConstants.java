@@ -33,6 +33,10 @@ public class JSONConstants {
 	public static final String ISLIKE = "isLike";
 	
 	public static final String LIKE_COUNT = "likeCount";
+	
+	public static final String USER = "user";
+	
+	public static final String IS_ATTENTION = "isAttention";
 
 	
 	public static Map<String, Object> getMap(){
