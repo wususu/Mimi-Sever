@@ -17,9 +17,24 @@ import com.spittr.user.exception.PasswdNotEqualsException;
 @CrossOrigin(origins="*", maxAge=3600)
 public class ExceptionsHandler {
 	
+	/**
+	 * 操作错误
+	 * @param e
+	 * @return
+	 */
 	@ExceptionHandler(BaseException.class)
 	public ResponseEntity<ReturnModel> handleException(BaseException e){
 		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(e), HttpStatus.OK);
+	}
+	
+	/**
+	 * 系统错误
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ReturnModel> handleException(Exception e){
+		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(), HttpStatus.OK);
 	}
 	
 }
