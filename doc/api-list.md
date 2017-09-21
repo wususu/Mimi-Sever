@@ -1630,7 +1630,7 @@
 
 #### 1.查看某用户发过的历史message:
 
-		- url: /api/message/user/{tmbefore}
+		- url: /api/message/user/{uname}/{tmbefore}
 		
 		- method: GET
 		
