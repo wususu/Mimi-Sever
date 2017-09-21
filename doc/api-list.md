@@ -1337,6 +1337,8 @@
 		}
 
 - 查看其他用户个人信息:
+`isAttention`:代表当前登录用户是否关注此用户
+
 
 		- url: /api/user/profile/{uname}
 		
@@ -1345,21 +1347,25 @@
 		- login: true
 		
 		- response:
-		{
-		    "code": 200,
-		    "message": "成功",
-		    "content": {
-			"uid": 2,
-			"uname": "liaojiekx",
-			"nname": "liaojie",
-			"tmCreated": 1501605274000,
-			"faculty": "faculty111",
-			"grade": 2015,
-			"site": "五山",
-			"signature": "帅气的人",
-			"gender": true
-		    }
-		}
+			{
+			    "code": 200,
+			    "message": "成功",
+			    "content": {
+			        "isAttention": true,
+			        "user": {
+			            "uid": 16,
+			            "uname": "liaojiekx",
+			            "nname": "liaojie",
+			            "tmCreated": 1504930854000,
+			            "userPic": null,
+			            "faculty": null,
+			            "grade": null,
+			            "site": null,
+			            "signature": null,
+			            "gender": null
+			        }
+			    }
+			}
 
 #### 2.新增点赞接口
  注意: 点赞和取消点赞都是同一个接口
@@ -1618,3 +1624,273 @@
 			"numPerPage": 15
 		    }
 		}
+
+		
+### Update(2017.9.20)
+
+#### 1.查看某用户发过的历史message:
+
+		- url: /api/message/user/{tmbefore}
+		
+		- method: GET
+		
+		- login: false
+		
+		- response(success):
+		
+			{
+			    "code": 200,
+			    "message": "成功",
+			    "content": {
+			        "messageList": [
+			            {
+			                "mid": 1206,
+			                "uid": 1,
+			                "lid": 3,
+			                "user": {
+			                    "uid": 1,
+			                    "uname": "wususu",
+			                    "nname": "吴叔叔",
+			                    "tmCreated": 1503126951000,
+			                    "userPic": null,
+			                    "faculty": "外国语学院",
+			                    "grade": 2016,
+			                    "site": "华山区",
+			                    "signature": "哈哈哈哈",
+			                    "gender": true
+			                },
+			                "content": "test",
+			                "tmCreated": 1505533770000,
+			                "messageImageSet": [],
+			                "fakeName": null,
+			                "likeCount": 0,
+			                "likee": null,
+			                "commentCount": 0,
+			                "commentNextVal": 1,
+			                "location": {
+			                    "lid": 3,
+			                    "locale": "图书馆"
+			                },
+			                "fake": false,
+			                "delete": false
+			            },
+			            {
+			                "mid": 1022,
+			                "uid": 1,
+			                "lid": 3,
+			                "user": {
+			                    "uid": 1,
+			                    "uname": "wususu",
+			                    "nname": "吴叔叔",
+			                    "tmCreated": 1503126951000,
+			                    "userPic": null,
+			                    "faculty": "外国语学院",
+			                    "grade": 2016,
+			                    "site": "华山区",
+			                    "signature": "哈哈哈哈",
+			                    "gender": true
+			                },
+			                "content": "其全球",
+			                "tmCreated": 1505397506000,
+			                "messageImageSet": [
+			                    {
+			                        "imageid": 1021,
+			                        "webPath": "/images/2017-09-14/09:58:24_1505397504669.png",
+			                        "mid": 1022
+			                    }
+			                ],
+			                "fakeName": null,
+			                "likeCount": 0,
+			                "likee": null,
+			                "commentCount": 0,
+			                "commentNextVal": 1,
+			                "location": {
+			                    "lid": 3,
+			                    "locale": "图书馆"
+			                },
+			                "fake": false,
+			                "delete": false
+			            },
+			            {
+			                "mid": 1017,
+			                "uid": 1,
+			                "lid": 3,
+			                "user": {
+			                    "uid": 1,
+			                    "uname": "wususu",
+			                    "nname": "吴叔叔",
+			                    "tmCreated": 1503126951000,
+			                    "userPic": null,
+			                    "faculty": "外国语学院",
+			                    "grade": 2016,
+			                    "site": "华山区",
+			                    "signature": "哈哈哈哈",
+			                    "gender": true
+			                },
+			                "content": "啊啊",
+			                "tmCreated": 1505397316000,
+			                "messageImageSet": [],
+			                "fakeName": null,
+			                "likeCount": 0,
+			                "likee": null,
+			                "commentCount": 0,
+			                "commentNextVal": 1,
+			                "location": {
+			                    "lid": 3,
+			                    "locale": "图书馆"
+			                },
+			                "fake": false,
+			                "delete": false
+			            },
+			            {
+			                "mid": 1015,
+			                "uid": 1,
+			                "lid": 3,
+			                "user": {
+			                    "uid": 1,
+			                    "uname": "wususu",
+			                    "nname": "吴叔叔",
+			                    "tmCreated": 1503126951000,
+			                    "userPic": null,
+			                    "faculty": "外国语学院",
+			                    "grade": 2016,
+			                    "site": "华山区",
+			                    "signature": "哈哈哈哈",
+			                    "gender": true
+			                },
+			                "content": "测",
+			                "tmCreated": 1505397298000,
+			                "messageImageSet": [
+			                    {
+			                        "imageid": 1014,
+			                        "webPath": "/images/2017-09-14/09:54:56_1505397296626.png",
+			                        "mid": 1015
+			                    }
+			                ],
+			                "fakeName": null,
+			                "likeCount": 0,
+			                "likee": null,
+			                "commentCount": 0,
+			                "commentNextVal": 1,
+			                "location": {
+			                    "lid": 3,
+			                    "locale": "图书馆"
+			                },
+			                "fake": false,
+			                "delete": false
+			            },
+			            {
+			                "mid": 928,
+			                "uid": 1,
+			                "lid": 3,
+			                "user": {
+			                    "uid": 1,
+			                    "uname": "wususu",
+			                    "nname": "吴叔叔",
+			                    "tmCreated": 1503126951000,
+			                    "userPic": null,
+			                    "faculty": "外国语学院",
+			                    "grade": 2016,
+			                    "site": "华山区",
+			                    "signature": "哈哈哈哈",
+			                    "gender": true
+			                },
+			                "content": "11111111今生今世就爱计算机案件王家卫鸡尾酒11111111今生今世就爱计算机案件王家卫鸡尾酒111111111111111今生今世就爱计算机案件王家卫鸡尾酒11111111今生今世就爱计算机案件王家卫鸡尾酒11111111今生今世就爱计算机案件王家卫鸡尾酒1今生今世就爱计算机案件王家卫鸡尾酒",
+			                "tmCreated": 1505317065000,
+			                "messageImageSet": [],
+			                "fakeName": null,
+			                "likeCount": 0,
+			                "likee": null,
+			                "commentCount": 2,
+			                "commentNextVal": 3,
+			                "location": {
+			                    "lid": 3,
+			                    "locale": "图书馆"
+			                },
+			                "fake": false,
+			                "delete": false
+			            },
+			            {
+			                "mid": 4,
+			                "uid": 1,
+			                "lid": 3,
+			                "user": {
+			                    "uid": 1,
+			                    "uname": "wususu",
+			                    "nname": "吴叔叔",
+			                    "tmCreated": 1503126951000,
+			                    "userPic": null,
+			                    "faculty": "外国语学院",
+			                    "grade": 2016,
+			                    "site": "华山区",
+			                    "signature": "哈哈哈哈",
+			                    "gender": true
+			                },
+			                "content": "巴拉拉小魔仙",
+			                "tmCreated": 1503127249000,
+			                "messageImageSet": [],
+			                "fakeName": null,
+			                "likeCount": 0,
+			                "likee": null,
+			                "commentCount": 0,
+			                "commentNextVal": 1,
+			                "location": {
+			                    "lid": 3,
+			                    "locale": "图书馆"
+			                },
+			                "fake": false,
+			                "delete": false
+			            }
+			        ],
+			        "tmBefore": 1505991552502,
+			        "numThisPage": 6,
+			        "numPerPage": 15
+			    }
+			}
+			
+#### 2.用户头像修改/更新:
+
+		- url: /api/image/user/create
+		
+		- method: POST
+		
+		- login: login
+		
+		- response(success):
+				{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+		        "webPath": "/Mimi-3.1/images/2017-09-21/07:19:15_1505992755141.png",
+		        "delete": false,
+		        "imageid": 1568
+		    }
+			}
+
+用户有头像的话, 会在个人信息出自动添加一个`userPic`
+
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+		        "isAttention": false,
+		        "user": {
+		            "uid": 16,
+		            "uname": "liaojiekx",
+		            "nname": "liaojie",
+		            "tmCreated": 1504930854000,
+		            "userPic": {
+		                "webPath": "/images/2017-09-21/07:17:21_1505992641649.png",
+		                "delete": false,
+		                "imageid": 1568
+		            },
+		            "faculty": null,
+		            "grade": null,
+		            "site": null,
+		            "signature": null,
+		            "gender": null
+		        }
+		    }
+		}
+
+

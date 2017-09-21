@@ -8,6 +8,7 @@ websocket 不同于http, 前者更为底层,即使使用子协议stomp,还是不
 [JS-Stomp Over Websocket文档](https://segmentfault.com/a/1190000006617344)
 
 ### 点对点聊天流程:
+信息的接收模仿了 tcp三次握手<br/>
 唔...差不多如图
 ![用户A向用户B发送消息,B成功接收的整个流程](../pic/socket_chatting_process.png)
 

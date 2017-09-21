@@ -34,3 +34,23 @@ DataErrorCode = -401;
 
 - 资源不存在
 ResourceNotFoundCode = -404;		
+
+-----------
+
+####  返回示例:
+已知错误: 有具体`message`提示, 异常类型:
+
+			{
+			    "code": -200,
+			    "message": "Token error, check it again.",
+			    "content": "TokenErrorException"
+			}
+			
+			
+系统未知错误:统一异常`code`为-300
+
+		{
+		    "code": -300,
+		    "message": "失败",
+		    "content": "(゜Д゜;)"
+		}
