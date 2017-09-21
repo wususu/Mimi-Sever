@@ -8,8 +8,8 @@ import java.util.Date;
 import com.spittr.config.StaticConfig;
 import com.spittr.image.exception.ImageAlreadyBeUsedException;
 import com.spittr.image.exception.ImageNotFoundException;
+import com.spittr.image.model.Image;
 import com.spittr.image.model.MessageImage;
-import com.spittr.image.model.UserImage;
 
 public class ImageIssues {
 	
@@ -39,13 +39,8 @@ public class ImageIssues {
 		return true;
 	}
 	
-	public static void formatMessageImagePath(MessageImage messageImage, String appRootDir){
-		messageImage.setWebPath(appRootDir + messageImage.getWebPath());
-		return ;
-	}
-	
-	public static void formatUserImagePath(UserImage userImage, String appRootDir){
-		userImage.setWebPath(appRootDir + userImage.getWebPath());
+	public static <T extends Image> void formatImagePath(T image, String appRootDir){
+		image.setWebPath(appRootDir + image.getWebPath());
 		return ;
 	}
 	

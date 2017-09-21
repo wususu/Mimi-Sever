@@ -19,7 +19,7 @@ import com.spittr.user.model.User;
 @Entity
 @Table(name="user_image")
 @JsonIgnoreProperties({"user", "realPath", "isDelete", "tmDelete", "tmCreated", "uid"})
-public class UserImage implements Serializable{
+public class UserImage implements Image, Serializable{
 
 	/**
 	 * 

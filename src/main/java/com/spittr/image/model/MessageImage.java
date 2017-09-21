@@ -20,7 +20,7 @@ import com.spittr.message.model.Message;
 @Entity
 @Table(name="message_image")
 @JsonIgnoreProperties({"message", "realPath", "isDelete", "tmDelete", "tmCreated"})
-public class MessageImage implements Serializable{
+public class MessageImage implements Image, Serializable{
 
 	/**
 	 * 

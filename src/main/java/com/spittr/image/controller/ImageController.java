@@ -55,7 +55,7 @@ public class ImageController {
 		String webPath = messageImageService.saveImageFromBase64(imageDirPath, image);
 		MessageImage messageImage = messageImageService.get(webPath);
 
-		ImageIssues.formatMessageImagePath(messageImage, appRootDir);
+		ImageIssues.<MessageImage>formatImagePath(messageImage, appRootDir);
 		return ReturnModel.SUCCESS(messageImage);
 	}
 	
@@ -72,7 +72,7 @@ public class ImageController {
 		
 		UserImage userImage = userImageService.saveImageFromBase64(imageDirPath, image, user);
 
-		ImageIssues.formatUserImagePath(userImage, appRootDir);
+		ImageIssues.<UserImage>formatImagePath(userImage, appRootDir);
 		return ReturnModel.SUCCESS(userImage);
 	}
 	
