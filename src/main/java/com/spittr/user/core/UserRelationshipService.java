@@ -18,7 +18,6 @@ public interface UserRelationshipService {
 		
 	Map<String, Object> attentionsByObjectUser(User objectUser, Date bfTime);
 
-
 	Map<String, Object> attentionsByMainUser(User mainUser, Date bfTime);
 
 	

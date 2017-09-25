@@ -56,54 +56,67 @@ public class UserRelationshipServiceImpl implements UserRelationshipService{
 		return true;
 	}
 
-	public List<User> getAttentionsByObjectUser(User objectUser, Date bfTime) {
+	private List<Map<String,Object>> getAttentionsByObjectUser(User objectUser, Date bfTime) {
 		// TODO Auto-generated method stub
-		List<User> mainUsers = new LinkedList<>();
+		Map<String, Object> mainUser = null;
+		List<Map<String, Object>> mainUsers = new ArrayList<>();
+		
 		List<UserRelationship> userRelationships = userRelationshipDao.getObjectUserRelationship(objectUser, bfTime, ITEM_PER_PAGE);
 		
-		for (UserRelationship userRelationship : userRelationships) 
-			mainUsers.add(userRelationship.getMainUser());
-		
+		for (UserRelationship userRelationship : userRelationships) {
+			mainUser = getMap();
+			mainUser.put(USER, userRelationship.getMainUser());
+			mainUser.put(ATTENTION_TIME, userRelationship.getTmCreated());
+			mainUsers.add(mainUser);
+		}
+			
 		return mainUsers;
 	}
 	
 	@Override
 	public Map<String, Object> attentionsByObjectUser(User objectUser, Date bfTime) {
 		// TODO Auto-generated method stub
-		List<User> users = getAttentionsByObjectUser(objectUser, bfTime);
+		List<Map<String, Object>> mainUsers = getAttentionsByObjectUser(objectUser, bfTime);
 		
-		Map<String, Object> map = getMap();
-		map.put(MAIN_USER_LIST, users);
-		map.put(BEFORE_TIME, bfTime);
-		map.put(NUM_THIS_PAGE, users.size());
-		map.put(NUM_PER_PAGE, ITEM_PER_PAGE);
+		Map<String, Object> mainMap = getMap();
+		mainMap.put(MAIN_USER_LIST, mainUsers);
+		mainMap.put(BEFORE_TIME, bfTime);
+		mainMap.put(NUM_THIS_PAGE, mainUsers.size());
+		mainMap.put(NUM_PER_PAGE, ITEM_PER_PAGE);
 		
-		return map;
+		return mainMap;
 	}
 
-	public List<User> getAttentionsByMainUser(User mainUser, Date bfTime) {
+	private List<Map<String, Object>> getAttentionsByMainUser(User mainUser, Date bfTime) {
 		// TODO Auto-generated method stub
-		List<User> objectUsers = new LinkedList<>();
+		Map<String, Object> objectUser = null;
+		List<Map<String, Object>> objectUsers = new ArrayList<>();
 		List<UserRelationship> userRelationships = userRelationshipDao.getMainUserRelationship(mainUser, bfTime, ITEM_PER_PAGE);
 		
-		for (UserRelationship userRelationship : userRelationships) 
-			objectUsers.add(userRelationship.getObjectUser());
-		
+		for (UserRelationship userRelationship : userRelationships) {
+			objectUser = getMap();
+			objectUser.put(USER,userRelationship.getObjectUser());
+			objectUser.put(ATTENTION_TIME, userRelationship.getTmCreated());
+			objectUsers.add(objectUser);
+		}
+		System.out.println("objectUsers: ");
+		System.out.println(objectUsers);
+
 		return objectUsers;
 	}
 	
 	@Override
 	public Map<String, Object> attentionsByMainUser(User mainUser, Date bfTime) {
 		// TODO Auto-generated method stub
-		List<User> users = getAttentionsByMainUser(mainUser, bfTime);
+		List<Map<String, Object>> objectUsers = getAttentionsByMainUser(mainUser, bfTime);
 		
-		Map<String, Object> map = getMap();
-		map.put(MAIN_USER_LIST, users);
-		map.put(BEFORE_TIME, bfTime);
-		map.put(NUM_THIS_PAGE, users.size());
-		map.put(NUM_PER_PAGE, ITEM_PER_PAGE);
+		Map<String, Object> objectMap = getMap();
+		objectMap.put(MAIN_USER_LIST, objectUsers);
+		objectMap.put(BEFORE_TIME, bfTime);
+		objectMap.put(NUM_THIS_PAGE, objectUsers.size());
+		objectMap.put(NUM_PER_PAGE, ITEM_PER_PAGE);
 		
-		return map;
+		return objectMap;
 	}
 	
 }

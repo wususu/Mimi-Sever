@@ -49,8 +49,9 @@ public class UserRelationshipDaoImpl extends BaseDaoHibernate5<UserRelationship>
 		Criteria criteria = session.createCriteria(UserRelationship.class)
 				.add(Restrictions.eq("isDelete", false))
 				.add(Restrictions.eq("mainUser", mainUser))
-				.add(Restrictions.le("tmCreated", bfTime))
 				.addOrder(Order.desc("tmCreated"))
+				.add(Restrictions.le("tmCreated", bfTime))
+				.setFirstResult(0)
 				.setMaxResults(limit);
 		
 		@SuppressWarnings("unchecked")
@@ -66,8 +67,9 @@ public class UserRelationshipDaoImpl extends BaseDaoHibernate5<UserRelationship>
 		Criteria criteria = session.createCriteria(UserRelationship.class)
 				.add(Restrictions.eq("isDelete", false))
 				.add(Restrictions.eq("objectUser", objectUser))
-				.add(Restrictions.le("tmCreated", bfTime))
 				.addOrder(Order.desc("tmCreated"))
+				.add(Restrictions.le("tmCreated", bfTime))
+				.setFirstResult(0)
 				.setMaxResults(limit);
 		
 		@SuppressWarnings("unchecked")

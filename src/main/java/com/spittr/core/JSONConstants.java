@@ -38,6 +38,8 @@ public class JSONConstants {
 	
 	public static final String IS_ATTENTION = "isAttention";
 
+	public static final String ATTENTION_TIME = "tmAttention";
+	
 	
 	public static Map<String, Object> getMap(){
 		return new HashMap<String, Object>();

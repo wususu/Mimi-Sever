@@ -60,7 +60,9 @@ public class UserRelationshipController {
 			@PathVariable(name="tmbefore", required=false) Long tmbefore
 			){
 		Date bfTime = null;
+		System.out.println(bfTime);
 		bfTime = tmbefore == null? (new Date()) : (new Date(tmbefore));
+		System.out.println(bfTime);
 		Map<String, Object> data = userRelationshipService.attentionsByMainUser(mainUser, bfTime);
 		
 		return ReturnModel.SUCCESS(data);

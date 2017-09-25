@@ -211,11 +211,6 @@ public class User implements Serializable{
 				return false;
 		} else if (!nname.equals(other.nname))
 			return false;
-		if (plogin == null) {
-			if (other.plogin != null)
-				return false;
-		} else if (!plogin.equals(other.plogin))
-			return false;
 		if (tmCreated == null) {
 			if (other.tmCreated != null)
 				return false;
