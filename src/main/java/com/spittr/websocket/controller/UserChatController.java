@@ -1,24 +1,16 @@
 package com.spittr.websocket.controller;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spittr.config.StaticConfig;
 import com.spittr.user.core.UserService;
 import com.spittr.user.model.User;
 import com.spittr.websocket.model.SendMsg;
@@ -28,12 +20,11 @@ import com.spittr.websocket.core.SocketAuthorization;
 import com.spittr.websocket.exception.ChatMsgReciverErrorException;
 import com.spittr.websocket.exception.ParamersErrorException;
 import com.spittr.websocket.exception.ParamersRequiredException;
-import com.spittr.websocket.model.ChatMsg;
-import com.spittr.websocket.model.ErrorMsg;
-import com.spittr.websocket.model.StatusMsg;
-import com.spittr.websocket.model.ReciveMsg;
+import com.spittr.websocket.model.*;
 
 import static com.spittr.websocket.config.WebSocketConstant.*;
+
+
 @Controller
 public class UserChatController {
 	
@@ -56,10 +47,8 @@ public class UserChatController {
 			for (ChatMsg chatMsg : chatMsgsNotRecived) {
 				messageingTemplate.convertAndSendToUser(user.getUname(), "/recive", chatMsg);
 				messageingTemplate.convertAndSendToUser(String.valueOf(user.getUid()), "/recive", chatMsg);
-
 			}
 		}
-		
 	}
 	
 	/**

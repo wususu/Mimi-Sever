@@ -37,11 +37,17 @@ public class ChatMsg implements Serializable{
 	@Column(nullable=false, unique=true)
 	private String chatID;
 	
+	// sender 的 uName
 	@Column(nullable=false)
 	private String sender;
-	
+
+	// reciver 的 uName
 	@Column(nullable=false)
 	private String reciver;
+	
+	// sender 的 nName
+	@Column(nullable=false)
+	private String nSender;
 	
 	@Column(nullable=false)
 	private String content;
@@ -67,14 +73,15 @@ public class ChatMsg implements Serializable{
 	}
 	
 	public ChatMsg(User sender, User reciver, SendMsg sendMsg) {
-		this(sendMsg.getMsgID(), sender.getUname(), reciver.getUname(), sendMsg.getMessage(), new Date(), sender.getUid(), reciver.getUid(), false, null);
+		this(sendMsg.getMsgID(), sender.getUname(), sender.getNname(), reciver.getUname(), reciver.getNname(), sendMsg.getMessage(), new Date(), sender.getUid(), reciver.getUid(), false, null);
 	}
 	
-	public ChatMsg( String chatID, String sender, String reciver, String content, Date time, Long senderId,
+	public ChatMsg( String chatID, String sender, String nSender, String reciver, String nReciver, String content, Date time, Long senderId,
 			Long reciverId, Boolean isRecived, Date tmRecived) {
 		super();
 		this.chatID = chatID;
 		this.sender = sender;
+		this.nSender = nSender;
 		this.reciver = reciver;
 		this.content = content;
 		this.time = time;
@@ -164,6 +171,18 @@ public class ChatMsg implements Serializable{
 
 	public void setTmRecived(Date tmRecived) {
 		this.tmRecived = tmRecived;
+	}
+	
+	public String getnSender() {
+		return nSender;
+	}
+
+	public void setnSender(String nSender) {
+		this.nSender = nSender;
+	}
+
+	public void setRecived(boolean isRecived) {
+		this.isRecived = isRecived;
 	}
 
 	@Override

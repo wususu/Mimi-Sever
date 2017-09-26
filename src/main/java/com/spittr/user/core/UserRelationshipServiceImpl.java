@@ -56,6 +56,7 @@ public class UserRelationshipServiceImpl implements UserRelationshipService{
 		return true;
 	}
 
+	// 提取并封装objectUser
 	private List<Map<String,Object>> getAttentionsByObjectUser(User objectUser, Date bfTime) {
 		// TODO Auto-generated method stub
 		Map<String, Object> mainUser = null;
@@ -87,6 +88,7 @@ public class UserRelationshipServiceImpl implements UserRelationshipService{
 		return mainMap;
 	}
 
+	// 提取并封装mainUser
 	private List<Map<String, Object>> getAttentionsByMainUser(User mainUser, Date bfTime) {
 		// TODO Auto-generated method stub
 		Map<String, Object> objectUser = null;
@@ -99,8 +101,6 @@ public class UserRelationshipServiceImpl implements UserRelationshipService{
 			objectUser.put(ATTENTION_TIME, userRelationship.getTmCreated());
 			objectUsers.add(objectUser);
 		}
-		System.out.println("objectUsers: ");
-		System.out.println(objectUsers);
 
 		return objectUsers;
 	}
