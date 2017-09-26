@@ -1,8 +1,10 @@
  
-# Mimi 华南农业大学匿名朋友圈  
+# Mimi 华南农业大学匿名朋友圈(Server Side)
 
  <img src="./pic/logo.png" style="text-align:center;" width="40%" height="60%">
 
+- web客户端: [web client](https://github.com/Q-Zhan/IT-Farm)
+- 安卓客户端: [Android client](https://github.com/Arsun/Mimi)
 
 ## 当前功能:
 - 用户登录
