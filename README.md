@@ -1,5 +1,5 @@
  
-# Mimi 华南农业大学匿名朋友圈(Server Side)
+# Mimi 华南农业大学匿名朋友圈(Sever Side)
 
  <img src="./pic/logo.png" style="text-align:center;" width="40%" height="60%">
 
