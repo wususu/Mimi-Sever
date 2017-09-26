@@ -95,39 +95,28 @@ public class CommentController {
 		
 		return ReturnModel.SUCCESS();
 	}
-
-	@RequestMapping(value={"/message/{mid}/page/{pid}"}, method=RequestMethod.GET)
-	public ReturnModel page(
-			@PathVariable("mid") Long mid,
-			@PathVariable(value = "pid", required=false) Integer pid
-			){
-		Message message = messageService.get(mid);
-		MessageIssues.checkIsDelete(message);
-		
-		Map<String, Object> result = commentService.getByMidAndPageNumber(mid, pid);
-		
-		return ReturnModel.SUCCESS(result);
-	}
 	
 	@RequestMapping(value={"/message/{mid}/tmbefore/{time}", "/message/{mid}/tmbefore", "message/{mid}"}, method=RequestMethod.GET)
 	public ReturnModel beforeTime(
+			@AutoCurrentUser User currentUser,
 			@PathVariable("mid") Long mid,
 			@PathVariable(value="time", required=false) Long time
 			){
 		if (time == null) 
 			time = (new Date()).getTime();
 		
-		Map< String, Object> result = commentService.getCommentBeforeTime(mid, new Date(time));
+		Map< String, Object> result = commentService.getCommentBeforeTime(mid, new Date(time), currentUser);
 		return ReturnModel.SUCCESS(result);
 	}
 	
 	@RequestMapping(value={"/message/{mid}/tmafter/{time}"}, method=RequestMethod.GET)
 	public ReturnModel afterTime(
+			@AutoCurrentUser User currentUser,
 			@PathVariable("mid") Long mid,
 			@PathVariable(value="time", required=false) Long time
 			){
 
-		Map<String, Object> result = commentService.getCommentAfterTime(mid, new Date(time));
+		Map<String, Object> result = commentService.getCommentAfterTime(mid, new Date(time), currentUser);
 		return ReturnModel.SUCCESS(result);
 	}
 	

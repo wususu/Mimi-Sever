@@ -6,21 +6,28 @@ import java.util.List;
 import com.spittr.dao.BaseDao;
 import com.spittr.message.model.Message;
 import com.spittr.tools.page.Page;
-import com.spittr.user.model.User;
 
 public interface MessageDao extends BaseDao<Message>{
 
 	List<Message> get(Page page);
 	
+	Message get(Long mid);
+	
+	@Deprecated
 	List<Message> getByLid(Page page, Long lid);
 	
-	List<Message> getBeforeTime(Date time, int num);
+	List<Message> getBeforeTime(Date tmbefore, int num);
 	
-	List<Message> getAfterTime(Date time, int num);
+	List<Message> getAfterTime(Date tmafter, int num);
+	
+	List<Message> getBeforeTime(Date tmbefore, Long lid, int num);
+	
+	List<Message> getAfterTime(Date tmafter, Long lid, int num);
 	
 	List<Message> getByUid(long uid, Date time, int num);
 	
 	Long count();
 	
+	@Deprecated
 	Long coutByLid(Long lid);
 }

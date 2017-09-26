@@ -1,6 +1,5 @@
 package com.spittr.message.dao;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.spittr.config.StaticConfig;
 import com.spittr.dao.BaseDaoHibernate5;
 import com.spittr.message.model.Message;
 import com.spittr.tools.page.Page;
@@ -25,6 +23,12 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	@Override
+	public Message get(Long mid) {
+		// TODO Auto-generated method stub
+		return get(Message.class, mid);
+	}
 	
 	@Override
 	public List<Message> get(Page page){
@@ -123,6 +127,40 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 		
 		return messages;
 	}
-	
+
+	@Override
+	public List<Message> getBeforeTime(Date tmbefore, Long lid, int num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.eq("isDelete", false))
+				.add(Restrictions.le("tmCreated", tmbefore))
+				.add(Restrictions.eq("lid", lid))
+				.addOrder(Order.desc("tmCreated"))
+				.setMaxResults(num);
+		
+		@SuppressWarnings("unchecked")
+		List<Message> messages = (List<Message>) criteria.list();
+
+		return messages;
+	}
+
+	@Override
+	public List<Message> getAfterTime(Date tmafter, Long lid, int num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.eq("isDelete", false))
+				.add(Restrictions.ge("tmCreated", tmafter))
+				.add(Restrictions.eq("lid", lid))
+				.addOrder(Order.desc("tmCreated"))
+				.setMaxResults(num);
+		
+		@SuppressWarnings("unchecked")
+		List<Message> messages = (List<Message>) criteria.list();
+
+		return messages;
+	}
+
 }
 	

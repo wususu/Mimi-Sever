@@ -1,5 +1,6 @@
 package com.spittr.message.core;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,7 @@ import com.spittr.message.dao.MessageDao;
 import com.spittr.message.exception.MessageNotFoundException;
 import com.spittr.message.model.Likee;
 import com.spittr.message.model.Message;
+import com.spittr.tools.Mapper;
 import com.spittr.tools.page.Page;
 import com.spittr.user.model.User;
 
@@ -77,8 +79,13 @@ public class MessageServiceImpl implements MessageService{
 		if (message == null) 
 			throw new MessageNotFoundException(mid);
 		
+		MessageIssues.checkIsDelete(message);
+		
+		message = MessageIssues.generateFakeMessage(message);
+		
 		return message;
 	}
+	
 	
 	@Override
 	@Transactional
@@ -127,6 +134,7 @@ public class MessageServiceImpl implements MessageService{
 		messageDao.update(message);
 	}
 	
+	@Deprecated
 	@Override
 	public Map<String, Object> getMessageByPageNumber(Integer pageNumber){
 		Long items = messageDao.count();
@@ -145,6 +153,7 @@ public class MessageServiceImpl implements MessageService{
 		return map;
 	}
 
+	@Deprecated
 	@Override
 	public Map<String, Object> getLocaleMessageByPageNumber(Long lid, Integer pageNumber) {
 		// TODO Auto-generated method stub
@@ -163,100 +172,110 @@ public class MessageServiceImpl implements MessageService{
 		return map;
 	}
 	
-	@Override
-	public Map<String, Object> beforeTimeMessage(Date time, User user){
-		List<Message> messageList =  user == null? getMessageBeforeTime(time) : getMessageBeforeTime(time, user);
-		
-		Map<String, Object> map = getMap();
-		map.put(BEFORE_TIME, time);
-		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
-		map.put(NUM_THIS_PAGE, messageList.size());
-		map.put(MESSAGE_LIST, messageList);
-		return map;
-	}
-
-	public List<Message> getMessageBeforeTime(Date time, User user) {
+	// 判断是否登录状态
+	private List<Message> judgeLikee(List<Message> messages, User user) {
 		// TODO Auto-generated method stub
-		List<Message> messageList = getMessageBeforeTime(time);
+		if (user == null) 
+			return messages;
 		
-		if (user != null) 
-			for (int i=0; i<messageList.size(); i++) 
-				generateLikee(messageList.get(i), user);
+		if (messages.size() == 0) 
+			return messages;
+		
+		for (int i=0; i<messages.size(); i++) 
+			likeeService.generateLikee(messages.get(i), user);
 				
-		return messageList;
+		return messages;
 	}
 	
-	public List<Message> getMessageBeforeTime(Date time){
-		Integer num = StaticConfig.ITEM_PER_PAGE;
-		List< Message> messageList = messageDao.getBeforeTime(time, num);
-
-		messageList = MessageIssues.generateFakeMessageList(messageList);
-		
-		return messageList;
-	}
-
+	// 所有before time message
 	@Override
-	public Map<String, Object> afterTimeMessage(Date time, User user){
-		List<Message> messageList = user == null? getMessageAfterTime(time) : getMessageAfterTime(time, user);
-		
-		Map<String, Object> map = getMap();
-		map.put(AFTER_TIME, time);
-		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
-		map.put(NUM_THIS_PAGE, messageList.size());
-		map.put(MESSAGE_LIST, messageList);
-		return map;
-	}
-	
-	public List<Message> getMessageAfterTime(Date time, User user) {
-		// TODO Auto-generated method stub
-		List<Message> messageList = getMessageAfterTime(time);
-		
-		if (user != null) 
-			for (int i=0; i<messageList.size(); i++) 
-				generateLikee(messageList.get(i), user);
-
-		return messageList;
-	}
-	
-	public List<Message> getMessageAfterTime(Date time){
+	public Map<String, Object> beforeTimeMessages(Date tmbefore, User currentUser){
 		Integer num = StaticConfig.ITEM_PER_PAGE;
-		List< Message> messageList = messageDao.getAfterTime(time, num);
+		List< Message> messages = messageDao.getBeforeTime(tmbefore, num);
 		
-		messageList = MessageIssues.generateFakeMessageList(messageList);
-		return messageList;
+		messages = judgeLikee(MessageIssues.generateFakeMessageList(messages), currentUser);
+		
+		return Mapper.newInstance(getMap()).
+		add(BEFORE_TIME, tmbefore).
+		add(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE).
+		add(NUM_THIS_PAGE, messages.size()).
+		add(MESSAGE_LIST, messages)
+		.getMap();
+	}
+
+	// 所有after time message
+	@Override
+	public Map<String, Object> afterTimeMessages(Date tmafter, User currentUser){
+		Integer num = StaticConfig.ITEM_PER_PAGE;
+		List< Message> messages = messageDao.getAfterTime(tmafter, num);
+		
+		messages = judgeLikee(MessageIssues.generateFakeMessageList(messages), currentUser);
+		
+		return Mapper.newInstance(getMap()).
+		add(AFTER_TIME, tmafter).
+		add(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE).
+		add(NUM_THIS_PAGE, messages.size()).
+		add(MESSAGE_LIST, messages)
+		.getMap();
 	}
 	
-	private void generateLikee(Message message, User user){
-		if (message == null )
-			return ;
-		if (message.getLikeCount() == 0) 
-			return ;
-		
-		Likee likee = likeeService.get(message, user);
-		
-		if (likee == null) 
-			return ;
-
-		message.setLikee(likee);
-	}
-
+	// 某一地点的before time message
 	@Override
-	public Map<String, Object> userMessage(Date time, User user, boolean isCurrentUser) {
+	public Map<String, Object> beforeTimeMessages(Date tmbefore, User currentUser, Long lid) {
 		// TODO Auto-generated method stub
 		int num = StaticConfig.ITEM_PER_PAGE;
-		List<Message> messages = messageDao.getByUid(user.getUid(), time, num);
+		List<Message> messages = messageDao.getBeforeTime(tmbefore, lid, num);
+			
+		messages = judgeLikee(MessageIssues.generateFakeMessageList(messages), currentUser);
 		
-		if (isCurrentUser) 
-			messages = MessageIssues.generateFakeMessageList(messages);
+		return Mapper.newInstance(getMap()).
+		add(BEFORE_TIME, tmbefore).
+		add(NUM_PER_PAGE, num).
+		add(NUM_THIS_PAGE, messages.size()).
+		add(MESSAGE_LIST, messages)
+		.getMap();
+	}
+
+	// 某一地点的after time message
+	@Override
+	public Map<String, Object> afterTimeMessages(Date tmafter, User currentUser, Long lid) {
+		// TODO Auto-generated method stub
+		int num = StaticConfig.ITEM_PER_PAGE;
+		List<Message> messages = messageDao.getAfterTime(tmafter, lid, num);
+		
+		messages = judgeLikee(MessageIssues.generateFakeMessageList(messages), currentUser);
+
+		return Mapper.newInstance(getMap()).
+		add(AFTER_TIME, tmafter).
+		add(NUM_PER_PAGE, num).
+		add(NUM_THIS_PAGE, messages.size()).
+		add(MESSAGE_LIST, messages)
+		.getMap();
+	}
+
+	// 某一用户的message
+	@Override
+	public Map<String, Object> userMessages(Date tmbefore, User objectUser, User currentUser) {
+		// TODO Auto-generated method stub
+		
+		int num = StaticConfig.ITEM_PER_PAGE;
+		List<Message> messages = messageDao.getByUid(objectUser.getUid(), tmbefore, num);
+		
+		if (objectUser.equals(currentUser)) 
+			messages = MessageIssues.generateFakeMessageList(messages); 
 		else 
+			// 移除匿名message
 			messages = MessageIssues.removeFakeMessage(messages);
 		
-		Map<String, Object> map = getMap();
-		map.put(BEFORE_TIME, time);
-		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
-		map.put(NUM_THIS_PAGE, messages.size());
-		map.put(MESSAGE_LIST, messages);
+		messages = judgeLikee(messages, currentUser);
 		
-		return map;
+		return Mapper.newInstance(getMap()).
+		add(BEFORE_TIME, tmbefore).
+		add(NUM_PER_PAGE, num).
+		add(NUM_THIS_PAGE, messages.size()).
+		add(MESSAGE_LIST, messages)
+		.getMap();
 	}
+
+
 }

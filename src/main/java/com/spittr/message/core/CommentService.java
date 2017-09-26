@@ -25,11 +25,17 @@ public interface CommentService {
 	
 	Comment get(Long cid);
 	
-	Map<String, Object> getByMidAndPageNumber(Long mid, Integer pageNumber);
+	/**
+	 * 根据mid和时间获取message详细信息, 包括message的comment
+	 * @param mid
+	 * @param pageNumber
+	 * @return
+	 */
+	Map<String, Object> getByMidAndTmBefore(Long mid, Date tmbefore, User currentUser);
 	
-	Map<String, Object> getCommentBeforeTime(Long mid, Date time);
+	Map<String, Object> getCommentBeforeTime(Long mid, Date time, User currentUser);
 	
-	Map<String, Object> getCommentAfterTime(Long mid, Date time);
+	Map<String, Object> getCommentAfterTime(Long mid, Date time, User currentUser);
 	
 	List<Comment> getByMid(Long mid);
 	

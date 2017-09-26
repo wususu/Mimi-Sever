@@ -19,6 +19,8 @@ public interface MessageService {
 		return new Message(content, user, location);
 	}
 	
+	Message get(Long mid);
+	
 	void createWhichImage(Message message, Set<MessageImage> imageSet);
 	
 	void create(Message message);
@@ -31,17 +33,23 @@ public interface MessageService {
 	
 	void decCommentCount(Message message);
 	
-	Message get(Long mid);
+//	Message get(Long mid);
 	
 	void delete(Message message);
 	
+	@Deprecated
 	Map<String, Object> getMessageByPageNumber(Integer pageNumber);
 	
+	@Deprecated
 	Map<String, Object> getLocaleMessageByPageNumber(Long lid, Integer pageNumber);
 	
-	Map<String, Object> beforeTimeMessage(Date time, User user);
+	Map<String, Object> beforeTimeMessages(Date tmbefore, User user);
 	
-	Map<String, Object> afterTimeMessage(Date time, User user);
+	Map<String, Object> afterTimeMessages(Date tmafter, User user);
+	
+	Map<String, Object> beforeTimeMessages(Date tmbefore, User user, Long lid);
+	
+	Map<String, Object> afterTimeMessages(Date tmafter, User user, Long lid );
 
-	Map<String, Object> userMessage(Date time, User user, boolean isCurrentUser);
+	Map<String, Object> userMessages(Date time, User user, User currentUser);
 }

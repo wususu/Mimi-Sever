@@ -11,11 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.spittr.config.StaticConfig;
 import com.spittr.message.dao.CommentDao;
+import com.spittr.message.dao.MessageDao;
 import com.spittr.message.exception.CommentNotFoundException;
 import com.spittr.message.model.Comment;
+import com.spittr.message.model.Likee;
 import com.spittr.message.model.Message;
+import com.spittr.tools.Mapper;
 import com.spittr.tools.page.Page;
 import com.spittr.user.model.User;
+import com.sun.org.glassfish.gmbal.Description;
 
 import static com.spittr.core.JSONConstants.*;
 
@@ -29,6 +33,14 @@ public class CommentServiceImpl implements CommentService{
 	@Autowired
 	@Qualifier("messageServiceImpl")
 	private MessageService messageService;
+	
+	@Autowired
+	@Qualifier("messageDaoImpl")
+	private MessageDao messageDao;
+	
+	@Autowired
+	@Qualifier("likeeServiceImpl")
+	private LikeeService likeeService;
 	
 	@Override
 	@Transactional
@@ -62,6 +74,8 @@ public class CommentServiceImpl implements CommentService{
 		if (comment == null) 
 			throw new CommentNotFoundException(cid);
 		
+		comment = CommentIssue.generateFakeComment(comment);
+		
 		return comment;
 	}
 
@@ -91,49 +105,51 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public Map<String, Object> getByMidAndPageNumber(Long mid, Integer pageNumber) {
+	public Map<String, Object> getByMidAndTmBefore(Long mid, Date tmbefore, User currentUser) {
 		// TODO Auto-generated method stub
-		Message message = messageService.get(mid);
+		Integer num = StaticConfig.ITEM_PER_PAGE;
+		
+		Message message = messageDao.get(mid);
 		MessageIssues.checkIsDelete(message);
 		message = MessageIssues.generateFakeMessage(message);
 		
-		Long items = commentDao.count(mid);
+		likeeService.generateLikee(message, currentUser);
 		
-		Page page = Page.newInstance(items);
-		page.setPage(pageNumber == null ? 0: pageNumber);
-		
-		List<Comment> commentList = commentDao.getByPage(mid, page);
+		List<Comment> comments = commentDao.getBeforeTime(mid, tmbefore, num);
 		DynamicFilter fakeFilter = DynamicFilter.getInstance()
 				.addFilteFields("user")
 				.addFilteFields("uid");
-		commentList = CommentIssue.generateFakeCommentList(commentList, fakeFilter);
+		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
 		
-		page.setItemInThisPage(commentList.size());
-		
-		Map<String, Object> map =  getMap();
-		map.put(PAGE, page);
-		map.put(MESSAGE, message);
-		map.put(COMMENT_LIST, commentList);
-		
-		return map;
+		return Mapper.newInstance(getMap())
+				.add(MESSAGE, message)
+				.add(COMMENT_LIST, comments)
+				.add(BEFORE_TIME, tmbefore)
+				.add(NUM_PER_PAGE, num)
+				.add(NUM_THIS_PAGE, comments.size())
+				.getMap();
 	}
 	
+	@Deprecated
 	@Override
 	public List<Comment> getByMid(Long mid) {
 		// TODO Auto-generated method stub
-		List<Comment> commentList = commentDao.get(mid);
-		return commentList;
+		List<Comment> comments = commentDao.get(mid);
+		DynamicFilter fakeFilter = DynamicFilter.getInstance()
+				.addFilteFields("user")
+				.addFilteFields("uid");
+		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
+		return comments;
 	}
 
 	@Override
-	public Map<String, Object> getCommentBeforeTime(Long mid, Date time) {
+	public Map<String, Object> getCommentBeforeTime(Long mid, Date tmbefore, User currentUser) {
 		// TODO Auto-generated method stub
 		Message message = messageService.get(mid);
-		MessageIssues.checkIsDelete(message);
-		message = MessageIssues.generateFakeMessage(message);
+		likeeService.generateLikee(message, currentUser);
 		
 		Integer num = StaticConfig.ITEM_PER_PAGE;
-		List<Comment> comments = commentDao.getBeforeTime(mid, time, num);
+		List<Comment> comments = commentDao.getBeforeTime(mid, tmbefore, num);
 		
 		// comment添加详细信息
 		for (int i=0; i<comments.size(); i++)
@@ -144,27 +160,25 @@ public class CommentServiceImpl implements CommentService{
 				.addFilteFields("uid");
 		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
 		
-		Map<String, Object> map = getMap();
-		map.put(BEFORE_TIME, time);
-		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
-		map.put(NUM_THIS_PAGE, comments.size());
-		map.put(MESSAGE, message);
-		map.put(COMMENT_LIST, comments);
-		
-		return map;
+		return Mapper.newInstance(getMap())
+				.add(BEFORE_TIME, tmbefore)
+				.add(NUM_PER_PAGE, num)
+				.add(NUM_THIS_PAGE, comments.size())
+				.add(MESSAGE, message)
+				.add(COMMENT_LIST, comments)
+				.getMap();
 	}
 
 	@Override
-	public Map<String, Object> getCommentAfterTime(Long mid, Date time) {
+	public Map<String, Object> getCommentAfterTime(Long mid, Date tmafter, User currentUser) {
 		// TODO Auto-generated method stub
 		Message message = messageService.get(mid);
-		MessageIssues.checkIsDelete(message);
-		message = MessageIssues.generateFakeMessage(message);
+		likeeService.generateLikee(message,currentUser);
 		
 		Integer num = StaticConfig.ITEM_PER_PAGE;
-		List<Comment> comments = commentDao.getAfterTime(mid, time, num);
+		List<Comment> comments = commentDao.getAfterTime(mid, tmafter, num);
 		
-		// comment添加详细信息
+		// comment添加Reply comment详细信息
 		for (int i=0; i<comments.size(); i++)
 			CommentIssue.generateDetailComment(comments.get(i));
 		
@@ -174,13 +188,12 @@ public class CommentServiceImpl implements CommentService{
 				.addFilteFields("uid");
 		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
 		
-		Map<String, Object> map = getMap();
-		map.put(AFTER_TIME, time);
-		map.put(NUM_PER_PAGE, StaticConfig.ITEM_PER_PAGE);
-		map.put(NUM_THIS_PAGE, comments.size());
-		map.put(MESSAGE, message);
-		map.put(COMMENT_LIST, comments);
-		
-		return map;
+		return Mapper.newInstance(getMap())
+				.add(AFTER_TIME, tmafter)
+				.add(NUM_PER_PAGE, num)
+				.add(NUM_THIS_PAGE, comments.size())
+				.add(MESSAGE, message)
+				.add(COMMENT_LIST, comments)
+				.getMap();
 	}
 }

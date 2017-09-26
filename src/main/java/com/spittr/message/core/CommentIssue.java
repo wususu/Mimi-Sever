@@ -28,6 +28,7 @@ public class CommentIssue {
 		// TODO Auto-generated constructor stub
 	}
 
+	// 添加回复的评论的具体信息
 	public static void generateDetailComment(Comment comment){
 		if (comment == null) 
 			throw new SourceDataErrorException();

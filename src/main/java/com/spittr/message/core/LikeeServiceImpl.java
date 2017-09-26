@@ -90,5 +90,20 @@ public class LikeeServiceImpl implements LikeeService{
 		
 		return result;
 	}
+	
+	// message是否被点赞
+	public void generateLikee(Message message, User user){
+		if (message == null )
+			return ;
+		if (message.getLikeCount() == 0) 
+			return ;
+		
+		Likee likee = get(message, user);
+		
+		if (likee == null) 
+			return ;
+
+		message.setLikee(likee);
+	}
 
 }

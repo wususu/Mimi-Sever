@@ -121,6 +121,7 @@ public class MessageController {
 		}
 	}
 	
+	@Deprecated
 	@RequestMapping(value="/page/{pid}", method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
 	public ReturnModel page(
@@ -131,6 +132,7 @@ public class MessageController {
 		return ReturnModel.SUCCESS(result);
 	}
 	
+	@Deprecated
 	@RequestMapping(value="/lid/{lid}/page/{pid}")
 	@ResponseStatus(value=HttpStatus.OK)
 	public ReturnModel pageByLid(
@@ -142,49 +144,77 @@ public class MessageController {
 		return ReturnModel.SUCCESS(result);
 	}
 	
+	@RequestMapping(value={"/lid/{lid}/tmbefore/{time}", "/lid/{lid}/tmbefore"}, method=RequestMethod.GET)
+	@Authorization
+	public ReturnModel getMessagesByLidBeforeTime(
+			@AutoCurrentUser User user,
+			@PathVariable("lid") Long lid,
+			@PathVariable(name="time", required=false) Long tmbefore
+			){
+		tmbefore = tmbefore == null? (new Date()).getTime() : tmbefore;
+		Map<String, Object> data = messageService.beforeTimeMessages(new Date(tmbefore), user, lid);
+		
+		return ReturnModel.SUCCESS(data);
+	}
+	
+	@RequestMapping(value={"/lid/{lid}/tmafter/{time}", "/lid/{lid}/tmafter"}, method=RequestMethod.GET)
+	@Authorization
+	public ReturnModel getMessagesByLidAfterTime(
+			@AutoCurrentUser User user,
+			@PathVariable("lid") Long lid,
+			@PathVariable(name="time", required=false) Long tmafter
+			){
+		tmafter = tmafter == null? (new Date()).getTime() : tmafter;
+		Map<String, Object> data = messageService.afterTimeMessages(new Date(tmafter), user, lid);
+		
+		return ReturnModel.SUCCESS(data);
+	}
+	
 	@RequestMapping(value={"/tmbefore/{time}", "/tmbefore"}, method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
-	public ReturnModel getMessageBeforeTime(
-			@PathVariable(name="time",required=false) Long time,
+	public ReturnModel getMessagesBeforeTime(
+			@PathVariable(name="time",required=false) Long tmbefore,
 			@AutoCurrentUser User user
 			){
-		time = time == null? (new Date()).getTime() : time;
-		Map<String, Object> data = messageService.beforeTimeMessage(new Date(time), user);
+		tmbefore = tmbefore == null? (new Date()).getTime() : tmbefore;
+		Map<String, Object> data = messageService.beforeTimeMessages(new Date(tmbefore), user);
+		
 		return ReturnModel.SUCCESS(data);
 	}
 	
 	@RequestMapping(value="/tmafter/{time}", method=RequestMethod.GET)
 	@ResponseStatus(value=HttpStatus.OK)
-	public ReturnModel getMessageAfterTime(
-			@PathVariable Long time,
+	public ReturnModel getMessagesAfterTime(
+			@PathVariable(name="time") Long tmbefore,
 			@AutoCurrentUser User user
 			) {
-		Map<String, Object> data = messageService.afterTimeMessage(new Date(time), user);
+		Map<String, Object> data = messageService.afterTimeMessages(new Date(tmbefore), user);
 		return ReturnModel.SUCCESS(data);
 	}
 	
 	@Authorization
 	@RequestMapping(value={"/me/{time}", "/me"})
-	public ReturnModel getSelfMessage(
-			@AutoCurrentUser User user,
-			@PathVariable(name="time", required=false) Long time
+	public ReturnModel getSelfMessages(
+			@AutoCurrentUser User currentUser,
+			@PathVariable(name="time", required=false) Long tmbefore
 			){
-		time = time == null? (new Date()).getTime() : time;
-		Map<String, Object> data = messageService.userMessage(new Date(time), user, true);
+		tmbefore = tmbefore == null? (new Date()).getTime() : tmbefore;
+		Map<String, Object> data = messageService.userMessages(new Date(tmbefore), currentUser, currentUser);
 		return ReturnModel.SUCCESS(data);
 	}
 	
 	@RequestMapping(value={"/user/{uname}/{time}", "/user/{uname}"})
-	public ReturnModel getSelfMessage(
+	public ReturnModel getUserMessages(
+			@AutoCurrentUser User currentUser,
 			@PathVariable(name="uname") String uName,
-			@PathVariable(name="time", required=false) Long time
+			@PathVariable(name="time", required=false) Long tmbefore
 			){
-		time = time == null? (new Date()).getTime() : time;
-		User user = userService.get(uName);
-		if (user == null) 
+		tmbefore = tmbefore == null? (new Date()).getTime() : tmbefore;
+		User objectUser = userService.get(uName);
+		if (objectUser == null) 
 			throw new UserNotFoundException(uName);		
 		
-		Map<String, Object> data = messageService.userMessage(new Date(time), user, false);
+		Map<String, Object> data = messageService.userMessages(new Date(tmbefore), objectUser, currentUser);
 		return ReturnModel.SUCCESS(data);
 	}
 	

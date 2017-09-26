@@ -19,4 +19,6 @@ public interface LikeeService {
 	Likee get(Message message, User user);
 	
 	Map<String, Object>  likee(Likee like);
+	
+	void generateLikee(Message message, User user);
 }
