@@ -20,8 +20,10 @@ import com.spittr.image.model.MessageImage;
 import com.spittr.location.core.LocationService;
 import com.spittr.location.model.Location;
 import com.spittr.message.core.CommentService;
+import com.spittr.message.core.LikeeService;
 import com.spittr.message.core.MessageIssues;
 import com.spittr.message.core.MessageService;
+import com.spittr.message.model.Likee;
 import com.spittr.message.model.Message;
 import com.spittr.model.ReturnModel;
 import com.spittr.user.core.UserService;
@@ -49,6 +51,10 @@ public class MessageController {
 	@Autowired
 	@Qualifier("commentServiceImpl")
 	private CommentService commentService;
+	
+	@Autowired
+	@Qualifier("likeeServiceImpl")
+	private LikeeService likeeService;
 	
 	@Autowired
 	@Qualifier("messageImageServiceImpl")
@@ -90,14 +96,16 @@ public class MessageController {
 
 	@RequestMapping(value="/get/{id}", method=RequestMethod.GET)
 	public ReturnModel get(
-			@PathVariable Long id
+			@PathVariable Long id,
+			@AutoCurrentUser User user
 			) throws IOException{
 		Message message = messageService.get(id);
 
 		MessageIssues.checkIsDelete(message);
 
 		message = MessageIssues.generateFakeMessage(message);
-
+		likeeService.generateLikee(message, user);
+		
 		return  ReturnModel.SUCCESS(message);
 	}
 	
