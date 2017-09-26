@@ -6,9 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
-<script  src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
- <script src="http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js"></script>
+ <script src="js/hashes.js"></script>
+<script src="js/sockjs.min.js"></script>
+<script src="js/stomp.js"></script>
 
 </head>
 <body>
