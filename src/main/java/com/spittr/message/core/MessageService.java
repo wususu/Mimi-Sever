@@ -52,4 +52,6 @@ public interface MessageService {
 	Map<String, Object> afterTimeMessages(Date tmafter, User user, Long lid );
 
 	Map<String, Object> userMessages(Date time, User user, User currentUser);
+	
+	Map<String, Object> myAttentionMessages(Date time, User mainUser);
 }

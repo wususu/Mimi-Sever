@@ -2,6 +2,7 @@ package com.spittr.message.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.spittr.dao.BaseDao;
 import com.spittr.message.model.Message;
@@ -24,7 +25,9 @@ public interface MessageDao extends BaseDao<Message>{
 	
 	List<Message> getAfterTime(Date tmafter, Long lid, int num);
 	
-	List<Message> getByUid(long uid, Date time, int num);
+	List<Message> getByUid(Long uid, Date time, int num);
+	
+	List<Message> getByUids(Set<Long> uids, Date time, int num);
 	
 	Long count();
 	

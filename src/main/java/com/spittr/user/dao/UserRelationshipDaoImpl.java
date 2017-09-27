@@ -43,7 +43,7 @@ public class UserRelationshipDaoImpl extends BaseDaoHibernate5<UserRelationship>
 	}
 	
 	@Override
-	public List<UserRelationship> getMainUserRelationship(User mainUser, Date bfTime, int limit) {
+	public List<UserRelationship> getMainUserRelationships(User mainUser, Date bfTime, int limit) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserRelationship.class)
@@ -51,7 +51,6 @@ public class UserRelationshipDaoImpl extends BaseDaoHibernate5<UserRelationship>
 				.add(Restrictions.eq("mainUser", mainUser))
 				.addOrder(Order.desc("tmCreated"))
 				.add(Restrictions.le("tmCreated", bfTime))
-				.setFirstResult(0)
 				.setMaxResults(limit);
 		
 		@SuppressWarnings("unchecked")
@@ -61,7 +60,21 @@ public class UserRelationshipDaoImpl extends BaseDaoHibernate5<UserRelationship>
 	}
 
 	@Override
-	public List<UserRelationship> getObjectUserRelationship(User objectUser, Date bfTime, int limit) {
+	public List<UserRelationship> getMainUserRelationships(User mainUser){
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(UserRelationship.class)
+				.add(Restrictions.eq("isDelete", false))
+				.add(Restrictions.eq("mainUser", mainUser))
+				.addOrder(Order.desc("tmCreated"));
+		
+		@SuppressWarnings("unchecked")
+		List<UserRelationship> userRelationships = (List<UserRelationship>)criteria.list();
+
+		return userRelationships;
+	}
+	
+	@Override
+	public List<UserRelationship> getObjectUserRelationships(User objectUser, Date bfTime, int limit) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserRelationship.class)
@@ -69,7 +82,6 @@ public class UserRelationshipDaoImpl extends BaseDaoHibernate5<UserRelationship>
 				.add(Restrictions.eq("objectUser", objectUser))
 				.addOrder(Order.desc("tmCreated"))
 				.add(Restrictions.le("tmCreated", bfTime))
-				.setFirstResult(0)
 				.setMaxResults(limit);
 		
 		@SuppressWarnings("unchecked")

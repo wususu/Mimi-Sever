@@ -3,10 +3,15 @@ package com.spittr.message.dao;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.criteria.Fetch;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaQuery;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import com.spittr.dao.BaseDaoHibernate5;
 import com.spittr.message.model.Message;
 import com.spittr.tools.page.Page;
+import com.spittr.user.model.UserRelationship;
 
 
 @Repository
@@ -112,7 +118,7 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 	}
 
 	@Override
-	public List<Message> getByUid(long uid, Date time, int num) {
+	public List<Message> getByUid(Long uid, Date time, int num) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Message.class)
@@ -159,6 +165,28 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 		@SuppressWarnings("unchecked")
 		List<Message> messages = (List<Message>) criteria.list();
 
+		return messages;
+	}
+
+	@Override
+	public List<Message> getByUids(Set<Long> uids, Date tmbefore, int num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.eq("isDelete", false))
+				.add(Restrictions.le("tmCreated", tmbefore));
+
+		Disjunction disjunction = Restrictions.disjunction();
+		for (Long uid : uids) {
+			disjunction.add(Restrictions.eq("uid", uid));
+		}
+		criteria.add(disjunction)
+		.addOrder(Order.desc("tmCreated"))
+		.setMaxResults(num);
+
+		@SuppressWarnings("unchecked")
+		List<Message> messages = (List<Message>) criteria.list();
+		
 		return messages;
 	}
 

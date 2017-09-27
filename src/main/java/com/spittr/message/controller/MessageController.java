@@ -1,29 +1,17 @@
 package com.spittr.message.controller;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import com.spittr.authorization.annotation.Authorization;
-import com.spittr.authorization.annotation.AutoCurrentUser;
-import com.spittr.image.core.ImageIssues;
-import com.spittr.image.core.MessageImageService;
+import com.spittr.authorization.annotation.*;
+import com.spittr.image.core.*;
 import com.spittr.image.model.MessageImage;
 import com.spittr.location.core.LocationService;
 import com.spittr.location.model.Location;
-import com.spittr.message.core.CommentService;
-import com.spittr.message.core.LikeeService;
-import com.spittr.message.core.MessageIssues;
-import com.spittr.message.core.MessageService;
-import com.spittr.message.model.Likee;
+import com.spittr.message.core.*;
 import com.spittr.message.model.Message;
 import com.spittr.model.ReturnModel;
 import com.spittr.user.core.UserService;
@@ -223,6 +211,19 @@ public class MessageController {
 			throw new UserNotFoundException(uName);		
 		
 		Map<String, Object> data = messageService.userMessages(new Date(tmbefore), objectUser, currentUser);
+		return ReturnModel.SUCCESS(data);
+	}
+	
+	@RequestMapping(value={"/attention/tmbefore/{time}", "/attention/tmbefore"}, method=RequestMethod.GET)
+	@Authorization
+	public ReturnModel getMyAttemtionMessages(
+			@AutoCurrentUser User currentUser,
+			@PathVariable(name="time", required=false) Long tmbefore
+			){
+		tmbefore = tmbefore == null? (new Date()).getTime() : tmbefore;
+
+		Map<String, Object> data = messageService.myAttentionMessages(new Date(tmbefore),currentUser);
+		
 		return ReturnModel.SUCCESS(data);
 	}
 	

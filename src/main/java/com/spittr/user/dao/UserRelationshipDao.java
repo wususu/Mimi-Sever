@@ -11,8 +11,9 @@ public interface UserRelationshipDao extends BaseDao<UserRelationship>{
 	
 	UserRelationship get(User mainUser, User objectUser);
 	
-	List<UserRelationship> getObjectUserRelationship(User objectUser, Date bfTime, int limit);
+	List<UserRelationship> getObjectUserRelationships(User objectUser, Date bfTime, int limit);
 	
-	List<UserRelationship> getMainUserRelationship(User mainUser, Date bfTime, int limit);
+	List<UserRelationship> getMainUserRelationships(User mainUser, Date bfTime, int limit);
 	
+	List<UserRelationship> getMainUserRelationships(User mainUser);
 }

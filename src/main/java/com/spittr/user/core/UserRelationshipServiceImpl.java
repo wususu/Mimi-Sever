@@ -62,7 +62,7 @@ public class UserRelationshipServiceImpl implements UserRelationshipService{
 		Map<String, Object> mainUser = null;
 		List<Map<String, Object>> mainUsers = new ArrayList<>();
 		
-		List<UserRelationship> userRelationships = userRelationshipDao.getObjectUserRelationship(objectUser, bfTime, ITEM_PER_PAGE);
+		List<UserRelationship> userRelationships = userRelationshipDao.getObjectUserRelationships(objectUser, bfTime, ITEM_PER_PAGE);
 		
 		for (UserRelationship userRelationship : userRelationships) {
 			mainUser = getMap();
@@ -93,7 +93,7 @@ public class UserRelationshipServiceImpl implements UserRelationshipService{
 		// TODO Auto-generated method stub
 		Map<String, Object> objectUser = null;
 		List<Map<String, Object>> objectUsers = new ArrayList<>();
-		List<UserRelationship> userRelationships = userRelationshipDao.getMainUserRelationship(mainUser, bfTime, ITEM_PER_PAGE);
+		List<UserRelationship> userRelationships = userRelationshipDao.getMainUserRelationships(mainUser, bfTime, ITEM_PER_PAGE);
 		
 		for (UserRelationship userRelationship : userRelationships) {
 			objectUser = getMap();
