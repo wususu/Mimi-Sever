@@ -12,6 +12,7 @@ public class StatusCodeConf {
 	public static final int TokenErrorCode = -200;		//token错误
 	public static final int AuthorizationNotFoundCode = -201;		// headers 缺少authorization头
 	public static final int TokenExpiredCode = -202;		// token超时
+	public static final int ActionFail = -203;		// 操作失败
 		
 	
 	public static final int ErrorCode = -300;		// 系统错误

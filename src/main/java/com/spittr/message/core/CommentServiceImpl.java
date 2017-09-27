@@ -14,12 +14,9 @@ import com.spittr.message.dao.CommentDao;
 import com.spittr.message.dao.MessageDao;
 import com.spittr.message.exception.CommentNotFoundException;
 import com.spittr.message.model.Comment;
-import com.spittr.message.model.Likee;
 import com.spittr.message.model.Message;
 import com.spittr.tools.Mapper;
-import com.spittr.tools.page.Page;
 import com.spittr.user.model.User;
-import com.sun.org.glassfish.gmbal.Description;
 
 import static com.spittr.core.JSONConstants.*;
 

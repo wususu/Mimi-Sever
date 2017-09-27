@@ -13,12 +13,15 @@ import com.spittr.user.model.User;
 public class TokenIssues {
 	
 	public static TokenIssues getInstance(){
-		return DefaultInstance.instance;
+		return Inner.instance;
 	}
 	
-	private static class DefaultInstance{
-		
+	private static class Inner{
 		public static TokenIssues instance = new TokenIssues();
+	}
+	
+	private TokenIssues(){
+		
 	}
 	
 	public Token tokenGenerator(User user){

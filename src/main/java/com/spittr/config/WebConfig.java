@@ -32,7 +32,8 @@ import com.spittr.authorization.resolvers.CurrentUserArgumentResolver;
 		"com.spittr.message.controller",
 		"com.spittr.image.controller",
 		"com.spittr.location.controller",
-		"com.spittr.websocket.controller"
+		"com.spittr.websocket.controller",
+		"com.spittr.authorization.controller"
 		})
 public class WebConfig extends WebMvcConfigurerAdapter{
 	
