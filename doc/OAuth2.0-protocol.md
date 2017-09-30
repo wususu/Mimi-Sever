@@ -10,6 +10,10 @@ url: hometown.scau.edu.cn/open/OAuth/authorize?client_id={client_id}&response_ty
 {redirect_uri}: 授权成功后的跳转地址
 {state}: 随机字符串(不知道干嘛用的,应该是用来防止浏览器缓存?)
 
+提供一个本地的测试应用: 
+  client_id:8
+  redirect_uri: localhost(自行添加后缀)
+
 ### 2. 链接跳转:
 
 用户第一次使用认证服务器需要询问是否授权, 否返回原来页面, 是则跳转到原先的`redirect_uri`,并发送一个`code`字符,前端接收到code后表示授权成功, 将`code`和`redirect_uri`发送给后端去请求用户数据.
