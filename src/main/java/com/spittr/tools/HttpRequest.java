@@ -1,127 +1,123 @@
-package com.spittr.authorization.core;
+package com.spittr.tools;
 
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.*;
 import com.spittr.authorization.exception.OAuthErrorException;
 
-
+/**
+ * 简单的线程安全的http请求单例
+ * @author janke
+ *
+ */
 public class HttpRequest {
 	
-	private static final String HMT_OAUTH_URL =  "http://hometown.scau.edu.cn/open/OAuth/access_token";
+	protected Logger logger = LoggerFactory.getLogger(HttpRequest.class);	
 	
-	private static final String HMT_USER_URL = "http://hometown.scau.edu.cn/bbs/plugin.php?id=iltc_open:userinfo&uid=";
-	
-	private static String K_CLIENT_SRECT = "client_secret";
-	
-	private static String K_REDIRECT_URI = "redirect_uri";
-	
-	private static String K_CLIENT_ID = "client_id";
-	
-	private static String K_GRANT_TYPE = "grant_type";
-	
-	private static String K_CODE = "code";
-		
-	private static String V_CLIENT_SECRET = "XB6Q3z3cPXp04xe58XEh157FEFum3vP7";
-	
-	private static String V_REDIRECT_URI = "http://localhost:8080/Mimi/OAuth/login";
-	
-	private static String V_CLIENT_ID = "8";
-	
-	private static String V_GRANT_TYPE = "authorization_code";
-		
-	private HttpClient  client = HttpClientBuilder.create().build();
-	
-	private HttpPost post = new HttpPost(HMT_OAUTH_URL);
-	
-	private HttpGet get  = null;
-	
-	private List<NameValuePair> urlParameters = new ArrayList<>();
-	
-	public static HttpRequest newInstance(){
-		return new HttpRequest();
+	private HttpClient httpClient;
+ 	
+	private static class Inner{
+		public static HttpRequest instance = new HttpRequest();
 	}
+	
+	public static HttpRequest getInstance(){
+		return Inner.instance;
+	}
+	
+	private PoolingHttpClientConnectionManager cm;	
 	
 	private HttpRequest() {
 		// TODO Auto-generated constructor stub
-		urlParameters.add(new BasicNameValuePair(K_REDIRECT_URI, V_REDIRECT_URI));
-		urlParameters.add(new BasicNameValuePair(K_CLIENT_SRECT, V_CLIENT_SECRET));
-		urlParameters.add(new BasicNameValuePair(K_CLIENT_ID, V_CLIENT_ID));
-		urlParameters.add(new BasicNameValuePair(K_GRANT_TYPE, V_GRANT_TYPE));
+		this.cm = new PoolingHttpClientConnectionManager();
+		this.httpClient = HttpClients.custom().setConnectionManager(cm).build();
 	}
 	
-	
-	public HttpRequest setCode(String code){
-		urlParameters.add(new BasicNameValuePair(K_CODE, code));
-		return this;
-	}
-	
-	public StringBuffer doPost(){
+	public String doPost(String url, List<NameValuePair> urlParameters){
+		HttpPost httpPost = new HttpPost(url);
+		
 		try {
-			post.setEntity(new UrlEncodedFormEntity(urlParameters));
+			if (urlParameters!=null && urlParameters.size() > 0) 
+				httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
+						
+				HttpResponse response = httpClient.execute(httpPost);
+				httpPost.releaseConnection();
+				HttpEntity httpEntity = response.getEntity();
+			try{
+				int responseCode = response.getStatusLine().getStatusCode();
+				if (responseCode != 200) 
+					throw new OAuthErrorException();
+				
+				return getConentBody(httpEntity.getContent()).toString()
+						;
+
+			}finally {
+				// 释放资源
+				EntityUtils.consume(httpEntity);
+			}
+		}catch (OAuthErrorException e) {
+			// TODO: handle exception
+			throw e;
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.warn("HttpPost Fail:  " + e.getMessage());
+			logger.debug(e.toString());
+		}
+		return null;
+	}
+	
+	public String doGet(String url){
+		HttpGet httpGet = new HttpGet(url);
+		
+		try {
+			HttpResponse response = httpClient.execute(httpGet);
+			HttpEntity httpEntity = response.getEntity();
 			
-			HttpResponse response = client.execute(post);
-			
-			int responseCode = response.getStatusLine().getStatusCode();
-			if (responseCode != 200) 
-				throw new OAuthErrorException();
-			
-			BufferedReader rd = new BufferedReader( new InputStreamReader(response.getEntity().getContent()));		
+				try{
+						int responseCode = response.getStatusLine().getStatusCode();
+						if (responseCode != 200) 
+							throw new OAuthErrorException();	
+									
+						return getConentBody(httpEntity.getContent()).toString();
+				}finally {
+						EntityUtils.consume(httpEntity);
+						httpGet.releaseConnection();
+				}		
+		}catch (OAuthErrorException e) {
+			// TODO: handle exception
+			throw e;
+		}catch (Exception e) {
+			logger.warn(e.toString());
+			logger.warn("HttpPost Fail:  " + e.getMessage());
+		}
+		return null;
+	}
+
+	
+	private StringBuffer getConentBody(InputStream inputStream){
+		BufferedReader rd;
+		try {
+			rd = new BufferedReader( new InputStreamReader(inputStream));
 			StringBuffer result = new StringBuffer();
 			String line = "";
 			while((line = rd.readLine()) != null)
 				result.append(line);
-			
 			return result;
-		} catch (Exception e) {
+		} catch (UnsupportedOperationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		throw new NullPointerException();
-	}
-	
-	public StringBuffer doGet(Long uid){
-		try {
-			HttpResponse response = client.execute(new HttpGet(HMT_USER_URL + String.valueOf(uid)));
-			
-			int responseCode = response.getStatusLine().getStatusCode();
-			if (responseCode != 200) 
-				throw new OAuthErrorException();
-			
-			BufferedReader rd = new BufferedReader( new InputStreamReader(response.getEntity().getContent()));		
-			StringBuffer result = new StringBuffer();
-			String line = "";
-			while((line = rd.readLine()) != null)
-				result.append(line);
-			
-			System.out.println(result);
-			
-			return result;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		throw new NullPointerException();
-
-	}
-
-	
-	
-	public static void main(String[] args) {
-		HttpRequest.newInstance().setCode("aab91ef05ea42a642b1f7398f16334eb").doPost();
+		}		
+		return null;
 	}
 }

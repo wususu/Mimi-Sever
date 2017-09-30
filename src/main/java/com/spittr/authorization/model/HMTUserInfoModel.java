@@ -1,7 +1,16 @@
 package com.spittr.authorization.model;
 
-public class HMTUserInfoModel {
+import java.io.Serializable;
+
+import org.hibernate.annotations.Check;
+
+public class HMTUserInfoModel implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3410919400236420376L;
+
 	private Long uid;
 	
 	private String username;
@@ -32,11 +41,14 @@ public class HMTUserInfoModel {
 		this.avatar = avatar;
 	}
 
+	public boolean check(){
+		if (uid != null && username != null ) 
+			return true;
+		return false;
+	}
+	
 	@Override
 	public String toString() {
 		return "HMTUserInfoModel [uid=" + uid + ", username=" + username + ", avatar=" + avatar + "]";
 	}
-	
-	
-	
 }

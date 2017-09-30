@@ -1,5 +1,7 @@
 package com.spittr.user.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,13 +11,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.spittr.authorization.model.HMTUserInfoModel;
+
 
 @Entity
 @Table(name="hmt_user")
-public class HMTUser {
+public class HMTUser implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2052470711532692863L;
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue
+	private Long id;
+	
+	@Column(nullable=false, unique=true)
 	private Long hmtUid;
 	
 	@Column(nullable=false, unique=true)
@@ -30,10 +42,18 @@ public class HMTUser {
 	
 	@Column(nullable=true)
 	private Long uid;
-
-	public HMTUser(Long hmtUid, String hmtUname, String hmtAvatar) {
+	
+	public HMTUser() {
 		// TODO Auto-generated constructor stub
-		this(hmtUid, hmtUname, hmtAvatar, null, null);
+	}
+	
+	public HMTUser(HMTUserInfoModel hmtUserInfoModel, User user){
+		this(hmtUserInfoModel.getUid(), hmtUserInfoModel.getUsername(), hmtUserInfoModel.getAvatar(), user);
+	}
+
+	public HMTUser(Long hmtUid, String hmtUname, String hmtAvatar, User user) {
+		// TODO Auto-generated constructor stub
+		this(hmtUid, hmtUname, hmtAvatar, user, user.getUid());
 	}
 	
 	public HMTUser(Long hmtUid, String hmtUname, String hmtAvatar, User user, Long uid) {
@@ -84,4 +104,12 @@ public class HMTUser {
 	public void setUid(Long uid) {
 		this.uid = uid;
 	}
+
+	@Override
+	public String toString() {
+		return "HMTUser [hmtUid=" + hmtUid + ", hmtUname=" + hmtUname + ", hmtAvatar=" + hmtAvatar + ", user=" + user
+				+ ", uid=" + uid + "]";
+	}
+	
+	
 }

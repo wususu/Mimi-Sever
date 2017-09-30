@@ -13,7 +13,7 @@ public interface UserService {
 		return  new User(uname, nname);
 	}
 	
-	void create(String uname, String nname, String passwd);
+	User create(String uname, String nname, String passwd);
 	
 	Token login(String uname, String passwd);
 	

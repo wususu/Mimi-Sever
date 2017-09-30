@@ -26,19 +26,19 @@ public class HMTOAuthModel {
 		this.scope = scope;
 	}
 
-	public long getUid() {
+	public Long getUid() {
 		return uid;
 	}
 
-	public void setUid(long uid) {
+	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 
-	public long getExpires_in() {
+	public Long getExpires_in() {
 		return expires_in;
 	}
 
-	public void setExpires_in(long expires_in) {
+	public void setExpires_in(Long expires_in) {
 		this.expires_in = expires_in;
 	}
 

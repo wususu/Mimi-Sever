@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	@Transactional
-	public void create(String uname, String nname, String passwd){
+	public User create(String uname, String nname, String passwd){
 		User user = null;
 		
 		user = userDao.get(uname);
@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService{
 		if (user == null || passwdCred == null) {
 			throw new UserNotFoundException(uname);
 		}
+		return user;
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.spittr.dao.BaseDao;
 import com.spittr.user.model.User;
 
-@Repository
+
 public interface UserDao extends BaseDao<User>{
 
 	User get(String uname);
