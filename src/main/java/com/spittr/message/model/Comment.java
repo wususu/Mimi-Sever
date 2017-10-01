@@ -70,6 +70,9 @@ public class Comment implements Serializable{
 	
 	private long likeCount;
 	
+	@Transient
+	private CLikee likee;
+	
 	@Column(nullable=false)
 	private boolean isFake;
 	
@@ -240,6 +243,14 @@ public class Comment implements Serializable{
 
 	public void setLikeCount(long likeCount) {
 		this.likeCount = likeCount;
+	}
+	
+	public CLikee getLikee() {
+		return likee;
+	}
+
+	public void setLikee(CLikee likee) {
+		this.likee = likee;
 	}
 
 	public boolean isFake() {

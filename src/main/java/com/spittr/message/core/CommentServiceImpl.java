@@ -1,8 +1,6 @@
 package com.spittr.message.core;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,22 +20,36 @@ import static com.spittr.core.JSONConstants.*;
 
 @Service
 public class CommentServiceImpl implements CommentService{
-
+	
 	@Autowired
 	@Qualifier("commentDaoImpl")
-	private CommentDao commentDao;
-
+	protected CommentDao commentDao;
+	
 	@Autowired
 	@Qualifier("messageServiceImpl")
-	private MessageService messageService;
+	protected MessageService messageService;
 	
 	@Autowired
 	@Qualifier("messageDaoImpl")
-	private MessageDao messageDao;
+	protected MessageDao messageDao;
 	
 	@Autowired
 	@Qualifier("likeeServiceImpl")
-	private LikeeService likeeService;
+	protected LikeeService likeeService;
+	
+	private List<Comment> judgeLikee(List<Comment> comments, User user) {
+		// TODO Auto-generated method stub
+		if (user == null) 
+			return comments;
+		
+		if (comments.size() == 0) 
+			return comments;
+		
+		for (int i=0; i<comments.size(); i++) 
+			likeeService.generateLikee(comments.get(i), user);
+		
+		return comments;
+	}
 	
 	@Override
 	@Transactional
@@ -54,7 +66,6 @@ public class CommentServiceImpl implements CommentService{
 		save(comment);
 		
 		messageService.adcNextCommentVal(comment.getUnderWhichMessage());
-
 	}
 	
 	@Override
@@ -65,6 +76,12 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public Comment get(Long cid) {
+		// TODO Auto-generated method stub
+		return commentDao.get(Comment.class, cid);
+	}
+	
+	@Override
+	public Comment need(Long cid) {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.get(Comment.class, cid);
 		
@@ -116,7 +133,7 @@ public class CommentServiceImpl implements CommentService{
 		DynamicFilter fakeFilter = DynamicFilter.getInstance()
 				.addFilteFields("user")
 				.addFilteFields("uid");
-		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
+		comments = judgeLikee(CommentIssue.generateFakeCommentList(comments, fakeFilter), currentUser);
 		
 		return Mapper.newInstance(getMap())
 				.add(MESSAGE, message)
@@ -155,7 +172,7 @@ public class CommentServiceImpl implements CommentService{
 		DynamicFilter fakeFilter = DynamicFilter.getInstance()
 				.addFilteFields("user")
 				.addFilteFields("uid");
-		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
+		comments = judgeLikee(CommentIssue.generateFakeCommentList(comments, fakeFilter), currentUser);
 		
 		return Mapper.newInstance(getMap())
 				.add(BEFORE_TIME, tmbefore)
@@ -183,7 +200,7 @@ public class CommentServiceImpl implements CommentService{
 		DynamicFilter fakeFilter = DynamicFilter.getInstance()
 				.addFilteFields("user")
 				.addFilteFields("uid");
-		comments = CommentIssue.generateFakeCommentList(comments, fakeFilter);
+		comments = judgeLikee(CommentIssue.generateFakeCommentList(comments, fakeFilter), currentUser);
 		
 		return Mapper.newInstance(getMap())
 				.add(AFTER_TIME, tmafter)

@@ -191,7 +191,7 @@ public class MessageServiceImpl implements MessageService{
 				
 		return messages;
 	}
-	
+
 	// 所有before time message
 	@Override
 	public Map<String, Object> beforeTimeMessages(Date tmbefore, User currentUser){
@@ -221,7 +221,7 @@ public class MessageServiceImpl implements MessageService{
 		add(MESSAGE_LIST, messages)
 		.getMap();
 	}
-	
+
 	// 某一地点的before time message
 	@Override
 	public Map<String, Object> beforeTimeMessages(Date tmbefore, User currentUser, Long lid) {

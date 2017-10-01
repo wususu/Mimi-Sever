@@ -17,7 +17,7 @@ import com.spittr.user.model.User;
 @Entity(name="likees")
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"message", "user"}))
 @JsonIgnoreProperties({"message", "user"})
-public class Likee implements Serializable{
+public class MLikee implements Serializable{
 
 	/**
 	 * 
@@ -45,15 +45,15 @@ public class Likee implements Serializable{
 	@JoinColumn(name="user", nullable=false, updatable=false)
 	private User user;
 
-	public Likee() {
+	public MLikee() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Likee(Message message, User user){
+	public MLikee(Message message, User user){
 		this(message.getMid(), user.getUid(), false, message, user);
 	}
 	
-	public Likee(long mid, long uid, boolean isLike, Message message, User user) {
+	public MLikee(long mid, long uid, boolean isLike, Message message, User user) {
 		super();
 		this.mid = mid;
 		this.uid = uid;
@@ -121,7 +121,7 @@ public class Likee implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Likee other = (Likee) obj;
+		MLikee other = (MLikee) obj;
 		if (id != other.id)
 			return false;
 		if (isLike != other.isLike)

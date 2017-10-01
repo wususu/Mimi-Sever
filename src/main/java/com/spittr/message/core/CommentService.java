@@ -25,6 +25,9 @@ public interface CommentService {
 	
 	Comment get(Long cid);
 	
+	Comment need(Long cid);
+
+	
 	/**
 	 * 根据mid和时间获取message详细信息, 包括message的comment
 	 * @param mid

@@ -8,42 +8,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spittr.dao.BaseDaoHibernate5;
-import com.spittr.message.model.Likee;
+import com.spittr.message.model.MLikee;
 import com.spittr.message.model.Message;
 import com.spittr.user.model.User;
 
 @Repository
-public class LikeeDaoImpl extends BaseDaoHibernate5<Likee> implements LikeeDao{
+public class MlikeeDaoImpl extends BaseDaoHibernate5<MLikee> implements MlikeeDao{
 
 	@Autowired
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public Likee get(long mid, long uid) {
+	public MLikee get(long mid, long uid) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Likee.class)
+		Criteria criteria = session.createCriteria(MLikee.class)
 				.add(Restrictions.eq("mid", mid))
 				.add(Restrictions.eq("uid", uid));
-		Likee userLike = (Likee)criteria.uniqueResult();
+		MLikee userLike = (MLikee)criteria.uniqueResult();
 		return userLike;
 	}
 
 	@Override
-	public Likee get(Message message, User user) {
+	public MLikee get(Message message, User user) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Likee.class)
+		Criteria criteria = session.createCriteria(MLikee.class)
 				.add(Restrictions.eq("message", message))
 				.add(Restrictions.eq("user", user));
-		Likee userLike = (Likee)criteria.uniqueResult();
+		MLikee userLike = (MLikee)criteria.uniqueResult();
 		return userLike;
 	}
 
 	@Override
-	public void create(Likee entity) {
+	public void create(MLikee entity) {
 		// TODO Auto-generated method stub
 		save(entity);
 	}
-
 }

@@ -10,33 +10,48 @@ import com.spittr.model.ReturnModel;
 import com.spittr.user.model.User;
 
 @RestController
-@RequestMapping(value="/api/message/likee")
+@RequestMapping(value="/api/likee")
 @CrossOrigin(origins="*", maxAge=3600)
 public class LikeeController {
 
 	@Autowired
 	@Qualifier("likeeServiceImpl")
-	private LikeeService likeService;
+	protected LikeeService likeService;
 	
 	@Autowired
 	@Qualifier("messageServiceImpl")
-	private MessageService messageService;
+	protected MessageService messageService;
+	
+	@Autowired
+	@Qualifier("commentServiceImpl")
+	protected CommentService commentService;
 	
 	@Authorization
-	@RequestMapping(value="/{mid}", method=RequestMethod.POST)
-	public ReturnModel like(
+	@RequestMapping(value="/message/{mid}", method=RequestMethod.POST)
+	public ReturnModel likeMessage(
 			@PathVariable Long mid,
-			@AutoCurrentUser User user
+			@AutoCurrentUser User currentUser
 			){
 		
 		Message message = messageService.get(mid);
 		
-		Likee like = likeService.get(message, user);
+		MLikee like = likeService.get(message, currentUser);
 		if (like == null) {
-			like = LikeeService.newInstance(message, user);
+			like = LikeeService.newInstance(message, currentUser);
 			likeService.create(like);
 		}
 		
 		return ReturnModel.SUCCESS(likeService.likee(like));
+	}
+	
+	@Authorization
+	@RequestMapping(value="/comment/{cid}", method=RequestMethod.POST)
+	public ReturnModel likeComment(
+			@PathVariable Long cid,
+			@AutoCurrentUser User currentUser
+			){
+		Comment comment = commentService.need(cid);
+		
+		return ReturnModel.SUCCESS();
 	}
 }
