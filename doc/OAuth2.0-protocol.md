@@ -10,12 +10,16 @@ url: hometown.scau.edu.cn/open/OAuth/authorize?client_id={client_id}&response_ty
 {redirect_uri}: 授权成功后的跳转地址
 {state}: 随机字符串(不知道干嘛用的,应该是用来防止浏览器缓存?)
 
-###2. 链接跳转:
+提供一个本地的测试应用: 
+  client_id:8
+  redirect_uri: localhost(自行添加后缀)
+
+### 2. 链接跳转:
 
 用户第一次使用认证服务器需要询问是否授权, 否返回原来页面, 是则跳转到原先的`redirect_uri`,并发送一个`code`字符,前端接收到code后表示授权成功, 将`code`和`redirect_uri`发送给后端去请求用户数据.
 
 
-###3. 后端处理用户数据
+### 3. 后端处理用户数据
 
 `code`和`redirect_uri`发送成功后会有两种情况:
 
@@ -76,7 +80,7 @@ url: hometown.scau.edu.cn/open/OAuth/authorize?client_id={client_id}&response_ty
 		}
 
 
-###4. 用户绑定
+### 4. 用户绑定
 
 第一次使用第三方授权登录后, 需要`绑定已有Mimi账户`或者`新建Mimi账户`( 绑定新建分为两个页面处理)才能登入应用, 
 - a.绑定已有账户:
