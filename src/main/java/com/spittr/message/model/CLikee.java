@@ -28,6 +28,19 @@ public class CLikee {
 	@ManyToOne
 	@JoinColumn(nullable=false, updatable=false)
 	private Comment comment;
+	
+	public CLikee(Comment comment,User user) {
+		// TODO Auto-generated constructor stub
+		this(comment.getCid(), user.getUid(), false, user, comment);
+	}
+	
+	public CLikee(long cid, long uid, boolean isLike, User user, Comment comment) {
+		this.cid = cid;
+		this.uid = uid;
+		this.isLike = isLike;
+		this.user = user;
+		this.comment = comment;
+	}
 
 	public long getCid() {
 		return cid;
@@ -68,6 +81,10 @@ public class CLikee {
 	public void setComment(Comment comment) {
 		this.comment = comment;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "CLikee [id=" + id + ", cid=" + cid + ", uid=" + uid + ", isLike=" + isLike + ", user=" + user
+				+ ", comment=" + comment + "]";
+	}
 }

@@ -52,6 +52,12 @@ public class LikeeController {
 			){
 		Comment comment = commentService.need(cid);
 		
-		return ReturnModel.SUCCESS();
+		CLikee cLikee = likeService.get(comment, currentUser);
+		if (cLikee == null) {
+			cLikee = new CLikee(comment, currentUser);
+			likeService.create(cLikee);
+		}
+		
+		return ReturnModel.SUCCESS(likeService.likee(cLikee));
 	}
 }
