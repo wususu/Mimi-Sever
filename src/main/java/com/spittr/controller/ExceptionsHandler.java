@@ -1,5 +1,7 @@
 package com.spittr.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +18,8 @@ import com.spittr.user.exception.PasswdNotEqualsException;
 @ControllerAdvice
 @CrossOrigin(origins="*", maxAge=3600)
 public class ExceptionsHandler {
+	
+	protected Logger logger = LoggerFactory.getLogger(ExceptionsHandler.class);
 	
 	/**
 	 * 操作错误
@@ -34,6 +38,7 @@ public class ExceptionsHandler {
 	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ReturnModel> handleException(Exception e){
+		logger.info(e.toString());
 		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(), HttpStatus.OK);
 	}
 	

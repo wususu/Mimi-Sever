@@ -19,6 +19,7 @@ import com.spittr.authorization.annotation.Authorization;
 import com.spittr.authorization.annotation.AutoCurrentUser;
 import com.spittr.message.core.CommentIssue;
 import com.spittr.message.core.CommentService;
+import com.spittr.message.core.LikeeService;
 import com.spittr.message.core.MessageIssues;
 import com.spittr.message.core.MessageService;
 import com.spittr.message.model.Comment;
@@ -43,7 +44,10 @@ public class CommentController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-
+	
+	@Autowired
+	@Qualifier("likeeServiceImpl")
+	private LikeeService likeeService;
 
 	@Authorization
 	@RequestMapping(value="/create", method=RequestMethod.POST)
@@ -71,13 +75,15 @@ public class CommentController {
 
 	@RequestMapping(value="/get/{cid}", method=RequestMethod.GET)
 	public ReturnModel get(
-			@PathVariable("cid") Long cid
+			@PathVariable("cid") Long cid,
+			@AutoCurrentUser User currentUser
 			) throws JsonParseException, JsonMappingException, IOException{
 		
 		Comment comment = commentService.get(cid);
 		
 		CommentIssue.checkIsDelete(comment);
-		comment = CommentIssue.generateFakeComment(comment);		
+		comment = CommentIssue.generateFakeComment(comment);	
+		likeeService.generateLikee(comment, currentUser);
 		
 		return ReturnModel.SUCCESS(comment);
 	}

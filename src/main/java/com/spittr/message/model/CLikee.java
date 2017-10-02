@@ -1,12 +1,21 @@
 package com.spittr.message.model;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spittr.user.model.User;
 
 @Entity
-@Table(name="clikees")
-public class CLikee {
+@Table(name="clikees", uniqueConstraints=@UniqueConstraint(columnNames={"user", "comment"}))
+@JsonIgnoreProperties({"comment", "user"})
+public class CLikee implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
@@ -22,12 +31,16 @@ public class CLikee {
 	private boolean isLike;
 	
 	@ManyToOne
-	@JoinColumn(nullable=false, updatable=false)
+	@JoinColumn(name="user", nullable=false, updatable=false)
 	private User user;
  	
 	@ManyToOne
-	@JoinColumn(nullable=false, updatable=false)
+	@JoinColumn(name="comment", nullable=false, updatable=false)
 	private Comment comment;
+	
+	public CLikee() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public CLikee(Comment comment,User user) {
 		// TODO Auto-generated constructor stub
