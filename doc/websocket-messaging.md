@@ -30,18 +30,18 @@
 a.  消息(一.1)的接收实体:
 
 		{
-			"ntcType":"mLikee",             // 通知类型
-			"ntcBody":{											// 通知对象
-					"id":417,										// 通知ID
-					"mid":407,									// messageID
-					"mUid":407,									// 发送message的用户(通知对象)的ID
-					"lkUid":2,									// 点赞对象ID
-					"mUname":"wususu",					// 通知对象uname
-					"lkUname":"liaojiekx",			// 点赞对象uname
-					"lkNname":"liaojie",				// 点赞对象昵称
-					"mShrtCntnt":"测试用户的测试mes",// 点赞的message的部分内容(截取)
-					"tmCreated":1507131869000		// 不用管
-						}
+			"ntcType":"mLikee",             	// 通知类型
+			"ntcBody":{				// 通知对象
+				"id":417,			// 通知ID
+				"mid":407,			// messageID
+				"mUid":407,			// 发送message的用户(通知对象)的ID
+				"lkUid":2,			// 点赞对象ID
+				"mUname":"wususu",		// 通知对象uname
+				"lkUname":"liaojiekx",		// 点赞对象uname
+				"lkNname":"liaojie",		// 点赞对象昵称
+				"mShrtCntnt":"测试用户的测试mes", // 点赞的message的部分内容(截取)
+				"tmCreated":1507131869000	// 不用管
+				}
 		}
 
 b. 消息(一.2)的接收实体:
@@ -69,8 +69,8 @@ c. 消息(一.3)的接收实体:
 				"id":419,
 				"cid":418,			
 				"mid":407,			
-				"cUid":2,				// 发送comment的用户ID
-				"mUid":1,				// 发送message的用户(通知对象)ID
+				"cUid":2,			// 发送comment的用户ID
+				"mUid":1,			// 发送message的用户(通知对象)ID
 				"cUname":"liaojie",		
 				"mUname":"wususu",
 				"cNname":"liaojiekx",		
@@ -87,13 +87,13 @@ d. 消息(一.4)的接收实体:
 
 		{
 			"ntcType":"cLikee",		// cLikee mLikee Cmmnt 三种类型
-			"id":438							// 通知ID
+			"id":438			// 通知ID
 		}
 		
 - 操作3的成功消息实体:
 
 		{
-			"msgID":"438",				// 通知ID
+			"msgID":"438",			// 通知ID
 			"code":200,
 			"status":"成功",
 			"content":"(=ↀωↀ=)"
