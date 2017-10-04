@@ -8,7 +8,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spittr.user.core.UserService;
 import com.spittr.websocket.core.NtcService;
@@ -55,7 +54,7 @@ public class NtcController {
 				logger.info(ntcMLikee.toString());
 				ntcService.rcv(ntcMLikee);
 				break;
-			case Cmmt:
+			case Cmmnt:
 				NtcCmmnt ntcCmmnt = ntcService.needCmmnt(ntcRcv.getId());
 				logger.info(ntcCmmnt.toString());
 				ntcService.rcv(ntcCmmnt);

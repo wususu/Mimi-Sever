@@ -87,7 +87,7 @@ public class CommentServiceImpl implements CommentService{
 			ntcCmmnt = new NtcCmmnt(comment);
 			ntcService.create(ntcCmmnt);
 		}
-		NtcMsg ntcMsg = new NtcMsg(NtcType.Cmmt, ntcCmmnt);
+		NtcMsg ntcMsg = new NtcMsg(NtcType.Cmmnt, ntcCmmnt);
 		
 		if (!ntcCmmnt.getIsRecived()) {
 			msgTplt.convertAndSendToUser(ntcCmmnt.getmUname(), "/notice", ntcMsg);
