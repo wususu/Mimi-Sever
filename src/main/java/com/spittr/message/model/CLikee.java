@@ -55,6 +55,10 @@ public class CLikee implements Serializable{
 		this.comment = comment;
 	}
 
+	public long getId(){
+		return id;
+	}
+	
 	public long getCid() {
 		return cid;
 	}

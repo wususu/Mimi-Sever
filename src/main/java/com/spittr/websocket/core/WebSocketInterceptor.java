@@ -2,6 +2,8 @@ package com.spittr.websocket.core;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.server.ServerHttpRequest;
@@ -21,6 +23,8 @@ import com.spittr.user.model.User;
 @Component
 public class WebSocketInterceptor implements HandshakeInterceptor{
 
+	protected Logger logger = LoggerFactory.getLogger(WebSocketInterceptor.class);
+	
 	@Autowired
 	@Qualifier("mySQLTokenManager")
 	private TokenManager manger;
@@ -46,7 +50,7 @@ public class WebSocketInterceptor implements HandshakeInterceptor{
 				if (token != null && TokenIssues.getInstance().checkToken(token)){
 					manger.updateToken(token);
 					user = token.getUser();
-					System.out.println(user);	
+					logger.debug(user.toString());
 				}
 			}
 			

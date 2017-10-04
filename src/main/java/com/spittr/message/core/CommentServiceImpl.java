@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +16,22 @@ import com.spittr.message.model.Comment;
 import com.spittr.message.model.Message;
 import com.spittr.tools.Mapper;
 import com.spittr.user.model.User;
+import com.spittr.websocket.core.NtcService;
+import com.spittr.websocket.model.NtcCmmnt;
+import com.spittr.websocket.model.NtcMsg;
+import com.spittr.websocket.model.NtcType;
 
 import static com.spittr.core.JSONConstants.*;
 
 @Service
 public class CommentServiceImpl implements CommentService{
+	
+	@Autowired
+	SimpMessagingTemplate msgTplt;
+	
+	@Autowired
+	@Qualifier("ntcServiceImpl")
+	protected NtcService ntcService;
 	
 	@Autowired
 	@Qualifier("commentDaoImpl")
@@ -66,6 +78,22 @@ public class CommentServiceImpl implements CommentService{
 		save(comment);
 		
 		messageService.adcNextCommentVal(comment.getUnderWhichMessage());
+		
+		/**
+		 *  消息通知
+		 */
+		NtcCmmnt ntcCmmnt = ntcService.getNtcCmmnt(comment);
+		if (ntcCmmnt == null) {
+			ntcCmmnt = new NtcCmmnt(comment);
+			ntcService.create(ntcCmmnt);
+		}
+		NtcMsg ntcMsg = new NtcMsg(NtcType.Cmmt, ntcCmmnt);
+		
+		if (!ntcCmmnt.getIsRecived()) {
+			msgTplt.convertAndSendToUser(ntcCmmnt.getmUname(), "/notice", ntcMsg);
+			msgTplt.convertAndSendToUser(String.valueOf(ntcCmmnt.getmUid()), "/notice", ntcMsg);
+		}
+		
 	}
 	
 	@Override
@@ -81,7 +109,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 	@Override
-	public Comment need(Long cid) {
+	public Comment	 need(Long cid) {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.get(Comment.class, cid);
 		
@@ -100,12 +128,22 @@ public class CommentServiceImpl implements CommentService{
 		if (comment.isDelete()) 
 			throw new CommentNotFoundException();
 	
+		/**
+		 * 删除消息
+		 */
+		NtcCmmnt ntcCmmnt = ntcService.getNtcCmmnt(comment);
+		ntcCmmnt.setIsRecived(false);
+		ntcService.update(ntcCmmnt);
+		
+		
 		comment.setDelete(true);
 		comment.setTmDelete(new Date());
 		
 		commentDao.update(comment);
 		
 		messageService.decCommentCount(comment.getUnderWhichMessage());
+		
+
 	}
 
 	@Override

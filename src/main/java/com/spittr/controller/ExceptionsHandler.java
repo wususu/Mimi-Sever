@@ -39,6 +39,8 @@ public class ExceptionsHandler {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ReturnModel> handleException(Exception e){
 		logger.info(e.toString());
+		e.printStackTrace();
+
 		return new ResponseEntity<ReturnModel>(ReturnModel.ERROR(), HttpStatus.OK);
 	}
 	

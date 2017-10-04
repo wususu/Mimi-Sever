@@ -16,7 +16,7 @@ import com.spittr.user.model.User;
 
 @Entity
 @Table(name="message")
-@JsonIgnoreProperties({"tmDelete", "isDelete"})
+@JsonIgnoreProperties({"tmDelete", "isDelete", "commentNextVal"})
 public class Message implements Serializable{
 
 	/**

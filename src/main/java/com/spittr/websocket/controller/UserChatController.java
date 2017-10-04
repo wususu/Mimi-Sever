@@ -29,7 +29,7 @@ import static com.spittr.websocket.config.WebSocketConstant.*;
 public class UserChatController {
 	
 	@Autowired
-	private SimpMessagingTemplate messageingTemplate;
+	private SimpMessagingTemplate msgTplt;
 		
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -45,8 +45,8 @@ public class UserChatController {
 		if (user != null) {
 			List<ChatMsg> chatMsgsNotRecived = chatMsgService.getNotRecivedChatMsg(user.getUid());
 			for (ChatMsg chatMsg : chatMsgsNotRecived) {
-				messageingTemplate.convertAndSendToUser(user.getUname(), "/recive", chatMsg);
-				messageingTemplate.convertAndSendToUser(String.valueOf(user.getUid()), "/recive", chatMsg);
+				msgTplt.convertAndSendToUser(user.getUname(), "/recive", chatMsg);
+				msgTplt.convertAndSendToUser(String.valueOf(user.getUid()), "/recive", chatMsg);
 			}
 		}
 	}
@@ -82,8 +82,8 @@ public class UserChatController {
 		ChatMsg chatMsg =  ChatMsgService.newInstance(sender, reciver, msg);
 		chatMsgService.sended(chatMsg);
 		
-		messageingTemplate.convertAndSendToUser(reciver.getUname(), "/recive", chatMsg);
-		messageingTemplate.convertAndSendToUser(String.valueOf( reciver.getUid() ), "/recive", chatMsg);
+		msgTplt.convertAndSendToUser(reciver.getUname(), "/recive", chatMsg);
+		msgTplt.convertAndSendToUser(String.valueOf( reciver.getUid() ), "/recive", chatMsg);
 
 		return StatusMsg.OK(chatMsg.getChatID());
 	}
