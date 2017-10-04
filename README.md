@@ -57,8 +57,8 @@
 #### 2017.10.5 Mimi-4.0
  - 聊天接口加入用户昵称
  - 引入EHcahce缓存框架
- - 添加红满堂Oauth2.0登录: (./doc/OAuth2.-protocol.md)
- - 添加用户消息通知: (./doc/websocket-messaging.md)
+ - 添加红满堂Oauth2.0登录: [OAuth2.0接入流程](./doc/OAuth2.-protocol.md)
+ - 添加用户消息通知: [消息通知接入流程](./doc/websocket-messaging.md)
  - 增加接口查看所有关注用户的`message`
  - 增加接口按时间获取某一地点的`message`
  - /api/message/get/{mid}接口返回点赞likee的信息
