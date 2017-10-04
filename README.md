@@ -14,6 +14,8 @@
 - 私聊
 - 用户资料修改查看
 - 分类查看`message`
+- 用户消息通知
+- Oauth2.0第三方登录
 
 ## 相关文档
 - [api 文档](./doc/api-list.md)
@@ -52,7 +54,19 @@
  - 添加异常状态表`[status code 返回码状态表](./doc/code-status-doc.md)`
  - 应用测试地址: http://104.224.174.146:8080/Mimi-3.1/
 
-
+#### 2017.10.5 Mimi-4.0
+ - 聊天接口加入用户昵称
+ - 引入EHcahce缓存框架
+ - 添加红满堂Oauth2.0登录: (./doc/OAuth2.-protocol.md)
+ - 添加用户消息通知: (./doc/websocket-messaging.md)
+ - 增加接口查看所有关注用户的`message`
+ - 增加接口按时间获取某一地点的`message`
+ - /api/message/get/{mid}接口返回点赞likee的信息
+ - 关注/被关注列表增加关注.被关注的时间
+ - 应用测试地址: http://104.224.174.146:8080/Mimi-4.0
+ - 接口文档未更新
+ 
+ 
 ## TODO:
 - [x] `message` `comment`点赞
 
@@ -64,6 +78,6 @@
 
 - [x] 接入红满堂OAuth2.0授权登录
 
-- [ ] 系统消息通知
+- [x] 系统消息通知
 
 - [ ] 信息验证(正方爬虫认证)
