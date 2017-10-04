@@ -133,6 +133,24 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 		
 		return messages;
 	}
+	
+	@Override
+	public List<Message> getNotFakeByUid(Long uid, Date time, int num) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Message.class)
+				.add(Restrictions.eq("uid", uid))
+				.add(Restrictions.eq("isDelete", false))
+				.add(Restrictions.le("tmCreated", time))
+				.add(Restrictions.eq("isFake", false))
+				.addOrder(Order.desc("tmCreated"))
+				.setMaxResults(num);
+		
+		@SuppressWarnings("unchecked")
+		List<Message> messages = (List<Message>)criteria.list();
+		
+		return messages;
+	}
 
 	@Override
 	public List<Message> getBeforeTime(Date tmbefore, Long lid, int num) {
@@ -189,6 +207,8 @@ public class MessageDaoImpl extends BaseDaoHibernate5<Message> implements Messag
 		
 		return messages;
 	}
+
+
 
 }
 	

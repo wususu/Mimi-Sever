@@ -259,14 +259,15 @@ public class MessageServiceImpl implements MessageService{
 	public Map<String, Object> userMessages(Date tmbefore, User objectUser, User currentUser) {
 		// TODO Auto-generated method stub
 		
-		List<Message> messages = messageDao.getByUid(objectUser.getUid(), tmbefore, ITEM_PER_PAGE);
+		List<Message> messages = null;
 		
 		// 是否查看自己的message
-		if (objectUser.equals(currentUser)) 
+		if (objectUser.equals(currentUser)){ 
+			messages = messageDao.getByUid(objectUser.getUid(), tmbefore, ITEM_PER_PAGE);
 			messages = MessageIssues.generateFakeMessageList(messages); 
-		else 
-			// 移除匿名message
-			messages = MessageIssues.removeFakeMessage(messages);
+		}else {
+			messages = messageDao.getNotFakeByUid(objectUser.getUid(), tmbefore, ITEM_PER_PAGE);
+		}
 		
 		messages = judgeLikee(messages, currentUser);
 		
@@ -278,6 +279,7 @@ public class MessageServiceImpl implements MessageService{
 		.getMap();
 	}
 
+	
 	@Override
 	public Map<String, Object> myAttentionMessages(Date tmbefore, User mainUser) {
 		// TODO Auto-generated method stub

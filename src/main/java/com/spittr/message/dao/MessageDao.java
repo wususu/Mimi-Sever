@@ -25,6 +25,8 @@ public interface MessageDao extends BaseDao<Message>{
 	
 	List<Message> getAfterTime(Date tmafter, Long lid, int num);
 	
+	List<Message> getNotFakeByUid(Long uid, Date time, int num);
+	
 	List<Message> getByUid(Long uid, Date time, int num);
 	
 	List<Message> getByUids(Set<Long> uids, Date time, int num);
