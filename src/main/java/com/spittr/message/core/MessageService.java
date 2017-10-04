@@ -21,6 +21,8 @@ public interface MessageService {
 	
 	Message get(Long mid);
 	
+	Message need(Long mid);
+	
 	void createWhichImage(Message message, Set<MessageImage> imageSet);
 	
 	void create(Message message);

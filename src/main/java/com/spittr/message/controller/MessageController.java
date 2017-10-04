@@ -87,7 +87,7 @@ public class MessageController {
 			@PathVariable Long id,
 			@AutoCurrentUser User user
 			) throws IOException{
-		Message message = messageService.get(id);
+		Message message = messageService.need(id);
 
 		MessageIssues.checkIsDelete(message);
 

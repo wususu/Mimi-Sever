@@ -73,12 +73,12 @@ public class NtcDaoImpl extends BaseDaoHibernate5<NtcBody> implements NtcDao{
 	}
 	
 	@Override
-	public NtcCmmnt getNtcCmmnt(Long cid, Long lkUid) {
+	public NtcCmmnt getNtcCmmnt(Long mid, Long cid) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(NtcCmmnt.class)
 				.add(Restrictions.eq("cid", cid))
-				.add(Restrictions.eq("lkUid", lkUid));
+				.add(Restrictions.eq("mid", mid));
 		Object object = criteria.uniqueResult();
 		
 		return object ==null?null:(NtcCmmnt)object;

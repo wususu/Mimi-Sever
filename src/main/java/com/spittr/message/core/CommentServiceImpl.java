@@ -197,7 +197,7 @@ public class CommentServiceImpl implements CommentService{
 	@Override
 	public Map<String, Object> getCommentBeforeTime(Long mid, Date tmbefore, User currentUser) {
 		// TODO Auto-generated method stub
-		Message message = messageService.get(mid);
+		Message message = messageService.need(mid);
 		likeeService.generateLikee(message, currentUser);
 		
 		Integer num = StaticConfig.ITEM_PER_PAGE;
@@ -224,7 +224,7 @@ public class CommentServiceImpl implements CommentService{
 	@Override
 	public Map<String, Object> getCommentAfterTime(Long mid, Date tmafter, User currentUser) {
 		// TODO Auto-generated method stub
-		Message message = messageService.get(mid);
+		Message message = messageService.need(mid);
 		likeeService.generateLikee(message,currentUser);
 		
 		Integer num = StaticConfig.ITEM_PER_PAGE;

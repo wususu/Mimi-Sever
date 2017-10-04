@@ -75,11 +75,17 @@ public class MessageServiceImpl implements MessageService{
 		// TODO Auto-generated method stub
 		messageDao.save(message);
 	}
-
+	
 	@Override
 	public Message get(Long mid) {
 		// TODO Auto-generated method stub
-		Message message = messageDao.get(Message.class, mid);
+		return messageDao.get(Message.class, mid);
+	}
+
+	@Override
+	public Message need(Long mid) {
+		// TODO Auto-generated method stub
+		Message message = get(mid);
 		
 		if (message == null) 
 			throw new MessageNotFoundException(mid);
@@ -299,4 +305,6 @@ public class MessageServiceImpl implements MessageService{
 				.add(MESSAGE_LIST, messages)
 				.getMap();
 	}
+
+
 }
