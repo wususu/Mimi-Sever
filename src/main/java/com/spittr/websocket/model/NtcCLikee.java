@@ -199,12 +199,39 @@ public class NtcCLikee implements Serializable, NtcBody{
 	public void setTmRecived(Date tmRecived) {
 		this.tmRecived = tmRecived;
 	}
+	
+	public String getLkNname() {
+		return lkNname;
+	}
+
+	public void setLkNname(String lkNname) {
+		this.lkNname = lkNname;
+	}
+
+	public String getcShrtCntnt() {
+		return cShrtCntnt;
+	}
+
+	public void setcShrtCntnt(String cShrtCntnt) {
+		this.cShrtCntnt = cShrtCntnt;
+	}
+
+	public Date getTmCreated() {
+		return tmCreated;
+	}
+
+	public void setTmCreated(Date tmCreated) {
+		this.tmCreated = tmCreated;
+	}
 
 	@Override
 	public String toString() {
 		return "NtcCLikee [id=" + id + ", cUid=" + cUid + ", cUname=" + cUname + ", cid=" + cid + ", lkUid=" + lkUid
-				+ ", lkUname=" + lkUname + ", cUser=" + cUser + ", lkUser=" + lkUser + ", comment=" + comment
-				+ ", isRecived=" + isRecived + ", tmRecived=" + tmRecived + "]";
+				+ ", lkUname=" + lkUname + ", lkNname=" + lkNname + ", cShrtCntnt=" + cShrtCntnt + ", cUser=" + cUser
+				+ ", lkUser=" + lkUser + ", tmCreated=" + tmCreated + ", isRecived=" + isRecived + ", tmRecived="
+				+ tmRecived + "]";
 	}
+
+
 	
 }

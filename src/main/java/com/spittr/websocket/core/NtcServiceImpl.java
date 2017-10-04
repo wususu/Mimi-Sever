@@ -121,8 +121,7 @@ public class NtcServiceImpl implements NtcService{
 	@Override
 	public void update(MLikee mLikee, NtcMLikee ntcMLikee) {
 		// TODO Auto-generated method stub
-		logger.info(mLikee.toString());
-		logger.info(ntcMLikee.toString());
+
 		if (mLikee.isLike() == false && ntcMLikee.getIsRecived() == true) {
 			ntcMLikee.setIsRecived(false);
 			ntcMLikee.setTmRecived(null);

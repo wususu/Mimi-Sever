@@ -30,4 +30,10 @@ public class NtcMsg {
 	public void setNtcBody(NtcBody ntcBody) {
 		this.ntcBody = ntcBody;
 	}
+
+	@Override
+	public String toString() {
+		return "NtcMsg [ntcType=" + ntcType + ", ntcBody=" + ntcBody + "]";
+	}
+	
 }

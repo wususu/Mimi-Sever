@@ -2,6 +2,8 @@ package com.spittr.message.core;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -24,6 +26,8 @@ import static com.spittr.core.JSONConstants.*;
 
 @Service
 public class LikeeServiceImpl implements LikeeService{
+	
+	protected Logger logger = LoggerFactory.getLogger(LikeeServiceImpl.class);
 	
 	@Autowired
 	SimpMessagingTemplate msgTplt;
@@ -198,6 +202,7 @@ public class LikeeServiceImpl implements LikeeService{
 		}
 
 		NtcMsg ntcMsg = new NtcMsg(NtcType.cLikee, ntcCLikee);
+		
 		if (!ntcCLikee.getIsRecived()) {
 			msgTplt.convertAndSendToUser(ntcCLikee.getcUname(), "/notice", ntcMsg);
 			msgTplt.convertAndSendToUser(String.valueOf(ntcCLikee.getcUid()), "/notice", ntcMsg);
