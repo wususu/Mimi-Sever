@@ -1227,8 +1227,13 @@
 		
 		- method: POST
 		
-		- login: login
+		- login: true
 		
+		- argument:
+			           |   key       |  isrequired | defaultValue |    type   |
+		   ----------------+-------------+-------------+--------------+-----------+
+		    图片base64编码  |    image    |     true    |      -       |  String   |
+
 		- response(success):
 				{
 		    "code": 200,
@@ -1267,3 +1272,82 @@
 		}
 
 
+### Update(2017.10.5)
+
+#### 1.查看所有关注用户的message:
+
+		- url: /api/message/attention/tmbefore/{time}
+		
+		- method: GET
+		
+		- login: false
+		
+		- response(success):
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"messageList": [
+			    {
+				"mid": 222,
+				"uid": 2,
+				"lid": 26,
+				"user": {
+				    "uid": 2,
+				    "uname": "liaojiekx",
+				    "nname": "liaojie",
+				    "tmCreated": 1501605274000,
+				    "userPic": null,
+				    "faculty": "faculty111",
+				    "grade": 2015,
+				    "site": "五山",
+				    "signature": "帅气的人",
+				    "gender": true
+				},
+				"content": "廖狗的测试message1",
+				"tmCreated": 1504453626000,
+				"messageImageSet": [],
+				"fakeName": null,
+				"likeCount": 2,
+				"likee": {
+				    "id": 264,
+				    "mid": 222,
+				    "uid": 1,
+				    "like": true
+				},
+				"commentCount": 32,
+				"location": {
+				    "lid": 26,
+				    "locale": "教三"
+				},
+				"delete": false,
+				"fake": false
+			    }
+			    .....
+			    ..
+			
+			],
+			"tmBefore": 1507175540866,
+			"numThisPage": 1,
+			"numPerPage": 15
+		    }
+		}
+
+#### 2.按时间查看某地点message:
+
+		- url: /api/message/lid/{lid}/tmbefore/{time}
+		
+		- method: GET
+		
+		- login: false
+		
+		- response:略
+		
+		
+		- url: /api/message/lid/{lid}/tmafter/{time}
+		
+		- method: GET
+		
+		- login: false
+		
+		- response:略
