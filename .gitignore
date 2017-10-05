@@ -1,3 +1,5 @@
+
+/bin/
 #javaÎÄ¼þ
 *.class
 *.classpath
@@ -11,6 +13,7 @@
 
 #maven
 **/target/
+
 
 # Eclipse
 **/RemoteSystemsTempFiles/
