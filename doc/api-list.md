@@ -1351,3 +1351,22 @@
 		- login: false
 		
 		- response:略
+
+
+#### 3.评论点赞:
+
+		- url: /api/likee/comment/{cid}
+		
+		- method: POST
+		
+		- login: true
+		
+		- response:
+		{
+		    "code": 200,
+		    "message": "成功",
+		    "content": {
+			"isLike": true,
+			"likeCount": 1
+		    }
+		}
