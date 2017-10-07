@@ -20,7 +20,8 @@
 ## 相关文档
 - [api 文档](./doc/api-list.md)
 - [status code 返回码状态表](./doc/code-status-doc.md)
-
+- [OAuth2.0接入流程](./doc/OAuth2.0-protocol.md)
+- [消息通知接入流程](./doc/websocket-messaging.md)
 
 ## 更新日志:
 ##### 2017.8.15  Mimi-1.0 <br/>
@@ -57,14 +58,14 @@
 #### 2017.10.5 Mimi-4.0
  - 聊天接口加入用户昵称
  - 引入EHcahce缓存框架
- - 添加红满堂Oauth2.0登录: [OAuth2.0接入流程](./doc/OAuth2.-protocol.md)
+ - 添加红满堂Oauth2.0登录: [OAuth2.0接入流程](./doc/OAuth2.0-protocol.md)
  - 添加用户消息通知: [消息通知接入流程](./doc/websocket-messaging.md)
  - 增加接口查看所有关注用户的`message`
  - 增加接口按时间获取某一地点的`message`
  - /api/message/get/{mid}接口返回点赞likee的信息
  - 关注/被关注列表增加关注.被关注的时间
  - 应用测试地址: http://104.224.174.146:8080/Mimi-4.0
- - 接口文档未更新
+ - 接口文档已经更新:[接口文档](./doc/api-list.md)
  
  
 ## TODO:
