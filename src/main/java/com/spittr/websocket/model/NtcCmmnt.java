@@ -88,7 +88,8 @@ public class NtcCmmnt implements Serializable, NtcBody{
 		this(comment.getCid(), message.getMid(), cUser.getUid(), mUser.getUid(),cUser.getNname(),
 				cUser.getUname(), mUser.getUname(), comment, message, cUser, mUser,
 				cUser.equals(mUser)?true:false,cUser.equals(mUser)?new Date(/* NOW */):null, new Date(),
-				comment.getContent().substring(0, 10), message.getContent().substring(0, 10)		
+				comment.getContent().length()>10?comment.getContent().substring(0, 10):comment.getContent(), 
+				message.getContent().length()>10?message.getContent().substring(0, 10): message.getContent()		
 				);
 	}
 

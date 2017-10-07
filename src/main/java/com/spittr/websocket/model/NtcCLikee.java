@@ -81,7 +81,8 @@ public class NtcCLikee implements Serializable, NtcBody{
 	private NtcCLikee(CLikee cLikee,User lkUser, User cUser, Comment comment){
 		this(cUser.getUid(), cUser.getUname(), comment.getCid(), lkUser.getUid(), 
 				lkUser.getUname(), lkUser.getNname(), cLikee, cUser, lkUser, comment,
-				cUser.equals(lkUser)?true:false, cUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), comment.getContent().substring(0, 10));
+				cUser.equals(lkUser)?true:false, cUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), 
+				comment.getContent().length()>10?comment.getContent().substring(0, 10):comment.getContent());
 	}
 
 	public NtcCLikee(Long cUid, String cUname, Long cid, Long lkUid, String lkUname, String lkNname,
