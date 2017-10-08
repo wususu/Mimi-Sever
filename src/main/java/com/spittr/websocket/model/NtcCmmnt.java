@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spittr.message.model.Comment;
 import com.spittr.message.model.Message;
 import com.spittr.user.model.User;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Entity
 @Table(name="ntc_cmmnt", uniqueConstraints=@UniqueConstraint(columnNames={"comment", "mUser"}))

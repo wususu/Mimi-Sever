@@ -100,8 +100,11 @@ public class LikeeServiceImpl implements LikeeService{
 			ntcService.create(ntcMLikee);
 		}
 		
+		logger.info(ntcMLikee.toString());
 		ntcService.update(like, ntcMLikee);
-			
+		logger.info(ntcMLikee.toString());
+	
+		
 		NtcMsg ntcMsg = new NtcMsg(NtcType.mLikee, ntcMLikee);
 		if (!ntcMLikee.getIsRecived()) {
 			msgTplt.convertAndSendToUser(ntcMLikee.getmUname(), "/notice", ntcMsg);

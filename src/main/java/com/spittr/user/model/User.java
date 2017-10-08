@@ -185,9 +185,6 @@ public class User implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
-		result = prime * result + ((nname == null) ? 0 : nname.hashCode());
-		result = prime * result + ((plogin == null) ? 0 : plogin.hashCode());
-		result = prime * result + ((tmCreated == null) ? 0 : tmCreated.hashCode());
 		result = prime * result + ((uname == null) ? 0 : uname.hashCode());
 		return result;
 	}
@@ -206,16 +203,6 @@ public class User implements Serializable{
 				return false;
 		} else if (!uid.equals(other.uid))
 			return false;
-		if (nname == null) {
-			if (other.nname != null)
-				return false;
-		} else if (!nname.equals(other.nname))
-			return false;
-		if (tmCreated == null) {
-			if (other.tmCreated != null)
-				return false;
-		} else if (!tmCreated.equals(other.tmCreated))
-			return false;
 		if (uname == null) {
 			if (other.uname != null)
 				return false;
@@ -223,5 +210,7 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
+
+
 	
 }

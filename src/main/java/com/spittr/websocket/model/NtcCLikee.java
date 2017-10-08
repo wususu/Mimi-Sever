@@ -34,6 +34,9 @@ public class NtcCLikee implements Serializable, NtcBody{
 	private Long cid;
 	
 	@Column(nullable=false)
+	private Long mid;
+	
+	@Column(nullable=false)
 	private Long lkUid;
 	
 	@Column(nullable=false)
@@ -81,13 +84,13 @@ public class NtcCLikee implements Serializable, NtcBody{
 	private NtcCLikee(CLikee cLikee,User lkUser, User cUser, Comment comment){
 		this(cUser.getUid(), cUser.getUname(), comment.getCid(), lkUser.getUid(), 
 				lkUser.getUname(), lkUser.getNname(), cLikee, cUser, lkUser, comment,
-				cUser.equals(lkUser)?true:false, cUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), 
-				comment.getContent().length()>10?comment.getContent().substring(0, 10):comment.getContent());
+				(cUser.equals(lkUser) && cLikee.isLike())?true:false, cUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), 
+				comment.getContent().length()>10?comment.getContent().substring(0, 10):comment.getContent(), comment.getMid());
 	}
 
 	public NtcCLikee(Long cUid, String cUname, Long cid, Long lkUid, String lkUname, String lkNname,
 			CLikee cLikee, User cUser,	User lkUser, Comment comment, Boolean isRecived, Date tmRecived,
-			Date tmCreated, String cShrtCntnt) {
+			Date tmCreated, String cShrtCntnt, Long mid) {
 		super();
 		this.cUid = cUid;
 		this.cUname = cUname;
@@ -103,6 +106,7 @@ public class NtcCLikee implements Serializable, NtcBody{
 		this.tmRecived = tmRecived;
 		this.tmCreated = tmCreated;
 		this.cShrtCntnt = cShrtCntnt;
+		this.mid = mid;
 	}
 
 	public Long getId() {
@@ -224,6 +228,14 @@ public class NtcCLikee implements Serializable, NtcBody{
 	public void setTmCreated(Date tmCreated) {
 		this.tmCreated = tmCreated;
 	}
+	
+	public Long getMid() {
+		return mid;
+	}
+
+	public void setMid(Long mid) {
+		this.mid = mid;
+	}
 
 	@Override
 	public String toString() {
@@ -232,7 +244,4 @@ public class NtcCLikee implements Serializable, NtcBody{
 				+ ", lkUser=" + lkUser + ", tmCreated=" + tmCreated + ", isRecived=" + isRecived + ", tmRecived="
 				+ tmRecived + "]";
 	}
-
-
-	
 }
