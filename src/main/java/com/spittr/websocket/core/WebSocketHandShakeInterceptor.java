@@ -41,6 +41,7 @@ public class WebSocketHandShakeInterceptor extends HttpSessionHandshakeIntercept
 				return false;
 			}
 			
+			tokenManager.updateToken(token);
 			User user = token.getUser();
 			
 			attributes.put(WebSocketConstant.CURRENT_USER_OBJ, user);

@@ -1,5 +1,6 @@
 package com.spittr.message.core;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
@@ -291,13 +292,17 @@ public class MessageServiceImpl implements MessageService{
 		// TODO Auto-generated method stub
 		Set<Long> uids = new HashSet<>();
 		List<UserRelationship> userRelationships = userRelationshipDao.getMainUserRelationships(mainUser);
-		for (UserRelationship userRelationship : userRelationships) {
-			uids.add(userRelationship.getObjectUser().getUid());
+		List<Message> messages = new ArrayList<>();
+		if (userRelationships.size() != 0) {
+		
+			for (UserRelationship userRelationship : userRelationships) {
+				uids.add(userRelationship.getObjectUser().getUid());
+			}
+			messages = messageDao.getByUids(uids, tmbefore, ITEM_PER_PAGE);
+			
+			messages = judgeLikee(MessageIssues.removeFakeMessage(MessageIssues.generateFakeMessageList(messages)), mainUser);
+			
 		}
-		List<Message> messages = messageDao.getByUids(uids, tmbefore, ITEM_PER_PAGE);
-		
-		messages = judgeLikee(MessageIssues.removeFakeMessage(MessageIssues.generateFakeMessageList(messages)), mainUser);
-		
 		return Mapper.newInstance(getMap())
 				.add(BEFORE_TIME, tmbefore)
 				.add(NUM_PER_PAGE, ITEM_PER_PAGE)

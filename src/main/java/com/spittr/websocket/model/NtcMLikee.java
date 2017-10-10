@@ -78,9 +78,10 @@ public class NtcMLikee implements Serializable, NtcBody{
 	}
 	
 	public NtcMLikee(MLikee mLikee, User lkUser, Message message, User mUser){
-		this(message.getMid(), message.getMid(), mLikee.getUid(), 
+		this(message.getMid(), mUser.getUid(), mLikee.getUid(), 
 				mUser.getUname(), lkUser.getUname(), lkUser.getNname(), mUser, lkUser, message, mLikee,
-				( (mUser.equals(lkUser) && mLikee.isLike() )?true:false), mUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), message.getContent().length()>10?message.getContent().substring(0, 10):message.getContent());
+				( (!mUser.equals(lkUser) && mLikee.isLike() )?true:false), mUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), 
+				message.getContent().length()>18?message.getContent().substring(0, 18):message.getContent());
 	}
 	
 	public NtcMLikee(Long mid, Long mUid, Long lkUid, String mUname, String lkUname, 

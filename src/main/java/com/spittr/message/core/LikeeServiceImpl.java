@@ -183,22 +183,24 @@ public class LikeeServiceImpl implements LikeeService{
 		return like.isLike() == true ? dislike(like) : like(like);
 	}
 	
-	@Transactional
+//	@Transactional
 	private Map<String, Object> like(CLikee cLikee){
 		Map<String, Object> result = getMap();
 		Comment comment = cLikee.getComment();
-		
+
 		comment.setLikeCount(comment.getLikeCount() + 1);
 		commentDao.update(comment);
 		cLikee.setLike(true);
 		clikeeDao.update(cLikee);
 		
+		logger.info(cLikee.toString());
 		/**
 		 *  消息通知
 		 */
 		NtcCLikee ntcCLikee = ntcService.getNtcCLikee(cLikee);
 		if (ntcCLikee == null) {
 			ntcCLikee = new NtcCLikee(cLikee);
+			logger.info(ntcCLikee.toString());
 			ntcService.create(ntcCLikee);
 		}else {
 			ntcService.update(cLikee, ntcCLikee);

@@ -50,7 +50,6 @@ public class WebSocketInterceptor implements HandshakeInterceptor{
 				if (token != null && TokenIssues.getInstance().checkToken(token)){
 					manger.updateToken(token);
 					user = token.getUser();
-					logger.debug(user.toString());
 				}
 			}
 			

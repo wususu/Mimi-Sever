@@ -16,6 +16,7 @@ import com.spittr.user.model.User;
 import com.spittr.websocket.model.SendMsg;
 
 import com.spittr.websocket.core.ChatMsgService;
+import com.spittr.websocket.core.NtcService;
 import com.spittr.websocket.core.SocketAuthorization;
 import com.spittr.websocket.exception.ChatMsgReciverErrorException;
 import com.spittr.websocket.exception.ParamersErrorException;
@@ -29,15 +30,19 @@ import static com.spittr.websocket.config.WebSocketConstant.*;
 public class UserChatController {
 	
 	@Autowired
-	private SimpMessagingTemplate msgTplt;
+	protected SimpMessagingTemplate msgTplt;
 		
 	@Autowired
 	@Qualifier("userServiceImpl")
-	private UserService userService;
+	protected UserService userService;
 	
 	@Autowired
 	@Qualifier("chatMsgServiceImpl")
-	private ChatMsgService chatMsgService;
+	protected ChatMsgService chatMsgService;
+	
+	@Autowired
+	@Qualifier("ntcServiceImpl")
+	protected NtcService ntcService;
 	
 	@MessageMapping("/chat/init")
 	public void connectionInit(Message<Object>message){
@@ -48,6 +53,18 @@ public class UserChatController {
 				msgTplt.convertAndSendToUser(user.getUname(), "/recive", chatMsg);
 				msgTplt.convertAndSendToUser(String.valueOf(user.getUid()), "/recive", chatMsg);
 			}
+			
+			ntcInit(user);
+		}
+	}
+	
+	private void ntcInit(User user){
+		List<NtcMsg> ntcMsgs = ntcService.getNtcNotRcv(user.getUid());
+		System.err.println("SIZEEEEEEEEEEEEE:"+ntcMsgs.size());
+		for (NtcMsg ntcMsg : ntcMsgs) {
+			System.err.println("init ntccccccccccc");
+			msgTplt.convertAndSendToUser(user.getUname(), "/notice", ntcMsg);
+			msgTplt.convertAndSendToUser(String.valueOf(user.getUid()), "/notice", ntcMsg);
 		}
 	}
 	
@@ -112,6 +129,7 @@ public class UserChatController {
 	@MessageExceptionHandler
 	@SendToUser(value="/queue/status")
 	public Object handleExceptions(RuntimeException e, Message<Object> msg, SendMsg sendMsg) {  
+		e.printStackTrace();
 		ErrorMsg errorMsg = ErrorMsg.newInstance(e, msg);
 		return StatusMsg.ERROR(sendMsg.getMsgID(), errorMsg);
 	}  

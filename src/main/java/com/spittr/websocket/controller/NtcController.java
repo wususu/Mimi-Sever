@@ -17,6 +17,7 @@ import com.spittr.websocket.model.NtcCLikee;
 import com.spittr.websocket.model.NtcCmmnt;
 import com.spittr.websocket.model.NtcMLikee;
 import com.spittr.websocket.model.NtcMsg;
+import com.spittr.websocket.model.NtcRCmmnt;
 import com.spittr.websocket.model.NtcRcv;
 import com.spittr.websocket.model.NtcType;
 import com.spittr.websocket.model.StatusMsg;
@@ -58,6 +59,11 @@ public class NtcController {
 				NtcCmmnt ntcCmmnt = ntcService.needCmmnt(ntcRcv.getId());
 				logger.info(ntcCmmnt.toString());
 				ntcService.rcv(ntcCmmnt);
+				break;
+			case rCmmnt:
+				NtcRCmmnt ntcRCmmnt = ntcService.needRCmmnt(ntcRcv.getId());
+				logger.info(ntcRCmmnt.toString());
+				ntcService.rcv(ntcRCmmnt);
 				break;
 			default:
 				throw new ParamersErrorException();

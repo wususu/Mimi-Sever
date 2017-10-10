@@ -30,6 +30,7 @@ public class Comment implements Serializable{
 	
 	private long muid;
 	
+	@Column(nullable=false)
 	private long mid;
 	
 	@Column(nullable=true)
@@ -92,18 +93,20 @@ public class Comment implements Serializable{
 	public Comment(String content, User user, Message underMessage, Comment replayComment){
 		
 		this(user.getUid(), underMessage.getUid(), underMessage.getMid(),
-				replayComment == null ? null:replayComment.getCid(), underMessage.getCommentNextVal(), user, underMessage, replayComment, content,
+				replayComment == null ? null:replayComment.getCid(), underMessage.getCommentNextVal(),
+				replayComment==null? null:replayComment.getRcUname(), user, underMessage, replayComment, content,
 				new Date(), null, false, false, null, (long)0);
 
 	}
 	
-	public Comment(long uid, long muid, long mid, Long rcid, long commentVal, User user, Message underWhichMessage,
+	public Comment(long uid, long muid, long mid, Long rcid, long commentVal,String rcUname, User user, Message underWhichMessage,
 			Comment replayWhichComment, String content, Date tmCreated, Date tmDelete, boolean isDelete, boolean isFake,
 			String fakeName, Long likeCount) {
 		this.uid = uid;
 		this.muid = muid;
 		this.mid = mid;
 		this.rcid = rcid;
+		this.rcUname = rcUname;
 		this.commentVal = commentVal;
 		this.user = user;
 		this.underWhichMessage = underWhichMessage;
@@ -276,6 +279,8 @@ public class Comment implements Serializable{
 	public void setRcNname(String rcNname) {
 		this.rcNname = rcNname;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {

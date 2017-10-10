@@ -5,5 +5,6 @@ public enum NtcType {
 	mLikee,
 	cLikee,
 	Cmmnt,
+	rCmmnt,
 	
 }
