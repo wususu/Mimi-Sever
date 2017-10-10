@@ -86,16 +86,16 @@ d. 消息(一.4)的接收实体:
 			"ntcType":"rCmmnt",
 			"ntcBody":{
 			"id":120,
-			"cid":118,
-			"rcid":47,
+			"cid":118,							// 评论
+			"rcid":47,							// 被回复的评论
 			"mid":22,
 			"cUid":2,
 			"rcUid":1,
 			"mUid":1,
-			"cUname":"liaojiekx",
-			"mUname":"wususu",
-			"rcUname":"wususu",
-			"cNname":"啊哈哈哈",
+			"cUname":"liaojiekx",				// 评论的用户名
+			"mUname":"wususu",					
+			"rcUname":"wususu",					// 被回复的评论的用户名
+			"cNname":"啊哈哈哈",						// 评论的用户昵称
 			"cShrtCntnt":"的评论22",
 			"rcShrtCntnt":"的评论22",
 			"tmCreated":1507640232000
