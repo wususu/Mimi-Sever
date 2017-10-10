@@ -123,7 +123,9 @@ public class NtcServiceImpl implements NtcService{
 		// TODO Auto-generated method stub
 
 		if (mLikee.isLike() == false && ntcMLikee.getIsRecived() == true) {
-			ntcMLikee.setIsRecived(false);
+			if (ntcMLikee.getLkUid() != ntcMLikee.getmUid()) 
+				ntcMLikee.setIsRecived(false);
+			
 			ntcMLikee.setTmRecived(null);
 			ntcDao.update(ntcMLikee);
 		}
@@ -134,8 +136,11 @@ public class NtcServiceImpl implements NtcService{
 		// TODO Auto-generated method stub
 		logger.info(cLikee.toString());
 		logger.info(ntcCLikee.toString());
-		if (cLikee.isLike() == false && ntcCLikee.getIsRecived() == true) {
-			ntcCLikee.setIsRecived(false);
+		if (cLikee.isLike() == false && ntcCLikee.getIsRecived() == true ) {
+			// 不是同一用户
+			if (ntcCLikee.getcUid() != ntcCLikee.getLkUid())
+				ntcCLikee.setIsRecived(false);
+			
 			ntcCLikee.setTmRecived(null);
 			ntcDao.update(ntcCLikee);
 		}
