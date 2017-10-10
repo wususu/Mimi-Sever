@@ -2,6 +2,8 @@ package com.spittr.message.core;
 
 import java.util.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -19,12 +21,15 @@ import com.spittr.user.model.User;
 import com.spittr.websocket.core.NtcService;
 import com.spittr.websocket.model.NtcCmmnt;
 import com.spittr.websocket.model.NtcMsg;
+import com.spittr.websocket.model.NtcRCmmnt;
 import com.spittr.websocket.model.NtcType;
 
 import static com.spittr.core.JSONConstants.*;
 
 @Service
 public class CommentServiceImpl implements CommentService{
+	
+	protected Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
 	
 	@Autowired
 	SimpMessagingTemplate msgTplt;
@@ -79,21 +84,7 @@ public class CommentServiceImpl implements CommentService{
 		
 		messageService.adcNextCommentVal(comment.getUnderWhichMessage());
 		
-		/**
-		 *  消息通知
-		 */
-		NtcCmmnt ntcCmmnt = ntcService.getNtcCmmnt(comment);
-		if (ntcCmmnt == null) {
-			ntcCmmnt = new NtcCmmnt(comment);
-			ntcService.create(ntcCmmnt);
-		}
-		NtcMsg ntcMsg = new NtcMsg(NtcType.Cmmnt, ntcCmmnt);
-		
-		if (!ntcCmmnt.getIsRecived()) {
-			msgTplt.convertAndSendToUser(ntcCmmnt.getmUname(), "/notice", ntcMsg);
-			msgTplt.convertAndSendToUser(String.valueOf(ntcCmmnt.getmUid()), "/notice", ntcMsg);
-		}
-		
+		ntcSend(comment);
 	}
 	
 	@Override
@@ -142,7 +133,6 @@ public class CommentServiceImpl implements CommentService{
 		commentDao.update(comment);
 		
 		messageService.decCommentCount(comment.getUnderWhichMessage());
-		
 
 	}
 
@@ -247,5 +237,44 @@ public class CommentServiceImpl implements CommentService{
 				.add(MESSAGE, message)
 				.add(COMMENT_LIST, comments)
 				.getMap();
+	}
+	
+	/**
+	 *  消息通知
+	 */
+	private void ntcSend(Comment comment){
+
+		// 评论通知
+		NtcCmmnt ntcCmmnt = ntcService.getNtcCmmnt(comment);
+		if (ntcCmmnt == null) {
+			ntcCmmnt = new NtcCmmnt(comment);
+			ntcService.create(ntcCmmnt);
+		}
+		NtcMsg ntcMsg = new NtcMsg(NtcType.Cmmnt, ntcCmmnt);
+		
+		if (!ntcCmmnt.getIsRecived()) {
+			msgTplt.convertAndSendToUser(ntcCmmnt.getmUname(), "/notice", ntcMsg);
+			msgTplt.convertAndSendToUser(String.valueOf(ntcCmmnt.getmUid()), "/notice", ntcMsg);
+		}
+		
+		// 回复评论通知
+		Comment rComment = comment.getReplayWhichComment();
+		logger.info(comment.toString());
+		if (rComment != null) {
+			logger.info(rComment.toString());
+			NtcRCmmnt ntcRCmmnt = ntcService.getNtcRCmmnt(comment);
+			if (ntcRCmmnt == null) {
+				ntcRCmmnt = new NtcRCmmnt(comment, rComment);
+				ntcService.create(ntcRCmmnt);
+				System.err.println(ntcRCmmnt);
+			}
+			
+			ntcMsg = new NtcMsg(NtcType.rCmmnt, ntcRCmmnt);
+			
+			if (!ntcRCmmnt.getIsRecived()) {
+				msgTplt.convertAndSendToUser(ntcRCmmnt.getRcUname(), "/notice", ntcMsg);
+				msgTplt.convertAndSendToUser(String.valueOf(ntcRCmmnt.getRcUid()), "/notice", ntcMsg);
+			}
+		}
 	}
 }

@@ -81,7 +81,8 @@ public class NtcCLikee implements Serializable, NtcBody{
 	private NtcCLikee(CLikee cLikee,User lkUser, User cUser, Comment comment){
 		this(cUser.getUid(), cUser.getUname(), comment.getCid(), lkUser.getUid(), 
 				lkUser.getUname(), lkUser.getNname(), cLikee, cUser, lkUser, comment,
-				cUser.equals(lkUser)?true:false, cUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), comment.getContent().substring(0, 10));
+				cUser.equals(lkUser)?true:false, cUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), 
+				comment.getContent().length()>18?comment.getContent().substring(0, 18): comment.getContent());
 	}
 
 	public NtcCLikee(Long cUid, String cUname, Long cid, Long lkUid, String lkUname, String lkNname,
@@ -103,6 +104,8 @@ public class NtcCLikee implements Serializable, NtcBody{
 		this.tmCreated = tmCreated;
 		this.cShrtCntnt = cShrtCntnt;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -152,6 +155,22 @@ public class NtcCLikee implements Serializable, NtcBody{
 		this.lkUname = lkUname;
 	}
 
+	public String getLkNname() {
+		return lkNname;
+	}
+
+	public void setLkNname(String lkNname) {
+		this.lkNname = lkNname;
+	}
+
+	public String getcShrtCntnt() {
+		return cShrtCntnt;
+	}
+
+	public void setcShrtCntnt(String cShrtCntnt) {
+		this.cShrtCntnt = cShrtCntnt;
+	}
+
 	public CLikee getcLikee() {
 		return cLikee;
 	}
@@ -184,6 +203,14 @@ public class NtcCLikee implements Serializable, NtcBody{
 		this.comment = comment;
 	}
 
+	public Date getTmCreated() {
+		return tmCreated;
+	}
+
+	public void setTmCreated(Date tmCreated) {
+		this.tmCreated = tmCreated;
+	}
+
 	public Boolean getIsRecived() {
 		return isRecived;
 	}
@@ -198,30 +225,6 @@ public class NtcCLikee implements Serializable, NtcBody{
 
 	public void setTmRecived(Date tmRecived) {
 		this.tmRecived = tmRecived;
-	}
-	
-	public String getLkNname() {
-		return lkNname;
-	}
-
-	public void setLkNname(String lkNname) {
-		this.lkNname = lkNname;
-	}
-
-	public String getcShrtCntnt() {
-		return cShrtCntnt;
-	}
-
-	public void setcShrtCntnt(String cShrtCntnt) {
-		this.cShrtCntnt = cShrtCntnt;
-	}
-
-	public Date getTmCreated() {
-		return tmCreated;
-	}
-
-	public void setTmCreated(Date tmCreated) {
-		this.tmCreated = tmCreated;
 	}
 
 	@Override

@@ -1,6 +1,10 @@
 package com.spittr.websocket.core;
 
+import java.rmi.server.UID;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,17 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.spittr.message.model.CLikee;
-import com.spittr.message.model.Comment;
-import com.spittr.message.model.MLikee;
+import com.spittr.message.model.*;
 import com.spittr.websocket.dao.NtcDao;
-import com.spittr.websocket.exception.NtcIDNotFoundException;
-import com.spittr.websocket.exception.NullValueException;
-import com.spittr.websocket.exception.ParamersErrorException;
-import com.spittr.websocket.model.NtcBody;
-import com.spittr.websocket.model.NtcCLikee;
-import com.spittr.websocket.model.NtcCmmnt;
-import com.spittr.websocket.model.NtcMLikee;
+import com.spittr.websocket.exception.*;
+import com.spittr.websocket.model.*;
 
 @Service
 public class NtcServiceImpl implements NtcService{
@@ -65,6 +62,18 @@ public class NtcServiceImpl implements NtcService{
 		return ntcCmnt;
 	}
 
+	@Override
+	public NtcRCmmnt needRCmmnt(Long id) {
+		// TODO Auto-generated method stub
+		if (id == null) {
+			throw new ParamersErrorException();
+		}
+		NtcRCmmnt ntcRCmmnt = ntcDao.getNtcRCmmnt(id);
+		if (ntcRCmmnt == null) 			
+			throw new NtcIDNotFoundException();
+		return ntcRCmmnt;
+	}
+
 	
 	@Override
 	public NtcMLikee getNtcMLikee(MLikee mLikee) {
@@ -84,6 +93,13 @@ public class NtcServiceImpl implements NtcService{
 		return ntcDao.getNtcCmmnt(cmmnt.getCid(), cmmnt.getUnderWhichMessage().getUid());
 	}
 
+	@Override
+	public NtcRCmmnt getNtcRCmmnt(Comment cmmnt) {
+		// TODO Auto-generated method stub
+		return ntcDao.getNtcRCmmnt(cmmnt.getCid(), cmmnt.getRcid());
+	}
+
+	
 	
 	@Override
 	public NtcMLikee needNtcMLikee(MLikee mLikee) {
@@ -113,10 +129,26 @@ public class NtcServiceImpl implements NtcService{
 	}
 	
 	@Override
+	public NtcRCmmnt needNtcRCmmnt(Comment comment) {
+		// TODO Auto-generated method stub
+		NtcRCmmnt ntcRCmmnt = getNtcRCmmnt(comment);
+		if (ntcRCmmnt == null) 
+			throw new NullValueException();
+		return ntcRCmmnt;
+	}
+	
+	@Override
 	public void create(NtcBody ntcBody) {
 		// TODO Auto-generated method stub
+		System.err.println(ntcBody);
 		ntcDao.save(ntcBody);
 	}
+	
+	@Override
+	public void create(NtcCLikee ntcCLikee){
+		ntcDao.save(ntcCLikee);
+	}
+
 
 	@Override
 	public void update(MLikee mLikee, NtcMLikee ntcMLikee) {
@@ -149,9 +181,15 @@ public class NtcServiceImpl implements NtcService{
 	@Override
 	public void update(NtcCmmnt ntcCmmnt) {
 		// TODO Auto-generated method stub
-		update(ntcCmmnt);
+		ntcDao.update(ntcCmmnt);
 	}
 
+	@Override
+	public void update(NtcRCmmnt ntcRCmmnt) {
+		// TODO Auto-generated method stub
+		ntcDao.update(ntcRCmmnt);
+	}
+	
 	@Override
 	public void rcv(NtcMLikee ntcMLikee) {
 		// TODO Auto-generated method stub
@@ -176,5 +214,56 @@ public class NtcServiceImpl implements NtcService{
 		ntcDao.update(ntcCmmnt);
 	}
 
+	@Override
+	public void rcv(NtcRCmmnt ntcRCmmnt) {
+		// TODO Auto-generated method stub
+		ntcRCmmnt.setIsRecived(true);
+		ntcRCmmnt.setTmRecived(new Date());
+		ntcDao.update(ntcRCmmnt);
+	}
+
+	@Override
+	public List<NtcMLikee> getNtcMLikeeNotRcv(long mUid) {
+		// TODO Auto-generated method stub
+		return ntcDao.getNtcMLikeeNotRcv(mUid);
+	}
+
+	@Override
+	public List<NtcCLikee> getNtcCLikeeNotRcv(long cUid) {
+		// TODO Auto-generated method stub
+		return ntcDao.getNtcCLikeeNotRcv(cUid);
+	}
+
+	@Override
+	public List<NtcCmmnt> getNtcCmmntNotRcv(long mUid) {
+		// TODO Auto-generated method stub
+		return ntcDao.getNtcCmmntNotRcv(mUid);
+	}
+
+	@Override
+	public List<NtcRCmmnt> getNtcRCmmntNotRcv(long rcUid) {
+		// TODO Auto-generated method stub
+		return ntcDao.getNtcRCmmntNotRcv(rcUid);
+	}
+	
+	@Override
+	public List<NtcMsg> getNtcNotRcv(long uid){
+		List<NtcMsg> ntcMsgs = new LinkedList<>();
+		for (NtcMLikee ntcMLikee : getNtcMLikeeNotRcv(uid)) 
+			ntcMsgs.add(new NtcMsg(NtcType.mLikee, ntcMLikee));
+		
+		for (NtcCLikee ntcCLikee : getNtcCLikeeNotRcv(uid)) 
+			ntcMsgs.add(new NtcMsg(NtcType.cLikee, ntcCLikee));
+		
+		for(NtcCmmnt ntcCmmnt : getNtcCmmntNotRcv(uid))
+			ntcMsgs.add(new NtcMsg(NtcType.Cmmnt, ntcCmmnt));
+		
+		for(NtcRCmmnt ntcRCmmnt : getNtcRCmmntNotRcv(uid))
+			ntcMsgs.add(new NtcMsg(NtcType.rCmmnt, ntcRCmmnt));
+		
+		logger.info(ntcMsgs.toString());
+		logger.info(ntcMsgs.size() + " ");
+		return ntcMsgs;
+	}
 
 }

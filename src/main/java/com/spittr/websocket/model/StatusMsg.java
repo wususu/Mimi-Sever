@@ -25,6 +25,10 @@ public class StatusMsg {
 		return new StatusMsg(msgID, ExceptionStatus.SUCCESS.getCode(), ExceptionStatus.SUCCESS.getMessage(), ExceptionStatus.DiY_OK_MESSAGE);
 	}
 	
+	public static StatusMsg ERROR(Object content){
+		return new StatusMsg(null, ExceptionStatus.ERROR.getCode(), ExceptionStatus.ERROR.getMessage(), content);
+	}
+	
 	public static StatusMsg ERROR(String msgID, Object content){
 		return new StatusMsg(msgID, ExceptionStatus.ERROR.getCode(), ExceptionStatus.ERROR.getMessage(), content);
 	}
