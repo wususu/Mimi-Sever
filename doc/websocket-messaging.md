@@ -81,12 +81,31 @@ c. 消息(一.3)的接收实体:
 		}
 
 d. 消息(一.4)的接收实体:
-暂无
+
+		{
+			"ntcType":"rCmmnt",
+			"ntcBody":{
+			"id":120,
+			"cid":118,
+			"rcid":47,
+			"mid":22,
+			"cUid":2,
+			"rcUid":1,
+			"mUid":1,
+			"cUname":"liaojiekx",
+			"mUname":"wususu",
+			"rcUname":"wususu",
+			"cNname":"啊哈哈哈",
+			"cShrtCntnt":"的评论22",
+			"rcShrtCntnt":"的评论22",
+			"tmCreated":1507640232000
+			}
+		}
 
 - 操作2的发送确认消息实体:
 
 		{
-			"ntcType":"cLikee",		// cLikee mLikee Cmmnt 三种类型
+			"ntcType":"cLikee",		// cLikee mLikee Cmmnt rCmmnt 四种类型
 			"id":438			// 通知ID
 		}
 		
