@@ -45,10 +45,10 @@ public class NtcCmmnt implements Serializable, NtcBody{
 	@Column(nullable=false)
 	private String cNname;
 	
-	@Column(length=13)
+	@Column(length=20)
 	private String cShrtCntnt;
 	
-	@Column(length=13)
+	@Column(length=20)
 	private String mShrtCntnt;
 	
 	@ManyToOne

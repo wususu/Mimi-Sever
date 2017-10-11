@@ -42,7 +42,7 @@ public class NtcCLikee implements Serializable, NtcBody{
 	@Column(nullable=false)
 	private String lkNname;
 	
-	@Column(length=13)
+	@Column(length=20)
 	private String cShrtCntnt;
 	
 	@ManyToOne
