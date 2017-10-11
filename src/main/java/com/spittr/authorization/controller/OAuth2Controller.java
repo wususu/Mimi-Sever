@@ -18,6 +18,7 @@ import com.spittr.user.model.User;
 
 @RestController
 @RequestMapping(value="/api/OAuth2")
+@CrossOrigin(origins="*", maxAge=3600)
 public class OAuth2Controller {
 
 	@Autowired
