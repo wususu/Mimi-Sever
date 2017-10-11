@@ -2,6 +2,8 @@ package com.spittr.message.core;
 
 import java.util.*;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -244,18 +246,15 @@ public class CommentServiceImpl implements CommentService{
 	 */
 	private void ntcSend(Comment comment){
 
+		NtcMsg ntcMsg = null;
+		boolean sendCmmnt = true;
 		// 评论通知
 		NtcCmmnt ntcCmmnt = ntcService.getNtcCmmnt(comment);
 		if (ntcCmmnt == null) {
 			ntcCmmnt = new NtcCmmnt(comment);
 			ntcService.create(ntcCmmnt);
 		}
-		NtcMsg ntcMsg = new NtcMsg(NtcType.Cmmnt, ntcCmmnt);
 		
-		if (!ntcCmmnt.getIsRecived()) {
-			msgTplt.convertAndSendToUser(ntcCmmnt.getmUname(), "/notice", ntcMsg);
-			msgTplt.convertAndSendToUser(String.valueOf(ntcCmmnt.getmUid()), "/notice", ntcMsg);
-		}
 		
 		// 回复评论通知
 		Comment rComment = comment.getReplayWhichComment();
@@ -266,15 +265,23 @@ public class CommentServiceImpl implements CommentService{
 			if (ntcRCmmnt == null) {
 				ntcRCmmnt = new NtcRCmmnt(comment, rComment);
 				ntcService.create(ntcRCmmnt);
-				System.err.println(ntcRCmmnt);
 			}
 			
-			ntcMsg = new NtcMsg(NtcType.rCmmnt, ntcRCmmnt);
+			if (rComment.getUid() == rComment.getMuid()) {
+				sendCmmnt = false;
+			}
 			
 			if (!ntcRCmmnt.getIsRecived()) {
+				ntcMsg = new NtcMsg(NtcType.rCmmnt, ntcRCmmnt);
 				msgTplt.convertAndSendToUser(ntcRCmmnt.getRcUname(), "/notice", ntcMsg);
 				msgTplt.convertAndSendToUser(String.valueOf(ntcRCmmnt.getRcUid()), "/notice", ntcMsg);
 			}
+		}
+		
+		if ( (!ntcCmmnt.getIsRecived()) && sendCmmnt) {
+			 ntcMsg = new NtcMsg(NtcType.Cmmnt, ntcCmmnt);
+			msgTplt.convertAndSendToUser(ntcCmmnt.getmUname(), "/notice", ntcMsg);
+			msgTplt.convertAndSendToUser(String.valueOf(ntcCmmnt.getmUid()), "/notice", ntcMsg);
 		}
 	}
 }
