@@ -12,7 +12,7 @@ import com.spittr.user.model.User;
 
 @Entity
 @Table(name="ntc_c_likee", uniqueConstraints=@UniqueConstraint(columnNames={"cLikee", "cUser"}))
-@JsonIgnoreProperties(value={"cLikee", "cUser", "lkUser", "tmRecived", "isRecived", "comment"})
+@JsonIgnoreProperties(value={"cLikee", "cUser", "tmRecived", "isRecived", "comment"})
 public class NtcCLikee implements Serializable, NtcBody{
 
 	/**

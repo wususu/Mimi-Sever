@@ -53,9 +53,10 @@ public class LikeeServiceImpl implements LikeeService{
 	protected CommentDao commentDao;
 	
 	@Override
-	public void create(MLikee entity) {
+	public void create(MLikee like) {
 		// TODO Auto-generated method stub
-		mlikeeDao.create(entity);
+		mlikeeDao.create(like);
+	
 	}
 	
 	@Override
@@ -72,6 +73,7 @@ public class LikeeServiceImpl implements LikeeService{
 	
 	@Override
 	public Map<String, Object> likee(MLikee like){
+		
 		
 		if (like == null) 
 			throw new NullPointerException("like");
@@ -105,8 +107,8 @@ public class LikeeServiceImpl implements LikeeService{
 		logger.info(ntcMLikee.toString());
 	
 		
-		NtcMsg ntcMsg = new NtcMsg(NtcType.mLikee, ntcMLikee);
 		if (!ntcMLikee.getIsRecived()) {
+			NtcMsg ntcMsg = new NtcMsg(NtcType.mLikee, ntcMLikee);
 			msgTplt.convertAndSendToUser(ntcMLikee.getmUname(), "/notice", ntcMsg);
 			msgTplt.convertAndSendToUser(String.valueOf(ntcMLikee.getmUid()), "/notice", ntcMsg);
 		}
@@ -183,7 +185,7 @@ public class LikeeServiceImpl implements LikeeService{
 		return like.isLike() == true ? dislike(like) : like(like);
 	}
 	
-//	@Transactional
+	@Transactional
 	private Map<String, Object> like(CLikee cLikee){
 		Map<String, Object> result = getMap();
 		Comment comment = cLikee.getComment();

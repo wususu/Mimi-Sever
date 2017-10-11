@@ -12,7 +12,7 @@ import com.spittr.user.model.User;
 
 @Entity
 @Table(name="ntc_m_likee", uniqueConstraints=@UniqueConstraint(columnNames={"message", "lkUser"}))
-@JsonIgnoreProperties(value={"mUser","lkUser", "mLikee", "tmRecived", "isRecived", "message"})
+@JsonIgnoreProperties(value={"mUser", "mLikee", "tmRecived", "isRecived", "message"})
 public class NtcMLikee implements Serializable, NtcBody{
 
 	/**
@@ -80,7 +80,7 @@ public class NtcMLikee implements Serializable, NtcBody{
 	public NtcMLikee(MLikee mLikee, User lkUser, Message message, User mUser){
 		this(message.getMid(), mUser.getUid(), mLikee.getUid(), 
 				mUser.getUname(), lkUser.getUname(), lkUser.getNname(), mUser, lkUser, message, mLikee,
-				( (!mUser.equals(lkUser) && mLikee.isLike() )?true:false), mUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), 
+				( (mUser.equals(lkUser) && mLikee.isLike() )?true:false), mUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), 
 				message.getContent().length()>18?message.getContent().substring(0, 18):message.getContent());
 	}
 	

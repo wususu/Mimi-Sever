@@ -22,7 +22,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="ntc_rcmmnt", uniqueConstraints=@UniqueConstraint(columnNames={"comment", "rComment"}))
-@JsonIgnoreProperties(value={"cUser", "mUser", "rcUser", "tmRecived", "isRecived", "comment", "message", "rComment"})
+@JsonIgnoreProperties(value={"mUser", "rcUser", "tmRecived", "isRecived", "comment", "message", "rComment"})
 public class NtcRCmmnt implements Serializable, NtcBody{
 
 	/**

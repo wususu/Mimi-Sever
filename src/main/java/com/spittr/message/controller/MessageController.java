@@ -70,7 +70,7 @@ public class MessageController {
 			}
 		
 		Location location = locationService.get(lid);
-		Message message = MessageService.newInstance(content, user, location);
+		Message message = new Message(content, user, location);
 		
 		message = MessageIssues.generateFakeName(isFake, message);
 		

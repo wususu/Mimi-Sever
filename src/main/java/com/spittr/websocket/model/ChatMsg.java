@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,9 +39,10 @@ public class ChatMsg implements Serializable{
 	@Column(nullable=false, unique=true)
 	private String chatID;
 	
-	// sender 的 uName
-	@Column(nullable=false)
-	private String sender;
+	// sender 
+	@ManyToOne
+	@JoinColumn(name="sender", nullable=false)
+	private User sender;
 
 	// reciver 的 uName
 	@Column(nullable=false)
@@ -73,10 +76,10 @@ public class ChatMsg implements Serializable{
 	}
 	
 	public ChatMsg(User sender, User reciver, SendMsg sendMsg) {
-		this(sendMsg.getMsgID(), sender.getUname(), sender.getNname(), reciver.getUname(), reciver.getNname(), sendMsg.getMessage(), new Date(), sender.getUid(), reciver.getUid(), false, null);
+		this(sendMsg.getMsgID(), sender, sender.getNname(), reciver.getUname(), reciver.getNname(), sendMsg.getMessage(), new Date(), sender.getUid(), reciver.getUid(), false, null);
 	}
 	
-	public ChatMsg( String chatID, String sender, String nSender, String reciver, String nReciver, String content, Date time, Long senderId,
+	public ChatMsg( String chatID, User sender, String nSender, String reciver, String nReciver, String content, Date time, Long senderId,
 			Long reciverId, Boolean isRecived, Date tmRecived) {
 		super();
 		this.chatID = chatID;
@@ -109,11 +112,11 @@ public class ChatMsg implements Serializable{
 		this.id = id;
 	}
 
-	public String getSender() {
+	public User getSender() {
 		return sender;
 	}
 
-	public void setSender(String sender) {
+	public void setSender(User sender) {
 		this.sender = sender;
 	}
 
