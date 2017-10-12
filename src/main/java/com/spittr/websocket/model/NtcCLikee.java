@@ -25,6 +25,9 @@ public class NtcCLikee implements Serializable, NtcBody{
 	private Long id;
 	
 	@Column(nullable=false)
+	private Long mid;
+	
+	@Column(nullable=false)
 	private Long cUid;
 	
 	@Column(nullable=false)
@@ -79,17 +82,18 @@ public class NtcCLikee implements Serializable, NtcBody{
 	}
 	
 	private NtcCLikee(CLikee cLikee,User lkUser, User cUser, Comment comment){
-		this(cUser.getUid(), cUser.getUname(), comment.getCid(), lkUser.getUid(), 
+		this(cUser.getUid(), comment.getMid(), cUser.getUname(), comment.getCid(), lkUser.getUid(), 
 				lkUser.getUname(), lkUser.getNname(), cLikee, cUser, lkUser, comment,
 				cUser.equals(lkUser)?true:false, cUser.equals(lkUser)?new Date(/* NOW */):null, new Date(), 
 				comment.getContent().length()>18?comment.getContent().substring(0, 18): comment.getContent());
 	}
 
-	public NtcCLikee(Long cUid, String cUname, Long cid, Long lkUid, String lkUname, String lkNname,
+	public NtcCLikee(Long cUid, Long mid,  String cUname, Long cid, Long lkUid, String lkUname, String lkNname,
 			CLikee cLikee, User cUser,	User lkUser, Comment comment, Boolean isRecived, Date tmRecived,
 			Date tmCreated, String cShrtCntnt) {
 		super();
 		this.cUid = cUid;
+		this.mid = mid;
 		this.cUname = cUname;
 		this.cid = cid;
 		this.lkUid = lkUid;
@@ -105,8 +109,6 @@ public class NtcCLikee implements Serializable, NtcBody{
 		this.cShrtCntnt = cShrtCntnt;
 	}
 
-
-
 	public Long getId() {
 		return id;
 	}
@@ -121,6 +123,14 @@ public class NtcCLikee implements Serializable, NtcBody{
 
 	public void setcUid(Long cUid) {
 		this.cUid = cUid;
+	}
+	
+	public Long getMid() {
+		return mid;
+	}
+
+	public void setMid(Long mid) {
+		this.mid = mid;
 	}
 
 	public String getcUname() {
