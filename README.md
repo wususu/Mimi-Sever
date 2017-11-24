@@ -3,6 +3,9 @@
 
  <img src="./pic/logo.png" style="text-align:center;" width="40%" height="60%">
 
+
+#### ps设计无能,界面模仿了无秘
+
 - web客户端: [web client](https://github.com/Q-Zhan/IT-Farm)
 - 安卓客户端: [Android client](https://github.com/Arsun/Mimi)
 
@@ -19,8 +22,23 @@
 - Oauth2.0第三方登录
 
 ## 功能展示
++ ### 点对点聊天与消息通知
+![点对点聊天与消息推送](./pic/gif/消息_通知_聊天.gif)
 
-！[点对点聊天与消息推送](./pic/gif/消息_通知_聊天.gif)
++ ### 学生身份认证
+![认证](./pic/gif/认证.gif)
+
++ ### 普通注册登录与第三方登录
+![第三方登录](./pic/gif/第三方登录.gif)
+
++ ### 关注其他用户
+![关注](./pic/gif/查看用户_关注_分类查看.gif)
+
++ ### 发送动态
+![发送动态](./pic/gif/发送message.gif)
+
++ ### 修改个人信息
+![修改个人信息](./pic/gif/查看修改个人信息.gif)
 
 ## 相关文档
 
