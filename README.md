@@ -4,7 +4,8 @@
  <img src="./pic/logo.png" style="text-align:center;" width="40%" height="60%">
 
 
-#### ps设计无能,界面模仿了无秘
+#### ps: 设计无能,界面模仿了无秘
+### pps: 这个项目主要是用来走一遍JavaEE开发，性能与可伸缩性都不是很好，代码质量无法直视，望海涵！
 
 - web客户端: [web client](https://github.com/Q-Zhan/IT-Farm)
 - 安卓客户端: [Android client](https://github.com/Arsun/Mimi)
